@@ -113,12 +113,13 @@ section{
 	color: var(--text-color);
 	font-size: 20px;
 	font-weight: 600;
-	line-height: 2;
+	line-height: 1.7;
+	margin: 15px 0 10px;
 	text-shadow: 2px 2px 6px rgb(0, 0, 0); /* adicionando uma sombra */
 }
 .home-text h2{
 	font-size: var(--h2-font);
-	line-height: 0.7;
+	line-height: 0.5;
 	text-shadow: 2px 2px 6px rgb(0, 0, 0); /* adicionando uma sombra */
 }
 
