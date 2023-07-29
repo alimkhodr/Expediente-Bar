@@ -411,7 +411,7 @@ margin-top: -30px;
 }
 
 .cardapio {
-    width: 20%;
+    width: 280px;
     height: 100%;
     margin: 0 auto; /* Define margens automáticas para centralizar horizontalmente */
     display: flex;
