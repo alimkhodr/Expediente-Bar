@@ -397,7 +397,7 @@ margin-top: -30px;
 	align-items: center;
 	justify-content: space-between;
 	gap: 2rem;
-	background: var(--bg-color);
+	background-color: var(--second-bg-color);
 }
 .last-text p{
 	color: var(--second-color);
