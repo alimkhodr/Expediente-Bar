@@ -498,7 +498,6 @@ margin-top: -30px;
 	  transition: .1s;
 	}
 	.home{
-		height: 87vh;
 		background-image: url(../img/ingressos-02.png);
 	}
 }
