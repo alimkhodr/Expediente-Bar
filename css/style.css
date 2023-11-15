@@ -92,7 +92,7 @@ section{
 	position: relative;
 	height: 60vh;
 	width: 100%;
-	background-image: url(../img/ingressos-01.png);	
+	background-image: url(../img/home.jpeg);	
 	background-size: cover;
 	background-position: center;
 	display: flex;
@@ -100,24 +100,30 @@ section{
 	justify-content: flex-start;
 }
 
-.ingressos{
+.faixa-reserva{
 	padding: 20px 15%;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
 	gap: 2rem;
-	background-color: #3c0f62;
+	background-color: var(--bg-color);
+	transition: 0.5s;
 }
 
-.ingressos:hover{
-    background-color: #d0086f;
+.faixa-reserva:hover{
+	background-color: var(--main-color);
 }
 
-.ingressos-text p {
+.faixa-reserva:hover .faixa-reserva-text p{
+	color: var(--bg-color);
+}
+
+.faixa-reserva-text p {
     color: var(--second-color);
     font-size: var(--p-font);
     line-height: 1.8;
+	transition: 0.5s;
 }
 
 
@@ -348,12 +354,113 @@ header.sticky{
 	height: 100%;
 }
 
-.avaliacao{
+.reserva{
 	background: var(--second-bg-color);
 }
 
-.contact{
+.form-reserva{
+    display: flex;
+    align-content: center;
+    padding: 0 200px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.inputGroup {
+	font-family: 'Segoe UI', sans-serif;
+	margin: 0 0 1em 0;
+	width: 100%;
+	position: relative;
+  }
+  
+  .inputGroup input {
+	font-size: 100%;
+	padding: 0.8em;
+	outline: none;
+	border: 2px solid #91948E;
+	background-color: transparent;
+	border-radius: 25px;
+	width:  100%;
+	color: #91948E;
+  }
+  
+  .inputGroup label {
+	font-size: 100%;
+	position: absolute;
+	left: 0;
+	padding: 0.8em;
+	margin-left: 0.5em;
+	pointer-events: none;
+	transition: all 0.3s ease;
+	color: #91948E;
+  }
+  
+  .inputGroup :is(input:focus, input:valid)~label {
+	transform: translateY(-50%) scale(.9);
+	margin: 0em;
+	margin-left: 1.3em;
+	padding: 0 0.4em;
+	background-color: var(--second-bg-color);
+  }
+  
+  .inputGroup :is(input:focus, input:valid) {
+	border-color: var(--main-color);
+  }
+
+  .inputGroup select {
+	font-size: 100%;
+	padding: 0.8em;
+	outline: none;
+	border: 2px solid #91948E;
+	background-color: transparent;
+	border-radius: 25px;
+	width:  100%;
+	color: #91948E;
+  }
+  
+  .inputGroup :is(select:focus, select:valid)~label {
+	transform: translateY(-50%) scale(.9);
+	margin: 0em;
+	margin-left: 1.3em;
+	padding: 0 0.4em;
+	background-color: var(--second-bg-color);
+  }
+  
+  .inputGroup :is(select:focus, select:valid) {
+	border-color: var(--main-color);
+  }
+
+  .btn-reservar {
+    color: var(--bg-color);
+    background: var(--main-color);
+    border: none;
+    border-radius: 20px;
+    padding: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    text-align: center;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(40%) sepia(12%) saturate(399%) hue-rotate(165deg) brightness(92%) contrast(89%);
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(40%) sepia(12%) saturate(399%) hue-rotate(165deg) brightness(92%) contrast(89%);
+}
+
+.btn-reservar:hover {
+    transform: scale(1.03);
+}
+
+.avaliacao{
 	background: var(--bg-color);
+}
+
+.contact{
+	background: var(--second-bg-color);
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	align-items: center;
@@ -421,7 +528,7 @@ margin-top: -30px;
 	align-items: center;
 	justify-content: space-between;
 	gap: 2rem;
-	background-color: var(--second-bg-color);
+	background-color: var(--bg-color);
 }
 .last-text p{
 	color: var(--second-color);
@@ -484,7 +591,7 @@ margin-top: -30px;
 		padding: 15px 3%;
 		
 	}
-	.ingressos{
+	.faixa-reserva{
 		padding: 15px 3%;
 		
 	}
@@ -497,8 +604,11 @@ margin-top: -30px;
 	  --p-font: 1rem;
 	  transition: .1s;
 	}
-	.home{
+	/* .home{
 		background-image: url(../img/ingressos-02.png);
+	} */
+	.form-reserva{
+		padding: 0;
 	}
 }
 
@@ -517,6 +627,9 @@ margin-top: -30px;
 	}
 	.contact{
 		grid-template-columns: 1fr;
+	}
+	.form-reserva{
+		padding: 0;
 	}
 }
 
@@ -550,5 +663,8 @@ margin-top: -30px;
 	}
 	.navlist.open{
 		top: 100%;
+	}
+	.form-reserva{
+		padding: 0;
 	}
 }
