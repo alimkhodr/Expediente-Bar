@@ -27,6 +27,11 @@ function validarDataHora() {
     return false;
   }
 
+  if (inputQtd > 30) {
+    alert("Escolha uma quantidade menor que 30");
+    return false;
+  }
+
   var apiLink = "https://api.whatsapp.com/send?phone=551298886-5185&text=*Nome:*%20" + inputNome + "%0A*Evento:*%20" + inputEvento + "%0A*Quantidade:*%20" + inputQtd + "%0A*Data:*%20" + dataFormatada + "%0A*Horário:*%20" + inputHora + "%0A*Observação:*%20" + inputObs + "";
   document.getElementById('apiLink').href = apiLink;
 
