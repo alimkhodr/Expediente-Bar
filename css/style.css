@@ -435,10 +435,10 @@ header.sticky{
     background: var(--main-color);
     border: none;
     border-radius: 20px;
-    padding: 8px;
+    padding: 12px;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s;
     text-align: center;
     width: 100%;
 }
@@ -452,7 +452,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .btn-reservar:hover {
-    transform: scale(1.03);
+	background: var(--text-color);
 }
 
 .avaliacao{
