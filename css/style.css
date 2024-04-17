@@ -35,21 +35,8 @@ header{
 	padding: 22px 15%;
 	transition: all .45s ease;
 	background-color: #000000c4;
-	border-bottom: solid 1px #2d2d2d;
 }
-.faixa{
-	width: 100%;
-	top: 0;
-	right: 0;
-	z-index: 1000;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	background: transparent;
-	padding: 22px 15%;
-	transition: all .45s ease;
-	background-color: #000000c4;
-}
+
 .logo{
 	width: 100px;
 	display: flex;
@@ -126,7 +113,6 @@ section{
     line-height: 1.8;
 	transition: 0.5s;
 }
-
 
 .slide{
 	margin-bottom: 20px;
