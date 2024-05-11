@@ -78,7 +78,7 @@ section{
 
 .home {
 	position: relative;
-	height: 60vh;
+	height: 80vh;
 	width: 100%;
 	background-image: url(../img/home.jpeg);	
 	background-size: cover;
