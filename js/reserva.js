@@ -32,14 +32,12 @@ function validarDataHora() {
     return false;
   }
 
-  var apiLink = "https://api.whatsapp.com/send?phone=551298886-5185&text=Olá, gostaria de fazer uma reserva%0A*Nome:*%20" + inputNome + "%0A*Evento:*%20" + inputEvento + "%0A*Quantidade:*%20" + inputQtd + "%20pessoas%0A*Data:*%20" + dataFormatada + "%0A*Horário:*%20" + inputHora + "%0A*Observação:*%20" + inputObs + "";
-  document.getElementById('apiLink').href = apiLink;
-
   return true;
 }
 
-document.getElementById('apiLink').addEventListener('click', function (event) {
+// Evento de submit do formulário
+document.querySelector('form[name="reserva-form"]').addEventListener('submit', function(event) {
   if (!validarDataHora()) {
-    event.preventDefault();
+    event.preventDefault(); // Impede o envio do formulário se a validação falhar
   }
 });
