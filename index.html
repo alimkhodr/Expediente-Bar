@@ -322,28 +322,32 @@
 		</div>
 		<form name="reserva-form" netlify>
 			<div class="form-reserva">
-				<div class="inputGroup">
-					<input id="text_nome" name="nome" autocomplete="off" required="" type="text">
+				<div class="inputGroup" style="width: 49%;">
+					<input id="text_nome" name="nome" autocomplete="off" required type="text">
 					<label for="text_nome">Nome</label>
 				</div>
 				<div class="inputGroup" style="width: 49%;">
-					<input id="text_evento" name="evento" autocomplete="off" required="" type="text">
+					<input id="text_tel" name="telefone" autocomplete="off" required type="text" placeholder="(xx) xxxxx-xxxx" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}">
+					<label for="text_tel" style="transform: translateY(-50%) scale(.9);margin: 0em;margin-left: 1.3em;padding:0 0.4em;background-color: var(--second-bg-color);">Telefone</label>
+				</div>
+				<div class="inputGroup" style="width: 49%;">
+					<input id="text_evento" name="evento" autocomplete="off" required type="text">
 					<label for="text_evento">Evento</label>
 				</div>
 				<div class="inputGroup" style="width: 49%;">
-					<input id="text_qtd" name="quantidade" autocomplete="off" required="" type="number">
+					<input id="text_qtd" name="quantidade" autocomplete="off" required type="number">
 					<label for="text_qtd">Quantidade</label>
 				</div>
 				<div class="inputGroup" style="width: 49%;">
-					<input id="text_data" autocomplete="off" required="" type="date">
+					<input id="text_data" autocomplete="off" required type="date">
 					<label for="text_data" style="transform: translateY(-50%) scale(.9);margin: 0em;margin-left: 1.3em;padding:0 0.4em;background-color: var(--second-bg-color);">Data</label>
 				</div>
 				<div class="inputGroup" style="width: 49%;">
-					<input id="text_hora" autocomplete="off" required="" type="time">
+					<input id="text_hora" autocomplete="off" required type="time">
 					<label for="text_hora" style="transform: translateY(-50%) scale(.9);margin: 0em;margin-left: 1.3em;padding:0 0.4em;background-color: var(--second-bg-color);">Horário</label>
 				</div>
 				<div class="inputGroup">
-					<input id="text_obs" name="observacao" autocomplete="off" required="" type="text">
+					<input id="text_obs" name="observacao" autocomplete="off" required type="text">
 					<label for="text_obs">Observação</label>
 				</div>
 				<button type="submit" class="btn-reservar">Reservar</button>
