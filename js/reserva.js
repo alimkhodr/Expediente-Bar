@@ -45,8 +45,8 @@ function formatarTelefone(event) {
   }
 
   // Limita o tamanho máximo do número de telefone para 15 dígitos
-  if (value.length > 15) {
-      value = value.substr(0, 15);
+  if (value.length > 14) {
+      value = value.substr(0, 14);
   }
 
   value = value.replace(/^(\d{2})\s(\d)/, '$1 $2'); // Adiciona espaço após os primeiros 2 dígitos
