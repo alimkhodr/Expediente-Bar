@@ -40,7 +40,22 @@ function validarDataHora() {
   
 document.getElementById('apiLink').addEventListener('click', function (event) {
     if (validarDataHora()) {
-        document.querySelector('form[name="reserva-form"]').submit(); // Envia o formulário via Netlify
+        event.preventDefault();
+
+        var form = document.querySelector('form[name="reserva-form"]');
+        var formData = new FormData(form);
+        
+        fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString()
+        })
+        .then(function() {
+            document.getElementById('success-message').style.display = 'block';
+        })
+        .catch(function(error) {
+            alert('Erro ao enviar o formulário');
+        });
     } else {
         event.preventDefault();
     }
