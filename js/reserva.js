@@ -40,7 +40,7 @@ function validarDataHora() {
   
 document.getElementById('apiLink').addEventListener('click', function (event) {
     if (validarDataHora()) {
-        document.querySelector('form[name="reserva-form"]').submit();
+        document.querySelector('form[name="reserva-form"]').submit(); // Envia o formulário via Netlify
     } else {
         event.preventDefault();
     }
