@@ -13,25 +13,24 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
 		rel="stylesheet">
 	<link rel="shortcut icon" href="ico/cerveja.ico" type="image/x-icon">
-
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 </head>
 
 <body>
-
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	<!----header design--->
 	<header>
 		<a href="#"><img class="logo" src="img/logo.svg"></a>
 
 		<ul class="navlist">
-			<li><a href="#home" class="active">HOME</a></li>
-			<li><a href="#reserva">RESERVA</a></li>
-			<li><a href="cardapio.html">CARDÁPIO</a>
-			<li>
+			<li><a href="#home" class="active">HOME</a></li>		
 				<!-- <li><a href="#about">SOBRE</a></li> -->
 			<li><a href="#services">SERVIÇOS</a></li>
 			<li><a href="#portfolio">FOTOS</a></li>
+			<li><a href="#reserva">RESERVA</a></li>
 			<li><a href="#avaliacao">AVALIAÇÃO</a></li>
 			<li><a href="#contact">CONTATO</a></li>
+			<li><a href="cardapio.html">CARDÁPIO</a>
 		</ul>
 
 		<div class="bx bx-menu" id="menu-icon">
@@ -40,15 +39,51 @@
 	</header>
 
 	<!----home section design--->
-	<section class="home" id="home">
-	</section>
+	<div class="home" id="home">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<img src="img/PAGODE(27-01)/3.jpg" alt="Background Image" class="background-image">
+					<div class="carousel-content">
+						<h1>Garanta seu Lugar Agora!</h1>
+						<p>Não perca tempo! Faça sua reserva agora mesmo e garanta seu lugar. Clique no botão abaixo para enviar sua mensagem diretamente para o nosso WhatsApp.
+						</p>
+						<a class="btn" href="#reserva">Faça uma Reserva</a>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<img src="img/PORCAO_2.jpg" alt="Background Image" class="background-image">
+					<div class="carousel-content">
+						<h1>Saboreie o Melhor por Menos!</h1>
+						<p>Descubra por que somos a escolha perfeita: oferecemos pratos deliciosos e bebidas refrescantes, tudo com a qualidade que você merece, a um preço que cabe no seu bolso. Explore nosso cardápio agora!
+						</p>
+						<button class="btn">Confira o Cardápio</button>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<img src="img/PAGODE(27-01)/1.jpg" alt="Background Image" class="background-image">
+					<div class="carousel-content">
+						<h1>Música ao Vivo!</h1>
+						<p>Aqui a música ganha vida! Desfrute de noites inesquecíveis com nossa seleção variada de música ao vivo, incluindo sertanejo, pop, MPB e nosso imperdível pagode de sábado, que é a grande estrela da casa. Venha curtir a vibe e mergulhar na melhor experiência musical da cidade!
+						</p>
+						<button class="btn">Confira a Agenda</button>
+					</div>
+				</div>
+			</div>
+			<!-- botões de navegação -->
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
+			<!-- pontos de paginação -->
+			<div class="swiper-pagination"></div>
+		</div>
+	</div>
 
 	<!----faixa reserva section-->
-	<a href="#reserva" class="faixa-reserva">
+	<!-- <a href="#reserva" class="faixa-reserva">
 		<div class="faixa-reserva-text">
 			<p>Não fique de fora e faça sua reserva ></p>
 		</div>
-	</a>
+	</a> -->
 
 	<!----about section design--->
 	<!-- <section class="about" id="about">
@@ -77,16 +112,16 @@
 				<div class="s-icons">
 					<img src="img/DRINK_3.jpeg">
 				</div>
-				<h3>Drinks Deliciosos</h3>
+				<h3><span>Drinks Deliciosos</span></h3>
 				<p>Drinks sensacionais feito com ingredientes da melhor qualidade. Veja nosso caradápio</p>
 				<a href="cardapio.html" class="btn">Cardápio</a>
 			</div>
 
 			<div class="box">
 				<div class="s-icons">
-					<img src="img/PORCAO_2.jpg">
+					<img src="img/ROW_22.jpg">
 				</div>
-				<h3>Porções Maravilhosas</h3>
+				<h3><span>Porções Maravilhosas</span></h3>
 				<p>Porções feitas com ingredientes selecionados da melhor qualidade. Disponível no Ifood</p>
 				<a href="https://www.ifood.com.br/delivery/sao-jose-dos-campos-sp/expediente-bar-jardim-satelite/0780226c-3ae2-4204-b6f0-ed90ada79fc2"
 					class="btnifood">Ifood</a>
@@ -96,7 +131,7 @@
 				<div class="s-icons">
 					<img src="img/PAGODE_1.jpg">
 				</div>
-				<h3>Música Ao Vivo</h3>
+				<h3><span>Música Ao Vivo</span></h3>
 				<p>O melhor pagode da cidade no sábado e na sexta ou feriados temos música ao vivo como sertanejo, MPB,
 					Brasilidades e muito mais. Veja nossa agenda</p>
 				<a href="https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTU2Mzc1NjQwNDE5NDcx?story_media_id=3363563992154783272_48396422607&igsh=ZnBrZGpkbGc4b2Ji"
@@ -336,11 +371,13 @@
 				</div>
 				<div class="inputGroup" style="width: 49%;">
 					<input id="text_data" name="data" autocomplete="off" required type="date">
-					<label for="text_data" style="transform: translateY(-50%) scale(.9);margin: 0em;margin-left: 1.3em;padding:0 0.4em;background-color: var(--second-bg-color);">Data*</label>
+					<label for="text_data"
+						style="transform: translateY(-50%) scale(.9);margin: 0em;margin-left: 1.3em;padding:0 0.4em;background-color: var(--second-bg-color);">Data*</label>
 				</div>
 				<div class="inputGroup" style="width: 49%;">
 					<input id="text_hora" name="hora" autocomplete="off" required type="time">
-					<label for="text_hora" style="transform: translateY(-50%) scale(.9);margin: 0em;margin-left: 1.3em;padding:0 0.4em;background-color: var(--second-bg-color);">Horário*</label>
+					<label for="text_hora"
+						style="transform: translateY(-50%) scale(.9);margin: 0em;margin-left: 1.3em;padding:0 0.4em;background-color: var(--second-bg-color);">Horário*</label>
 				</div>
 				<div class="inputGroup">
 					<input id="text_obs" autocomplete="off" required="" type="text">
@@ -368,9 +405,10 @@
 			</div>
 
 			<div class="contact-icons">
-				<a href="https://api.whatsapp.com/send?phone=551298886-5185&text=Olá"><i
-					target="_blank"	class='bx bxl-whatsapp'></i></a>
-				<a target="_blank" href="https://www.instagram.com/expedientebar_/?hl=pt-br"><i class='bx bxl-instagram-alt'></i></a>
+				<a href="https://api.whatsapp.com/send?phone=551298886-5185&text=Olá"><i target="_blank"
+						class='bx bxl-whatsapp'></i></a>
+				<a target="_blank" href="https://www.instagram.com/expedientebar_/?hl=pt-br"><i
+						class='bx bxl-instagram-alt'></i></a>
 				<a target="_blank" href="https://www.facebook.com/Expedientebarsjc"><i class='bx bxl-facebook'></i></a>
 			</div>
 		</div>
@@ -397,6 +435,8 @@
 	<!---custom js link--->
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/reserva.js"></script>
+	<script type="text/javascript" src="js/carrossel.js"></script>
+
 
 
 	<!-- Google tag (gtag.js) -->
