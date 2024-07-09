@@ -43,7 +43,7 @@
         <div class="row">
             <img src="img/galeria(21-01-24).png">
             <div class="layer">
-                <a href="img/galeria(21-01-24).png" id="downloadLink" download><i class='bx bx-download'></i></a>
+                <a href="img/galeria(21-01-24).png" download><i class='bx bx-download'></i></a>
             </div>
         </div>
     </section>
@@ -74,25 +74,6 @@
         }
         gtag('js', new Date());
         gtag('config', 'G-YTW99R9W7X');
-
-        // JavaScript para forçar o download ao clicar no link
-        document.getElementById('downloadLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevenir o comportamento padrão do link
-            var url = this.getAttribute('href');
-            var filename = url.substring(url.lastIndexOf('/') + 1);
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.responseType = 'blob';
-            xhr.onload = function() {
-                var a = document.createElement('a');
-                a.href = window.URL.createObjectURL(xhr.response);
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            };
-            xhr.send();
-        });
     </script>
 
 </body>
