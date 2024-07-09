@@ -361,10 +361,11 @@ header.sticky {
 
 .fotos-content {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(200px, auto));
-	align-items: center;
-	gap: 2.5rem;
-	margin-top: 5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 5rem;
+    justify-items: center;
 }
 
 .row {
@@ -389,7 +390,6 @@ header.sticky {
 }
 
 .fotos img {
-	width: 100%;
 	border-radius: 8px;
 	display: block;
 	transition: transform 0.5s;
