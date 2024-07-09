@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expediente Bar</title>
     <!---custom css link---->
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -14,66 +14,6 @@
         rel="stylesheet">
     <link rel="shortcut icon" href="ico/cerveja.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
-    <!-- Custom JavaScript -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script>
-        const folderId = '12v0gfzhGThyMAAVNzUTQCHZKvhp4fe3t';  // ID da sua pasta
-        const apiKey = 'AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc'; // Sua chave de API
-
-        async function fetchImages() {
-            try {
-                const response = await fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}`);
-                const data = await response.json();
-                console.log('API Response:', data); // Log da resposta da API
-
-                if (data.files && data.files.length > 0) {
-                    const imagesDiv = document.getElementById('images');
-                    const portfolioContent = document.createElement('div');
-                    portfolioContent.classList.add('fotos-content'); // Adiciona a classe portfolio-content
-
-                    data.files.forEach(file => {
-                        console.log('File:', file); // Log de cada arquivo
-                        if (file.mimeType.startsWith('image/')) {
-                            const imgContainer = document.createElement('div');
-                            imgContainer.classList.add('fotos'); // classe fotos para alinhar com o CSS existente
-
-                            const img = document.createElement('img');
-                            img.src = `https://drive.google.com/thumbnail?id=${file.id}`;
-                            img.alt = file.name;
-                            imgContainer.appendChild(img);
-
-                            const layerDiv = document.createElement('div');
-                            layerDiv.classList.add('layer'); // classe layer para texto sobreposto
-
-                            const link = document.createElement('a');
-                            link.href = `https://drive.google.com/uc?export=download&id=${file.id}`;
-                            link.setAttribute('download', file.name);
-                            link.setAttribute('target', '_blank'); // Adiciona o atributo target para abrir em nova aba
-                            const linkIcon = document.createElement('i');
-                            linkIcon.classList.add('bx', 'bx-download');
-                            link.appendChild(linkIcon);
-                            layerDiv.appendChild(link);
-
-                            imgContainer.appendChild(layerDiv);
-
-                            portfolioContent.appendChild(imgContainer);
-                        }
-                    });
-
-                    imagesDiv.appendChild(portfolioContent);
-                } else {
-                    document.getElementById('images').innerText = 'Nenhuma imagem encontrada na pasta.';
-                }
-            } catch (error) {
-                console.error('Erro ao buscar imagens:', error);
-                document.getElementById('images').innerText = 'Erro ao buscar imagens.';
-            }
-        }
-
-        fetchImages();
-    </script>
-
 </head>
 
 <body style="background: #111111;">
@@ -100,11 +40,151 @@
             <h2><span>Fotos</span> do bar</h2>
             <p>dd/MM/yyyy</p>
         </div>
-        <!-- Container para as imagens -->
-        <div id="images"></div>
+
+        <div class="portfolio-content">
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1y_d40S4aMEzvDvsdjmqTpNzS5_nfV2NK?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem do bar">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1y_d40S4aMEzvDvsdjmqTpNzS5_nfV2NK?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        + download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/15PJZ4YHaI97v-1W2nHIE7bPczedfRuOP?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 1">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/15PJZ4YHaI97v-1W2nHIE7bPczedfRuOP?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1vnJJPdvkRZhahd7inOW1at5TgmItxubV?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 2">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1vnJJPdvkRZhahd7inOW1at5TgmItxubV?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1tI6aWJEZXJow5r4e41JPq7gK5Vxxr1bk?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 3">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1tI6aWJEZXJow5r4e41JPq7gK5Vxxr1bk?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1zyLFeZiCXPp-V3gpGrjJjRBGXEF7XvC9?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 4">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1zyLFeZiCXPp-V3gpGrjJjRBGXEF7XvC9?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/19eiIxe5mtQdPZ9OtYiKs29pzJVWwDSaB?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 5">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/19eiIxe5mtQdPZ9OtYiKs29pzJVWwDSaB?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1YZYFe9tuIckFRKJX4QtVDIwG8fDTDxPY?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 6">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1YZYFe9tuIckFRKJX4QtVDIwG8fDTDxPY?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1P8e5wo-YZ-PTeypqNxTK8puyaxEVugn5?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 7">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1P8e5wo-YZ-PTeypqNxTK8puyaxEVugn5?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1D7mpLaGrj3EL_rHElNlMrJ88DTNrCUTb?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 8">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1D7mpLaGrj3EL_rHElNlMrJ88DTNrCUTb?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1R3y6uYeKj7PUP0QJxilrRdnuItNl5fwW?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 9">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1R3y6uYeKj7PUP0QJxilrRdnuItNl5fwW?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1st2tV7CfkoEF4FZA3JT4Nz00o9qAj2DR?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 10">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1st2tV7CfkoEF4FZA3JT4Nz00o9qAj2DR?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1__pXyI_J7e_9byadg3ixKeEJW-RH9fCW?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 11">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1__pXyI_J7e_9byadg3ixKeEJW-RH9fCW?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1r9Zra4B4a6lUNwqPTyofjJUNuDXONwz1?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 12">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1r9Zra4B4a6lUNwqPTyofjJUNuDXONwz1?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1M7VpnU8LZoFkdDyfHlGcTdGBY-yuBeJV?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 13">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1M7VpnU8LZoFkdDyfHlGcTdGBY-yuBeJV?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1x39GDWD8h_lGbMeNGSKMNKCk5pfLV948?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 14">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1x39GDWD8h_lGbMeNGSKMNKCk5pfLV948?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <img src="https://www.googleapis.com/drive/v3/files/1SKfQpedkSVeZ8f7_uKye8bjMAR1fWoRd?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                    alt="Imagem 15">
+                <div class="layer">
+                    <a href="https://www.googleapis.com/drive/v3/files/1SKfQpedkSVeZ8f7_uKye8bjMAR1fWoRd?alt=media&key=AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc"
+                        download><i class='bx bx-download'></i></a>
+                </div>
+            </div>
+        </div>
     </section>
-
-
 
     <!---end section design--->
     <section class="end">
@@ -126,7 +206,10 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YTW99R9W7X"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
         gtag('config', 'G-YTW99R9W7X');
     </script>
