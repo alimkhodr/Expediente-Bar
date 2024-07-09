@@ -359,23 +359,7 @@ header.sticky {
 	margin-top: 5rem;
 }
 
-.fotos-content {
-	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, auto));
-    align-items: center;
-    gap: 2.5rem;
-    margin-top: 5rem;
-    justify-items: center;
-}
-
 .row {
-	position: relative;
-	overflow: hidden;
-	border-radius: 8px;
-	cursor: pointer;
-}
-
-.fotos {
 	position: relative;
 	overflow: hidden;
 	border-radius: 8px;
@@ -384,12 +368,6 @@ header.sticky {
 
 .row img {
 	width: 100%;
-	border-radius: 8px;
-	display: block;
-	transition: transform 0.5s;
-}
-
-.fotos img {
 	border-radius: 8px;
 	display: block;
 	transition: transform 0.5s;
@@ -443,14 +421,6 @@ header.sticky {
 }
 
 .row:hover .layer {
-	height: 100%;
-}
-
-.fotos:hover img {
-	transform: scale(1.1);
-}
-
-.fotos:hover .layer {
 	height: 100%;
 }
 
