@@ -18,7 +18,7 @@
 
 <body style="background: #111111;">
     <!---header design--->
-    <header style="background-color: #000000; border: none; 	backdrop-filter: blur(0px);">
+    <header style="background-color: #000000; border: none; backdrop-filter: blur(0px);">
         <a href="index.html#home"><img class="logo" src="img/logo.svg"></a>
 
         <ul class="navlist">
@@ -40,11 +40,8 @@
             <h2><span>Galeria</span> do bar</h2>
             <p>21/01/2024</p>
         </div>
-        <div class="row">
-            <img src="img/galeria(21-01-24).png">
-            <div class="layer">
-                <a href="img/galeria(21-01-24).png" download><i class='bx bx-download'></i></a>
-            </div>
+        <div class="portfolio-content" id="gallery-container">
+            <!-- Imagens serão adicionadas aqui via JavaScript -->
         </div>
     </section>
 
@@ -74,6 +71,272 @@
         }
         gtag('js', new Date());
         gtag('config', 'G-YTW99R9W7X');
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const galleryContainer = document.getElementById('gallery-container');
+            const imgFolder = 'img/27-01-24/';
+            const imageFiles = [
+                'DSC_0129.jpg',
+                'DSC_0130.jpg',
+                'DSC_0131.jpg',
+                'DSC_0132.jpg',
+                'DSC_0133.jpg',
+                'DSC_0134.jpg',
+                'DSC_0135.jpg',
+                'DSC_0136.jpg',
+                'DSC_0137.jpg',
+                'DSC_0138.jpg',
+                'DSC_0139.jpg',
+                'DSC_0140.jpg',
+                'DSC_0141.jpg',
+                'DSC_0142.jpg',
+                'DSC_0143.jpg',
+                'DSC_0144.jpg',
+                'DSC_0145.jpg',
+                'DSC_0146.jpg',
+                'DSC_0147.jpg',
+                'DSC_0148.jpg',
+                'DSC_0149.jpg',
+                'DSC_0151.jpg',
+                'DSC_0152.jpg',
+                'DSC_0153.jpg',
+                'DSC_0154.jpg',
+                'DSC_0155.jpg',
+                'DSC_0157.jpg',
+                'DSC_0158.jpg',
+                'DSC_0159.jpg',
+                'DSC_0160.jpg',
+                'DSC_0162.jpg',
+                'DSC_0164.jpg',
+                'DSC_0167.jpg',
+                'DSC_0168.jpg',
+                'DSC_0169.jpg',
+                'DSC_0170.jpg',
+                'DSC_0171.jpg',
+                'DSC_0172.jpg',
+                'DSC_0173.jpg',
+                'DSC_0174.jpg',
+                'DSC_0175.jpg',
+                'DSC_0176.jpg',
+                'DSC_0178.jpg',
+                'DSC_0179.jpg',
+                'DSC_0180.jpg',
+                'DSC_0181.jpg',
+                'DSC_0185.jpg',
+                'DSC_0186.jpg',
+                'DSC_0187.jpg',
+                'DSC_0188.jpg',
+                'DSC_0189.jpg',
+                'DSC_0190.jpg',
+                'DSC_0191.jpg',
+                'DSC_0192.jpg',
+                'DSC_0193.jpg',
+                'DSC_0194.jpg',
+                'DSC_0195.jpg',
+                'DSC_0196.jpg',
+                'DSC_0197.jpg',
+                'DSC_0199.jpg',
+                'DSC_0200.jpg',
+                'DSC_0201.jpg',
+                'DSC_0202.jpg',
+                'DSC_0205.jpg',
+                'DSC_0206.jpg',
+                'DSC_0207.jpg',
+                'DSC_0208.jpg',
+                'DSC_0210.jpg',
+                'DSC_0211.jpg',
+                'DSC_0212.jpg',
+                'DSC_0216.jpg',
+                'DSC_0217.jpg',
+                'DSC_0219.jpg',
+                'DSC_0220.jpg',
+                'DSC_0221.jpg',
+                'DSC_0222.jpg',
+                'DSC_0223.jpg',
+                'DSC_0225.jpg',
+                'DSC_0226.jpg',
+                'DSC_0227.jpg',
+                'DSC_0228.jpg',
+                'DSC_0229.jpg',
+                'DSC_0230.jpg',
+                'DSC_0231.jpg',
+                'DSC_0232.jpg',
+                'DSC_0233.jpg',
+                'DSC_0235.jpg',
+                'DSC_0236.jpg',
+                'DSC_0241.jpg',
+                'DSC_0244.jpg',
+                'DSC_0245.jpg',
+                'DSC_0246.jpg',
+                'DSC_0248.jpg',
+                'DSC_0249.jpg',
+                'DSC_0250.jpg',
+                'DSC_0251.jpg',
+                'DSC_0252.jpg',
+                'DSC_0253.jpg',
+                'DSC_0254.jpg',
+                'DSC_0255.jpg',
+                'DSC_0256.jpg',
+                'DSC_0257.jpg',
+                'DSC_0260.jpg',
+                'DSC_0263.jpg',
+                'DSC_0268.jpg',
+                'DSC_0270.jpg',
+                'DSC_0272.jpg',
+                'DSC_0273.jpg',
+                'DSC_0276.jpg',
+                'DSC_0278.jpg',
+                'DSC_0281.jpg',
+                'DSC_0282.jpg',
+                'DSC_0283.jpg',
+                'DSC_0285.jpg',
+                'DSC_0287.jpg',
+                'DSC_0289.jpg',
+                'DSC_0290.jpg',
+                'DSC_0001.jpg',
+                'DSC_0002.jpg',
+                'DSC_0003.jpg',
+                'DSC_0007.jpg',
+                'DSC_0008.jpg',
+                'DSC_0009.jpg',
+                'DSC_0010.jpg',
+                'DSC_0011.jpg',
+                'DSC_0012.jpg',
+                'DSC_0014.jpg',
+                'DSC_0015.jpg',
+                'DSC_0016.jpg',
+                'DSC_0017.jpg',
+                'DSC_0018.jpg',
+                'DSC_0019.jpg',
+                'DSC_0020.jpg',
+                'DSC_0021.jpg',
+                'DSC_0022.jpg',
+                'DSC_0023.jpg',
+                'DSC_0024.jpg',
+                'DSC_0025.jpg',
+                'DSC_0026.jpg',
+                'DSC_0027.jpg',
+                'DSC_0028.jpg',
+                'DSC_0029.jpg',
+                'DSC_0031.jpg',
+                'DSC_0032.jpg',
+                'DSC_0033.jpg',
+                'DSC_0034.jpg',
+                'DSC_0035.jpg',
+                'DSC_0037.jpg',
+                'DSC_0038.jpg',
+                'DSC_0039.jpg',
+                'DSC_0040.jpg',
+                'DSC_0041.jpg',
+                'DSC_0042.jpg',
+                'DSC_0043.jpg',
+                'DSC_0044.jpg',
+                'DSC_0045.jpg',
+                'DSC_0046.jpg',
+                'DSC_0047.jpg',
+                'DSC_0048.jpg',
+                'DSC_0049.jpg',
+                'DSC_0050.jpg',
+                'DSC_0051.jpg',
+                'DSC_0052.jpg',
+                'DSC_0053.jpg',
+                'DSC_0054.jpg',
+                'DSC_0055.jpg',
+                'DSC_0056.jpg',
+                'DSC_0057.jpg',
+                'DSC_0058.jpg',
+                'DSC_0059.jpg',
+                'DSC_0060.jpg',
+                'DSC_0061.jpg',
+                'DSC_0062.jpg',
+                'DSC_0063.jpg',
+                'DSC_0064.jpg',
+                'DSC_0065.jpg',
+                'DSC_0066.jpg',
+                'DSC_0067.jpg',
+                'DSC_0068.jpg',
+                'DSC_0069.jpg',
+                'DSC_0070.jpg',
+                'DSC_0071.jpg',
+                'DSC_0072.jpg',
+                'DSC_0073.jpg',
+                'DSC_0074.jpg',
+                'DSC_0075.jpg',
+                'DSC_0076.jpg',
+                'DSC_0077.jpg',
+                'DSC_0079.jpg',
+                'DSC_0080.jpg',
+                'DSC_0081.jpg',
+                'DSC_0082.jpg',
+                'DSC_0083.jpg',
+                'DSC_0084.jpg',
+                'DSC_0085.jpg',
+                'DSC_0086.jpg',
+                'DSC_0087.jpg',
+                'DSC_0089.jpg',
+                'DSC_0091.jpg',
+                'DSC_0092.jpg',
+                'DSC_0093.jpg',
+                'DSC_0094.jpg',
+                'DSC_0095.jpg',
+                'DSC_0096.jpg',
+                'DSC_0097.jpg',
+                'DSC_0098.jpg',
+                'DSC_0099.jpg',
+                'DSC_0100.jpg',
+                'DSC_0101.jpg',
+                'DSC_0103.jpg',
+                'DSC_0104.jpg',
+                'DSC_0105.jpg',
+                'DSC_0106.jpg',
+                'DSC_0107.jpg',
+                'DSC_0110.jpg',
+                'DSC_0111.jpg',
+                'DSC_0112.jpg',
+                'DSC_0113.jpg',
+                'DSC_0114.jpg',
+                'DSC_0117.jpg',
+                'DSC_0118.jpg',
+                'DSC_0119.jpg',
+                'DSC_0120.jpg',
+                'DSC_0121.jpg',
+                'DSC_0122.jpg',
+                'DSC_0123.jpg',
+                'DSC_0124.jpg',
+                'DSC_0125.jpg',
+                'DSC_0127.jpg',
+                'DSC_0128.jpg',
+            ];
+
+            // Loop para criar elementos HTML para cada imagem
+            imageFiles.forEach((fileName) => {
+                const imgSrc = `${imgFolder}${fileName}`;
+
+                const row = document.createElement('div');
+                row.classList.add('row');
+
+                const img = document.createElement('img');
+                img.src = imgSrc;
+
+                const layer = document.createElement('div');
+                layer.classList.add('layer');
+
+                const downloadLink = document.createElement('a');
+                downloadLink.href = imgSrc;
+                downloadLink.setAttribute('download', '');
+
+                const downloadIcon = document.createElement('i');
+                downloadIcon.classList.add('bx', 'bx-download');
+
+                downloadLink.appendChild(downloadIcon);
+                layer.appendChild(downloadLink);
+                row.appendChild(img);
+                row.appendChild(layer);
+                galleryContainer.appendChild(row);
+            });
+        });
     </script>
 
 </body>
