@@ -359,7 +359,22 @@ header.sticky {
 	margin-top: 5rem;
 }
 
+.fotos-content {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+	align-items: center;
+	gap: 2.5rem;
+	margin-top: 5rem;
+}
+
 .row {
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.fotos {
 	position: relative;
 	overflow: hidden;
 	border-radius: 8px;
@@ -373,10 +388,16 @@ header.sticky {
 	transition: transform 0.5s;
 }
 
+.fotos img {
+	border-radius: 8px;
+	display: block;
+	transition: transform 0.5s;
+}
+
 .layer {
 	width: 100%;
 	height: 0;
-	background: linear-gradient(rgba(0, 0, 0, 0.1), var(--main-color));
+	background: linear-gradient(rgba(0, 0, 0, 0), var(--main-color));
 	position: absolute;
 	border-radius: 8px;
 	left: 0;
@@ -421,6 +442,14 @@ header.sticky {
 }
 
 .row:hover .layer {
+	height: 100%;
+}
+
+.fotos:hover img {
+	transform: scale(1.1);
+}
+
+.fotos:hover .layer {
 	height: 100%;
 }
 
@@ -646,6 +675,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 #review-list li {
 	margin-bottom: 10px;
 }
+
 
 @media (max-width: 1480px) {
 	header {
