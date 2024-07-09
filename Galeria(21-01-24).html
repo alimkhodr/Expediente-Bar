@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente Bar</title>
+    <!---custom css link---->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="shortcut icon" href="ico/cerveja.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+</head>
+
+<body style="background: #111111;">
+    <!---header design--->
+    <header style="background-color: #000000; border: none; 	backdrop-filter: blur(0px);">
+        <a href="#"><img class="logo" src="img/logo.svg"></a>
+
+        <ul class="navlist">
+            <li><a href="#home" class="active">HOME</a></li>
+            <li><a href="#services">SERVIÇOS</a></li>
+            <li><a href="#portfolio">FOTOS</a></li>
+            <li><a href="#reserva">RESERVA</a></li>
+            <li><a href="#avaliacao">AVALIAÇÃO</a></li>
+            <li><a href="#contact">CONTATO</a></li>
+            <li><a href="cardapio.html">CARDÁPIO</a></li>
+        </ul>
+
+        <div class="bx bx-menu" id="menu-icon"></div>
+    </header>
+
+    <!---portfolio section--->
+    <section id="fotos" style="margin-top: 5rem;">
+        <div class="main-text">
+            <h2><span>Galeria</span> do bar</h2>
+            <p>21/01/2024</p>
+        </div>
+        <div id="gallery" class="portfolio-content"></div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const gallery = document.getElementById('gallery');
+                const images = [
+                    { id: '1y_d40S4aMEzvDvsdjmqTpNzS5_nfV2NK', alt: 'Imagem 1' },
+                    { id: '15PJZ4YHaI97v-1W2nHIE7bPczedfRuOP', alt: 'Imagem 2' },
+                    { id: '1vnJJPdvkRZhahd7inOW1at5TgmItxubV', alt: 'Imagem 3' },
+                    { id: '1tI6aWJEZXJow5r4e41JPq7gK5Vxxr1bk', alt: 'Imagem 4' },
+                    { id: '1zyLFeZiCXPp-V3gpGrjJjRBGXEF7XvC9', alt: 'Imagem 5' },
+                    { id: '19eiIxe5mtQdPZ9OtYiKs29pzJVWwDSaB', alt: 'Imagem 6' },
+                    { id: '1YZYFe9tuIckFRKJX4QtVDIwG8fDTDxPY', alt: 'Imagem 7' },
+                    { id: '1P8e5wo-YZ-PTeypqNxTK8puyaxEVugn5', alt: 'Imagem 8' },
+                    { id: '1D7mpLaGrj3EL_rHElNlMrJ88DTNrCUTb', alt: 'Imagem 9' },
+                    { id: '1R3y6uYeKj7PUP0QJxilrRdnuItNl5fwW', alt: 'Imagem 10' },
+                    { id: '1st2tV7CfkoEF4FZA3JT4Nz00o9qAj2DR', alt: 'Imagem 11' },
+                    { id: '1__pXyI_J7e_9byadg3ixKeEJW-RH9fCW', alt: 'Imagem 12' },
+                    { id: '1r9Zra4B4a6lUNwqPTyofjJUNuDXONwz1', alt: 'Imagem 13' },
+                    { id: '1M7VpnU8LZoFkdDyfHlGcTdGBY-yuBeJV', alt: 'Imagem 14' },
+                    { id: '1x39GDWD8h_lGbMeNGSKMNKCk5pfLV948', alt: 'Imagem 15' },
+                    { id: '1SKfQpedkSVeZ8f7_uKye8bjMAR1fWoRd', alt: 'Imagem 16' }
+                ];
+
+                const apiKey = 'AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc';
+                const baseUrl = 'https://www.googleapis.com/drive/v3/files/';
+
+                images.forEach(image => {
+                    const row = document.createElement('div');
+                    row.classList.add('row');
+
+                    const img = document.createElement('img');
+                    img.alt = image.alt;
+
+                    const layer = document.createElement('div');
+                    layer.classList.add('layer');
+
+                    const downloadLink = document.createElement('a');
+                    downloadLink.download = '';
+
+                    const icon = document.createElement('i');
+                    icon.classList.add('bx', 'bx-download');
+
+                    fetchImage(image.id)
+                        .then(imageURL => {
+                            img.src = imageURL;
+                            downloadLink.href = imageURL;
+                        })
+                        .catch(error => {
+                            console.error(`Erro ao carregar imagem ${image.id}:`, error);
+                            img.src = 'img/erro.png';
+                        })
+                        .finally(() => {
+                            downloadLink.appendChild(icon);
+                            layer.appendChild(downloadLink);
+                            row.appendChild(img);
+                            row.appendChild(layer);
+                            gallery.appendChild(row);
+                        });
+                });
+
+                function fetchImage(imageId) {
+                    const cache = new Map();
+                    const REQUEST_LIMIT = 5;
+                    const TIME_WINDOW = 60000;
+                    let requestCount = 0;
+                    let lastRequestTime = Date.now();
+
+                    const now = Date.now();
+                    if (now - lastRequestTime > TIME_WINDOW) {
+                        requestCount = 0;
+                        lastRequestTime = now;
+                    }
+
+                    if (requestCount >= REQUEST_LIMIT) {
+                        console.log("Muitas solicitações. Por favor, tente novamente mais tarde.");
+                        return;
+                    }
+
+                    if (cache.has(imageId)) {
+                        return cache.get(imageId);
+                    }
+
+                    requestCount++;
+                    const url = `${baseUrl}${imageId}?alt=media&key=${apiKey}`;
+                    return fetch(url)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            const objectURL = URL.createObjectURL(blob);
+                            cache.set(imageId, objectURL);
+                            return objectURL;
+                        })
+                        .catch(error => {
+                            console.error("Erro ao buscar a imagem:", error);
+                            return 'img/erro.png';
+                        });
+                }
+            });
+        </script>
+    </section>
+
+    <!---end section design--->
+    <section class="end">
+        <div class="last-text">
+            <p>© 2022 por Ali Mohamed. - @alikhodr10</p>
+        </div>
+
+        <div class="top">
+            <a href="#fotos"><i class='bx bx-up-arrow-alt'></i></a>
+        </div>
+    </section>
+
+    <!---custom js link--->
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/reserva.js"></script>
+    <script type="text/javascript" src="js/carrossel.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YTW99R9W7X"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-YTW99R9W7X');
+    </script>
+
+</body>
+
+</html>
