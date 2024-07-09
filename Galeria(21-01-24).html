@@ -40,105 +40,12 @@
             <h2><span>Galeria</span> do bar</h2>
             <p>21/01/2024</p>
         </div>
-        <div id="gallery" class="portfolio-content"></div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const gallery = document.getElementById('gallery');
-                const images = [
-                    { id: '1y_d40S4aMEzvDvsdjmqTpNzS5_nfV2NK', alt: 'Imagem 1' },
-                    { id: '15PJZ4YHaI97v-1W2nHIE7bPczedfRuOP', alt: 'Imagem 2' },
-                    { id: '1vnJJPdvkRZhahd7inOW1at5TgmItxubV', alt: 'Imagem 3' },
-                    { id: '1tI6aWJEZXJow5r4e41JPq7gK5Vxxr1bk', alt: 'Imagem 4' },
-                    { id: '1zyLFeZiCXPp-V3gpGrjJjRBGXEF7XvC9', alt: 'Imagem 5' },
-                    { id: '19eiIxe5mtQdPZ9OtYiKs29pzJVWwDSaB', alt: 'Imagem 6' },
-                    { id: '1YZYFe9tuIckFRKJX4QtVDIwG8fDTDxPY', alt: 'Imagem 7' },
-                    { id: '1P8e5wo-YZ-PTeypqNxTK8puyaxEVugn5', alt: 'Imagem 8' },
-                    { id: '1D7mpLaGrj3EL_rHElNlMrJ88DTNrCUTb', alt: 'Imagem 9' },
-                    { id: '1R3y6uYeKj7PUP0QJxilrRdnuItNl5fwW', alt: 'Imagem 10' },
-                    { id: '1st2tV7CfkoEF4FZA3JT4Nz00o9qAj2DR', alt: 'Imagem 11' },
-                    { id: '1__pXyI_J7e_9byadg3ixKeEJW-RH9fCW', alt: 'Imagem 12' },
-                    { id: '1r9Zra4B4a6lUNwqPTyofjJUNuDXONwz1', alt: 'Imagem 13' },
-                    { id: '1M7VpnU8LZoFkdDyfHlGcTdGBY-yuBeJV', alt: 'Imagem 14' },
-                    { id: '1x39GDWD8h_lGbMeNGSKMNKCk5pfLV948', alt: 'Imagem 15' },
-                    { id: '1SKfQpedkSVeZ8f7_uKye8bjMAR1fWoRd', alt: 'Imagem 16' }
-                ];
-
-                const apiKey = 'AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc';
-                const baseUrl = 'https://www.googleapis.com/drive/v3/files/';
-
-                images.forEach(image => {
-                    const row = document.createElement('div');
-                    row.classList.add('row');
-
-                    const img = document.createElement('img');
-                    img.alt = image.alt;
-
-                    const layer = document.createElement('div');
-                    layer.classList.add('layer');
-
-                    const downloadLink = document.createElement('a');
-                    downloadLink.download = '';
-
-                    const icon = document.createElement('i');
-                    icon.classList.add('bx', 'bx-download');
-
-                    fetchImage(image.id)
-                        .then(imageURL => {
-                            img.src = imageURL;
-                            downloadLink.href = imageURL;
-                        })
-                        .catch(error => {
-                            console.error(`Erro ao carregar imagem ${image.id}:`, error);
-                            img.src = 'img/erro.png';
-                        })
-                        .finally(() => {
-                            downloadLink.appendChild(icon);
-                            layer.appendChild(downloadLink);
-                            row.appendChild(img);
-                            row.appendChild(layer);
-                            gallery.appendChild(row);
-                        });
-                });
-
-                function fetchImage(imageId) {
-                    const cache = new Map();
-                    const REQUEST_LIMIT = 5;
-                    const TIME_WINDOW = 60000;
-                    let requestCount = 0;
-                    let lastRequestTime = Date.now();
-
-                    const now = Date.now();
-                    if (now - lastRequestTime > TIME_WINDOW) {
-                        requestCount = 0;
-                        lastRequestTime = now;
-                    }
-
-                    if (requestCount >= REQUEST_LIMIT) {
-                        console.log("Muitas solicitações. Por favor, tente novamente mais tarde.");
-                        return;
-                    }
-
-                    if (cache.has(imageId)) {
-                        return cache.get(imageId);
-                    }
-
-                    requestCount++;
-                    const url = `${baseUrl}${imageId}?alt=media&key=${apiKey}`;
-                    return fetch(url)
-                        .then(response => response.blob())
-                        .then(blob => {
-                            const objectURL = URL.createObjectURL(blob);
-                            cache.set(imageId, objectURL);
-                            return objectURL;
-                        })
-                        .catch(error => {
-                            console.error("Erro ao buscar a imagem:", error);
-                            return 'img/erro.png';
-                        });
-                }
-            });
-        </script>
+        <div class="row">
+            <img src="img/galeria(21-01-24).png">
+            <div class="layer">
+                <a href="img/galeria(21-01-24).png" id="downloadLink" download><i class='bx bx-download'></i></a>
+            </div>
+        </div>
     </section>
 
     <!---end section design--->
@@ -167,6 +74,25 @@
         }
         gtag('js', new Date());
         gtag('config', 'G-YTW99R9W7X');
+
+        // JavaScript para forçar o download ao clicar no link
+        document.getElementById('downloadLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevenir o comportamento padrão do link
+            var url = this.getAttribute('href');
+            var filename = url.substring(url.lastIndexOf('/') + 1);
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'blob';
+            xhr.onload = function() {
+                var a = document.createElement('a');
+                a.href = window.URL.createObjectURL(xhr.response);
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            };
+            xhr.send();
+        });
     </script>
 
 </body>
