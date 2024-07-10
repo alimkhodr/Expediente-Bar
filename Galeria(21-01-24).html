@@ -18,7 +18,7 @@
 
 <body style="background: #111111;">
     <!---header design--->
-    <header style="background-color: #000000; border: none; backdrop-filter: blur(0px);">
+    <header style="background-color: #000000; border: none; 	backdrop-filter: blur(0px);">
         <a href="index.html#home"><img class="logo" src="img/logo.svg"></a>
 
         <ul class="navlist">
@@ -40,9 +40,317 @@
             <h2><span>Galeria</span> do bar</h2>
             <p>21/01/2024</p>
         </div>
-        <div class="portfolio-content" id="gallery-container">
-            <!-- Imagens serão adicionadas aqui via JavaScript -->
-        </div>
+        <div id="gallery" class="portfolio-content"></div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const gallery = document.getElementById('gallery');
+                const images = [
+                    { id: '1kwHy5fxnfrwpekXeCr2dRmr1P9AshJL4', alt: 'DSC_0290.jpg' },
+                    { id: '17mzppOyEAKUBm53BOke_x49P5ZKD_MHL', alt: 'DSC_0289.jpg' },
+                    { id: '1QtW0cQU2TtsYEG5FvBhAgbNj_KB58gTk', alt: 'DSC_0283.jpg' },
+                    { id: '1RdwnJYiIgFFse38yR2Z8CYbHswWFljtw', alt: 'DSC_0281.jpg' },
+                    { id: '1qFG0JKa8tylB6ypUGsI-_0N8dxp66M0t', alt: 'DSC_0278.jpg' },
+                    { id: '1BtWJSjBH3IuvFDR2JBjIzyJ3sQoayr98', alt: 'DSC_0287.jpg' },
+                    { id: '1wa-QuQRxtYGiYDYAS3VKvGGieFzvJyHq', alt: 'DSC_0273.jpg' },
+                    { id: '14S7t9BiCoDP0PwN28eGP-mIJW_3wzO6X', alt: 'DSC_0282.jpg' },
+                    { id: '1sDm7EDnJ64rma1v4dafmxI2WQVHieEZQ', alt: 'DSC_0272.jpg' },
+                    { id: '1sQfiAmslDMpTID84RSy83kW0jd-LPI91', alt: 'DSC_0285.jpg' },
+                    { id: '1XyDIoVDnrhyFYkrfUUSMV1ZdWjKj5_yJ', alt: 'DSC_0276.jpg' },
+                    { id: '1KAIxuix-3z6QXypfGCbHaPeDbAm4FWel', alt: 'DSC_0270.jpg' },
+                    { id: '12kjF0MxEW1VTJI2Jk0ghCPEtPQ5oXzUd', alt: 'DSC_0268.jpg' },
+                    { id: '1Jg0tomQZA_ntzgtPkMf3XliL575nroYn', alt: 'DSC_0263.jpg' },
+                    { id: '1a_Td2NhqXDkC5fWhVaFoRkGWphp5dIJy', alt: 'DSC_0260.jpg' },
+                    { id: '1Toc9UK5pyyQJ4FEWEHL0nGg-k6Bl1sEg', alt: 'DSC_0256.jpg' },
+                    { id: '1YQFmmc5Jl5MWqfpptpR7yhVNw_rgtPUN', alt: 'DSC_0255.jpg' },
+                    { id: '1OHKMyPjvGBzmT_nzPKIQB1e_RP2KanmX', alt: 'DSC_0257.jpg' },
+                    { id: '18__UbU2e-jUh7gh3AVla7GBNAd1XfcOT', alt: 'DSC_0254.jpg' },
+                    { id: '1hnAnrdnahmFxIEETaKLhMx7sC4aNFYq2', alt: 'DSC_0253.jpg' },
+                    { id: '1iqf7uEoB9n8nLGjG61M7tLMJipXBcIR_', alt: 'DSC_0251.jpg' },
+                    { id: '1MwZWg1p7DHrjSk_S3A73KfewTB3ymK6Q', alt: 'DSC_0252.jpg' },
+                    { id: '1r7HDxMQElvrfZ5FL2j08olCjqK20EzSx', alt: 'DSC_0245.jpg' },
+                    { id: '1-xs1sQWJRV0k0H4v-APCFtratShiwxiE', alt: 'DSC_0248.jpg' },
+                    { id: '1x5NIEdo-_QqfTFdxLjwJRz9ipV57PX89', alt: 'DSC_0250.jpg' },
+                    { id: '1bCGPX8Pc8s1uCQwS-DPUNg4oFEuyhPz2', alt: 'DSC_0246.jpg' },
+                    { id: '1k-Xdsibu05xo2DnGPwf2g0k_QB6XDK5u', alt: 'DSC_0249.jpg' },
+                    { id: '138a1zOW1kNxn8bMAxGsXWUeoZR05scKl', alt: 'DSC_0244.jpg' },
+                    { id: '1_UAWw-J_V1XCD-YN8IF6k8KRTIKbpjex', alt: 'DSC_0235.jpg' },
+                    { id: '1YZaq0vll4_tpb_1xw0hjzr3bBDWWwTmQ', alt: 'DSC_0236.jpg' },
+                    { id: '1RPUrr8r-wSFBpjG5xmkBysBvKkeegCge', alt: 'DSC_0230.jpg' },
+                    { id: '1lRDRsXULArLPOrNP_2KWpW7NznjcGb36', alt: 'DSC_0233.jpg' },
+                    { id: '1R-iqIFbwHIilnG-rW82yUQ5GvXPdBA_8', alt: 'DSC_0241.jpg' },
+                    { id: '1PdBk1og-04BbvzfqGyV_wsWa84I-wiYm', alt: 'DSC_0231.jpg' },
+                    { id: '1qm_hnjM9LlrT6nA8bqNcXht3tgtB0wr3', alt: 'DSC_0232.jpg' },
+                    { id: '1U4DZh2dL6lvyr4ghDKFB-1ZFQA7_3Dis', alt: 'DSC_0228.jpg' },
+                    { id: '1wNItPwYXoajoJU000YHzwqsli-6APwkg', alt: 'DSC_0229.jpg' },
+                    { id: '13wNxUL2BqYJZcLLqSsHC83R_bZnoONTX', alt: 'DSC_0227.jpg' },
+                    { id: '10WkpRh_m8k9hLj02CzAXHK3Vj0aP21Xk', alt: 'DSC_0225.jpg' },
+                    { id: '16_UfJ16U2lOt431pWvaOKwHKX9f3Pzvx', alt: 'DSC_0222.jpg' },
+                    { id: '1PRMz08eZG6Bj1Nx2DISuiaS1NNem-S1V', alt: 'DSC_0226.jpg' },
+                    { id: '1MUMYFHx2EKXSphfYcCBPZTXrTtCZevJn', alt: 'DSC_0220.jpg' },
+                    { id: '1jXPeiocPnkP4p0w2_ukTficjYxvlvKu9', alt: 'DSC_0219.jpg' },
+                    { id: '19BtdDfa3FEJnshQDyMTw--jpKnlSYvCl', alt: 'DSC_0223.jpg' },
+                    { id: '1e13lLwoVTJPAEnWbQp1RWwhdzuFH2vCh', alt: 'DSC_0217.jpg' },
+                    { id: '1ukOJiSqH2ohCHPJlVLn11mTjAyKNXgHL', alt: 'DSC_0221.jpg' },
+                    { id: '1dS7LyIROOPOQZ8NZ3AA4ojvXPwVhUq-3', alt: 'DSC_0216.jpg' },
+                    { id: '1B0mGOd7eyAlO5g6X1WAVPnO2KB7uMhKL', alt: 'DSC_0206.jpg' },
+                    { id: '1caF66OegWK_yjtWAj7vbWQ6jMnUxm7SA', alt: 'DSC_0207.jpg' },
+                    { id: '1v2pwqzRd_uISZEPU2hChYBCwt5S3t49m', alt: 'DSC_0208.jpg' },
+                    { id: '1e2_Fe724iWT4knhIxSphCPqPx5jDCaw-', alt: 'DSC_0210.jpg' },
+                    { id: '1556hobkomku7HYROH5dgrGt2jRcvrI-p', alt: 'DSC_0211.jpg' },
+                    { id: '11bGtFoOxrCGYE_4e4uDVNV9VwVPD_U7e', alt: 'DSC_0212.jpg' },
+                    { id: '1zZMVOLQA3goFVIcOU0YOWtSJJIqiL5Zz', alt: 'DSC_0202.jpg' },
+                    { id: '1ZRCsrPIcKoegLo2x5aYk3czT8misTQA-', alt: 'DSC_0205.jpg' },
+                    { id: '1_ohyT_nDIoEGaKWv0NqwMoWkh5zlYBpg', alt: 'DSC_0197.jpg' },
+                    { id: '1el3Iy9kO4TaCdSW769Ncj7czS0jh018W', alt: 'DSC_0200.jpg' },
+                    { id: '1TGWKdWljk4D5v-rTFSxCunf8_vCnPrvg', alt: 'DSC_0195.jpg' },
+                    { id: '1St6Q4P_YOoP5g_1hVyrKwTuC8MJRVDPI', alt: 'DSC_0196.jpg' },
+                    { id: '1MDoFOPthBNYgmdb5n8QHv5yLxV9OJdep', alt: 'DSC_0191.jpg' },
+                    { id: '1ou2FIc_PSDDRsan_1gurjSRCSuqYq-2E', alt: 'DSC_0193.jpg' },
+                    { id: '1qYN-xZ5O6u31SFqWdE7RP862ROk7ISyO', alt: 'DSC_0199.jpg' },
+                    { id: '1qmhNxu1-zOzUJDlv0-VKc5rZ9k8R5nf-', alt: 'DSC_0192.jpg' },
+                    { id: '1zBUS55KcDQk-mrs2OMlwQoTheudJp_JR', alt: 'DSC_0194.jpg' },
+                    { id: '1TxrwG5yNGPqNCkSOrOIJP_MahbDP4BpI', alt: 'DSC_0201.jpg' },
+                    { id: '1QmYXS5BXup328bUb8sdKeC6ZFslpqFyX', alt: 'DSC_0190.jpg' },
+                    { id: '1Cl9Qd2ujv1oFekWo0r1yc9dEOx6IxiXW', alt: 'DSC_0189.jpg' },
+                    { id: '15vv29q1WLmkYKX89BMlFG_ADMNzfaCNr', alt: 'DSC_0188.jpg' },
+                    { id: '1LGSpnca0O4vjrdJpwM9Dj-ofcgqHIPDL', alt: 'DSC_0180.jpg' },
+                    { id: '1kam_OJM1lRjfvjwbEpgLH3lKXjrHrwyY', alt: 'DSC_0186.jpg' },
+                    { id: '1KLAsjSk_h-kmbZ8ktE6HlKKKSHSAOPsm', alt: 'DSC_0185.jpg' },
+                    { id: '1zyxVVbf3SR88XHi0ZilUXJpIRMwBIpvl', alt: 'DSC_0181.jpg' },
+                    { id: '1VoDm8hatwnm1ur9RaH_uOfQ6EMvIicNo', alt: 'DSC_0179.jpg' },
+                    { id: '1WqxIg8z7Jujb-z6mlMjmguaQ6iXYat7j', alt: 'DSC_0187.jpg' },
+                    { id: '1TA__icNDcitsklluDA6HXo-xKenF_1zG', alt: 'DSC_0176.jpg' },
+                    { id: '1lFsmf0BwTY3hCAZkOdeZuCU7YsT6uD4h', alt: 'DSC_0175.jpg' },
+                    { id: '1fZPTVdnSoEDwzrv6PvoA7d9DVz_Oej5k', alt: 'DSC_0178.jpg' },
+                    { id: '1Qr0qWDxJWnRnP573eQFdbMN3ldMEctba', alt: 'DSC_0174.jpg' },
+                    { id: '1jC_tvHIbbOLPw5iebcywRLEYuhgg7gRE', alt: 'DSC_0172.jpg' },
+                    { id: '1hGMNNrKjyc26Pqo3yQv9JnBPX4XNcjxm', alt: 'DSC_0173.jpg' },
+                    { id: '1jO7SLZ1Cr6LvvyY-SQxUM0CewL2gPycE', alt: 'DSC_0171.jpg' },
+                    { id: '1xQdHokbH4ITcTlFVP65MctO8ntV1D8dD', alt: 'DSC_0170.jpg' },
+                    { id: '1oBOwy-d95K3oGDUaXKTl3aRTPgbuvq9-', alt: 'DSC_0169.jpg' },
+                    { id: '1uEBreFmavQORBPx0Imzg3-rjksDQ6ZvM', alt: 'DSC_0168.jpg' },
+                    { id: '1TJuMT9P1PEHnqlO_R61yQ4tfHt-tPjUW', alt: 'DSC_0167.jpg' },
+                    { id: '1tZFLbPafg3MitjDjqRK0Or-fBdFDnxjH', alt: 'DSC_0162.jpg' },
+                    { id: '1R3IoJl_Sm8RVoXrbTs-CIJp1bVbp1gbk', alt: 'DSC_0164.jpg' },
+                    { id: '1vKl0jCPboiSM5CavGeE6g9K-AbAPvQKr', alt: 'DSC_0158.jpg' },
+                    { id: '1oeRpgdH7C-qC2c1ac7T2UIEr16HmpiS_', alt: 'DSC_0153.jpg' },
+                    { id: '1axZszQocQlfqnyeQAfSZtXoYLisp-F4i', alt: 'DSC_0151.jpg' },
+                    { id: '1DEu3U3HF0PHbUCpeWRpGCWR2cUrssC9D', alt: 'DSC_0157.jpg' },
+                    { id: '1FZT_pZ3E5Lp2PWU5qrPhGQRA-9oQapQx', alt: 'DSC_0154.jpg' },
+                    { id: '1678eExQt5GmHf6mPityCSyTCpmZp4ssD', alt: 'DSC_0160.jpg' },
+                    { id: '11k4gEV19sLfd4tS24T6mZM2q-6y9WCvc', alt: 'DSC_0152.jpg' },
+                    { id: '1VyAdIRzVaYMLLbgevPqsEHTRlggdvsm3', alt: 'DSC_0159.jpg' },
+                    { id: '1zvvdoOZRA_zrmjYxpAv3KaxRUEY1pSDi', alt: 'DSC_0155.jpg' },
+                    { id: '1THcgZJvUSgFe08pgMyM_SCEuQsNLTOVn', alt: 'DSC_0149.jpg' },
+                    { id: '1-uJFO4lDnVgpC_Gn7WKqiQAVyHuekfwE', alt: 'DSC_0125.jpg' },
+                    { id: '1IKtuXf9Gh7wZPV10tXrLBc6iX8Gy021F', alt: 'DSC_0148.jpg' },
+                    { id: '1O3GZdrGSavrNJ_NT4ybkItcsp7AeMWjn', alt: 'DSC_0146.jpg' },
+                    { id: '18SafZaMnSnEXQGLVornV0nxgksm5QyXY', alt: 'DSC_0147.jpg' },
+                    { id: '15Ya9-ZrUyYwo5ItX0MJEoms3rMRgUjWS', alt: 'DSC_0144.jpg' },
+                    { id: '1ohoUp5kI--Mci1tsI0v1hSybKs_ihmDu', alt: 'DSC_0145.jpg' },
+                    { id: '1aRgUF5uOSkarQD1tHLEN8QFuaUGQHrdM', alt: 'DSC_0143.jpg' },
+                    { id: '1sVpdk1zCMR9NlDSTggATgLCHA9MMd-HU', alt: 'DSC_0142.jpg' },
+                    { id: '14CdNpwqnHP72C1NbhduFu0VletJVns5e', alt: 'DSC_0140.jpg' },
+                    { id: '1RMvOHX2o64djBx5AJiAgM4zEwY71ZdWS', alt: 'DSC_0141.jpg' },
+                    { id: '1oRdf3051u41jz25dqM648BiRVVu1ZqC3', alt: 'DSC_0138.jpg' },
+                    { id: '1BcFJx4m-AhiiRdAhbjBtVLAOvKq1aRzU', alt: 'DSC_0136.jpg' },
+                    { id: '1jSRR4xW9nwAeFnrc6CQdrbIxfVgyDxWd', alt: 'DSC_0139.jpg' },
+                    { id: '1aDJhqzZfRWTMd45vYcuYLaWhCJPe7azY', alt: 'DSC_0137.jpg' },
+                    { id: '1KTlXMNvaAHHIXgf7Rg11sdbQzMrTmEPX', alt: 'DSC_0135.jpg' },
+                    { id: '1K-PdCihZRi4nVrWCErZhcZD7WdFM1Ghi', alt: 'DSC_0134.jpg' },
+                    { id: '1MPgYOydyf8RZWK5UZVk64Woy85O01_pd', alt: 'DSC_0132.jpg' },
+                    { id: '1PHD9qXAU3s0DBcPFA9qeM3gD_LWILR99', alt: 'DSC_0131.jpg' },
+                    { id: '1b6sH6RqY0-W2BhM6ZC4eHFHrJl1uEb_e', alt: 'DSC_0133.jpg' },
+                    { id: '1KlkVVMe3D_2fX_eUplKcHhtRQnNAG1M-', alt: 'DSC_0130.jpg' },
+                    { id: '1Eoz_CgyNUg6oT4iB5KfiHJZO9WWHNRZv', alt: 'DSC_0127.jpg' },
+                    { id: '1Z2iXN6LezUExRl7nX_K7iSNLlRAD37Wd', alt: 'DSC_0129.jpg' },
+                    { id: '1vJC6dlGgNl1NwTuBmqITgmQTThfWs0WQ', alt: 'DSC_0124.jpg' },
+                    { id: '1uFuCNCTgQmlmtnUvJ9fNVhzjkEej1Mks', alt: 'DSC_0128.jpg' },
+                    { id: '16EJ2txLDXL5UnF-9rAwTSlxLzug6cLky', alt: 'DSC_0123.jpg' },
+                    { id: '1Z0KI_mDFYMcoSJEkGIaYz-AqxQfjEtfM', alt: 'DSC_0122.jpg' },
+                    { id: '1YYDDX17XdQrjNlMh59PDV67l_UO15_Zj', alt: 'DSC_0114.jpg' },
+                    { id: '1Mah8JebSTrI40O9dXn6SnTfs6CMp5X5E', alt: 'DSC_0113.jpg' },
+                    { id: '1H96iRaNFm6Se6geWTSFJmH0Ib5MxBSsd', alt: 'DSC_0119.jpg' },
+                    { id: '1PUM8owPQ84svAj1EJHTH2WA9BAacX6Xz', alt: 'DSC_0112.jpg' },
+                    { id: '1lxIIfDLR0Z4GYaMtGRFw4oMu8KZ-YA6d', alt: 'DSC_0118.jpg' },
+                    { id: '1NsDbA243gD7HbficaVTNGizCifEkbGXD', alt: 'DSC_0110.jpg' },
+                    { id: '1hZWmNnSeu77r1xfcDVNMSChJ-q7c2vMg', alt: 'DSC_0121.jpg' },
+                    { id: '1nKuVuVReQkne9xOpIuJuJA2qBRkw5En0', alt: 'DSC_0117.jpg' },
+                    { id: '1OGuStY6adxdWeDUJKOYy4nDNHNDOG7qQ', alt: 'DSC_0111.jpg' },
+                    { id: '1Ee0dViQ6Qr83FkAB_qjBgar6j78gjmxf', alt: 'DSC_0120.jpg' },
+                    { id: '1TgHXz207-RNsExapbLESuqeIVixb8VuM', alt: 'DSC_0106.jpg' },
+                    { id: '1u-mWhjbWQ-MZAxOUyuFtCFPDqeTmcnvR', alt: 'DSC_0107.jpg' },
+                    { id: '1ID4PLTIvf7ZQJ7jy4eoeRsCsNENG5a2A', alt: 'DSC_0105.jpg' },
+                    { id: '1sMJD3xzqzxn6BxNx9NUG5zxELuG1XFPx', alt: 'DSC_0104.jpg' },
+                    { id: '1TxHGp9g3TYt72TSYq7pIl8L8F4bfz4An', alt: 'DSC_0103.jpg' },
+                    { id: '1hFgRXCTWkPcttVcvHhzf9MH4Qypo64XR', alt: 'DSC_0101.jpg' },
+                    { id: '1_gdmGMBm1jirbDrNU61aBm_HsASNFIh8', alt: 'DSC_0100.jpg' },
+                    { id: '1ykcOZ4MJPwtkr9Rsi-iOHd8N48xLiEAA', alt: 'DSC_0098.jpg' },
+                    { id: '1C3cagJwI0a7q5uXCAwLETuxGyglqo2nr', alt: 'DSC_0094.jpg' },
+                    { id: '1KIgNydIillpSaUKprlh3edTgATf-gUnA', alt: 'DSC_0099.jpg' },
+                    { id: '1GlaJRGs_UAcEh8jlq-oXNhXfujkhlkIW', alt: 'DSC_0095.jpg' },
+                    { id: '15W-fBUtu-MSebaGe8kFM6mD6U9v4yUD1', alt: 'DSC_0097.jpg' },
+                    { id: '1hV0FZpIoXS6Ab6w73IXQ3XEldABrxvGJ', alt: 'DSC_0096.jpg' },
+                    { id: '17XIjpk-ghGrOIoebZgIE69TqRnv4G4it', alt: 'DSC_0093.jpg' },
+                    { id: '1N3tRVusesZH0Ok8x-HKUBvDkBpPWsQre', alt: 'DSC_0091.jpg' },
+                    { id: '1fOJKawukuq_FihbAiOP9ry0CizuzFcuA', alt: 'DSC_0092.jpg' },
+                    { id: '14pnCNYFSnXKSoCzTLVou05gjFu8CiSgQ', alt: 'DSC_0089.jpg' },
+                    { id: '1nLKoT2AjKXILDnVfRtgUDtEIMJWc9wJC', alt: 'DSC_0087.jpg' },
+                    { id: '1srWMoX-wV6eGn69YjDtS0uPEwD3lkdVQ', alt: 'DSC_0085.jpg' },
+                    { id: '1a125uUp_UXvDDu4-jXRWATruoGrmvKaX', alt: 'DSC_0086.jpg' },
+                    { id: '1wz_vMaWOiddcT2dX5hi2nJm8OyiojbBs', alt: 'DSC_0083.jpg' },
+                    { id: '1J3gWx03kChA3anjPXe3VPV02Xgc4nO_n', alt: 'DSC_0081.jpg' },
+                    { id: '1JwSyLmtREBLDVMyn5JYcbk-CmSFSuwF1', alt: 'DSC_0082.jpg' },
+                    { id: '1dHECBpVsO5EAdAJr2NQTor86WSqYLLLZ', alt: 'DSC_0080.jpg' },
+                    { id: '1EqJl6VBhpOg9rQ7JctspL7it_FdfzT-V', alt: 'DSC_0084.jpg' },
+                    { id: '1qQoJRosjGZy8i97Floq_78aQilJpBuBb', alt: 'DSC_0079.jpg' },
+                    { id: '12FC8NScJjv-rKFojuLJMTnUm2OIghz7w', alt: 'DSC_0075.jpg' },
+                    { id: '1DqnuLG5lQ4s9eIaJ8R7zkfrwjSUqJ_c-', alt: 'DSC_0073.jpg' },
+                    { id: '1ePBV2PVdGQAPGoi42eiQd8TiCvR96D6O', alt: 'DSC_0069.jpg' },
+                    { id: '1OLm1SMsyLa8XJhjL8R9O7YJX_3qNlNCg', alt: 'DSC_0068.jpg' },
+                    { id: '1Ni8bDaEc8IUVWNgIPCXFEU51-EIKUdzV', alt: 'DSC_0072.jpg' },
+                    { id: '111kzZPgYifWS3Jku1jb9bqXV0mwIR2on', alt: 'DSC_0076.jpg' },
+                    { id: '1NYdKlwIk5wujT8IyDcuRL6tw6ZpiQ7UW', alt: 'DSC_0077.jpg' },
+                    { id: '1Q0SGxmlZRVNB2nKaD6DJ7pVC6OoJ6WIh', alt: 'DSC_0071.jpg' },
+                    { id: '1PWMRl-fo-t7AUHajm1Qe8F1QfRPgbv1R', alt: 'DSC_0070.jpg' },
+                    { id: '1XKP8dgaLRZk4OTOdVM3-W3q6w5TF01Ra', alt: 'DSC_0074.jpg' },
+                    { id: '1vHpUZjS2-vAxKQXwD82syY1ol5l0L6yD', alt: 'DSC_0067.jpg' },
+                    { id: '1bpSL3vYwDwKDpjgUzH-lt82rIQNfnT-Y', alt: 'DSC_0065.jpg' },
+                    { id: '1czald36XGhRw20DpTi0M6m0kXU1VlbUj', alt: 'DSC_0066.jpg' },
+                    { id: '1rNFLWID-Lzogzbz0WHBJd8yl8Q1nFz8v', alt: 'DSC_0064.jpg' },
+                    { id: '1R3sDLnSaq8q46djnwt5Mmr6OzO-0nKnJ', alt: 'DSC_0063.jpg' },
+                    { id: '11nwKyTnVAkzb-YhZa61T_EOtSkWKY5dh', alt: 'DSC_0062.jpg' },
+                    { id: '1ClO1CTzQK8B41aHafKI6RxdSXzqApyKq', alt: 'DSC_0059.jpg' },
+                    { id: '1v3EUyrBt0eR8C9FaQyHJq2NF6n99nokv', alt: 'DSC_0061.jpg' },
+                    { id: '15bN_AKQZLbgHniBco9o1qv1j1cu-YVDI', alt: 'DSC_0058.jpg' },
+                    { id: '1TszfLDQQIn5jiE9A4vSWFBBgL91cx8mY', alt: 'DSC_0057.jpg' },
+                    { id: '1_T8GWuQOFXTcZshrXczCIuMGc6D-YsZm', alt: 'DSC_0060.jpg' },
+                    { id: '1xT4LbHC-nZnUOnZwT79vORVoIId1ZWWf', alt: 'DSC_0056.jpg' },
+                    { id: '1bCoMPHxQ3B0hLSXyZygqNomJQjV9ni1Z', alt: 'DSC_0054.jpg' },
+                    { id: '1LbDpM8YqsoAHG6caVT7FbMCwrfw17-29', alt: 'DSC_0052.jpg' },
+                    { id: '1RD9G-Vzkp_87mihMi4WuSHIQ-vv8QfCV', alt: 'DSC_0051.jpg' },
+                    { id: '17Rwz0WIEYXtBN4_IDO9hqi6y1Z3JQGxv', alt: 'DSC_0050.jpg' },
+                    { id: '1kuNhGDJSZDoodojMVQ2wNMgHhIFX-s65', alt: 'DSC_0053.jpg' },
+                    { id: '1w0PvbbM_81exVSgljii5CtsOjCIHc9t4', alt: 'DSC_0049.jpg' },
+                    { id: '19n5dXLVevsYfU-ypDXxG2Vpbx_Cp6sXJ', alt: 'DSC_0048.jpg' },
+                    { id: '1sFNGKdnoyXyycCVxczXxgYNsypBdfKAW', alt: 'DSC_0055.jpg' },
+                    { id: '1YxZhbr_7nOM_pLPLrhIXDMbZmuW7RyBL', alt: 'DSC_0047.jpg' },
+                    { id: '1qKD7jQDAod6K1OKU0_kBq9NnGYOexaXU', alt: 'DSC_0039.jpg' },
+                    { id: '16X2um0qzQxYjvrH4RVZgpfGyxiAROqFb', alt: 'DSC_0037.jpg' },
+                    { id: '1PnweI-V3PpRy2xBK3nVJ0kPfKk9Gqejp', alt: 'DSC_0038.jpg' },
+                    { id: '1gg4nsRNsiTej1b2D-SQwMtVBzhYLd8Mb', alt: 'DSC_0044.jpg' },
+                    { id: '1L47DZsxgeVG1qCFtozqzqBc_kcayqEWo', alt: 'DSC_0046.jpg' },
+                    { id: '1z-ke0izvVuLb7CYtSO1Z-14-DB3vfPeZ', alt: 'DSC_0045.jpg' },
+                    { id: '1sTnFQUaXUxBs5AzjG-TRT7v2jwoPh9fq', alt: 'DSC_0041.jpg' },
+                    { id: '1MVLFPpTjp894Ai4lsr1ojMbnw9LZM1uS', alt: 'DSC_0040.jpg' },
+                    { id: '1vbZgFQJmYpPeCZM8uXfRsvMExDyax_MT', alt: 'DSC_0042.jpg' },
+                    { id: '1P17WkvraABYH9n7oBI5HS_gdWPY7M7zK', alt: 'DSC_0043.jpg' },
+                    { id: '1Hmj4njaDSgHMn7l9pe4-dDGUl3THPdoI', alt: 'DSC_0035.jpg' },
+                    { id: '1-dvcmC1IBxd4f3YWl1bwoMc0attRbKOw', alt: 'DSC_0034.jpg' },
+                    { id: '1qKPgur7BZMuchz8esqn2MKwDzmmC4ttW', alt: 'DSC_0033.jpg' },
+                    { id: '1AIv3ZupcOM0fqFFrUfQCJo0MUD_aEXuS', alt: 'DSC_0031.jpg' },
+                    { id: '1aSi5k13eq-jBaTuWmsuFw6OauyMi6XVK', alt: 'DSC_0029.jpg' },
+                    { id: '1Ip0pDePkCz62GKvpvSayLvfm35FraLOe', alt: 'DSC_0032.jpg' },
+                    { id: '1uylxA_NkYFhefqvNKAZ-iulT9S34qk3B', alt: 'DSC_0026.jpg' },
+                    { id: '1LsoLHefQQiT-xou7eA20gRExQLcvZH8T', alt: 'DSC_0028.jpg' },
+                    { id: '1vv8ooNyQCod_97YgRstsLokOSBHsNSb5', alt: 'DSC_0027.jpg' },
+                    { id: '1l-dmWFc3n1xAc-8y_IaqQ_eJVga0oda7', alt: 'DSC_0025.jpg' },
+                    { id: '16gChUuHy4B-dU2rEBQoylF9N_aVIBOTe', alt: 'DSC_0023.jpg' },
+                    { id: '12Wda0sUWt4-hBxJcZWYWrpdNh3RTmXKD', alt: 'DSC_0022.jpg' },
+                    { id: '10Hk2h_meUAK9mdWKFqhk7OHBqhVNHHsS', alt: 'DSC_0024.jpg' },
+                    { id: '1lNViGMFmCpNJvAB-USv4Mrm9_S0Pq8-z', alt: 'DSC_0021.jpg' },
+                    { id: '1r9Zra4B4a6lUNwqPTyofjJUNuDXONwz1', alt: 'DSC_0017.jpg' },
+                    { id: '1__pXyI_J7e_9byadg3ixKeEJW-RH9fCW', alt: 'DSC_0016.jpg' },
+                    { id: '1SKfQpedkSVeZ8f7_uKye8bjMAR1fWoRd', alt: 'DSC_0020.jpg' },
+                    { id: '1M7VpnU8LZoFkdDyfHlGcTdGBY-yuBeJV', alt: 'DSC_0018.jpg' },
+                    { id: '1x39GDWD8h_lGbMeNGSKMNKCk5pfLV948', alt: 'DSC_0019.jpg' },
+                    { id: '1st2tV7CfkoEF4FZA3JT4Nz00o9qAj2DR', alt: 'DSC_0015.jpg' },
+                    { id: '1R3y6uYeKj7PUP0QJxilrRdnuItNl5fwW', alt: 'DSC_0014.jpg' },
+                    { id: '1vnJJPdvkRZhahd7inOW1at5TgmItxubV', alt: 'DSC_0003.jpg' },
+                    { id: '19eiIxe5mtQdPZ9OtYiKs29pzJVWwDSaB', alt: 'DSC_0009.jpg' },
+                    { id: '1P8e5wo-YZ-PTeypqNxTK8puyaxEVugn5', alt: 'DSC_0011.jpg' },
+                    { id: '1D7mpLaGrj3EL_rHElNlMrJ88DTNrCUTb', alt: 'DSC_0012.jpg' },
+                    { id: '15PJZ4YHaI97v-1W2nHIE7bPczedfRuOP', alt: 'DSC_0002.jpg' },
+                    { id: '1zyLFeZiCXPp-V3gpGrjJjRBGXEF7XvC9', alt: 'DSC_0008.jpg' },
+                    { id: '1y_d40S4aMEzvDvsdjmqTpNzS5_nfV2NK', alt: 'DSC_0001.jpg' },
+                    { id: '1YZYFe9tuIckFRKJX4QtVDIwG8fDTDxPY', alt: 'DSC_0010.jpg' },
+                    { id: '1tI6aWJEZXJow5r4e41JPq7gK5Vxxr1bk', alt: 'DSC_0007.jpg' },
+                ];
+
+                const apiKey = 'AIzaSyC3FqqHfNkDGCUDgJMvjMfbDguaqwYu6Uc';
+                const baseUrl = 'https://www.googleapis.com/drive/v3/files/';
+
+                images.forEach(image => {
+                    const row = document.createElement('div');
+                    row.classList.add('row');
+
+                    const img = document.createElement('img');
+                    img.alt = image.alt;
+
+                    const layer = document.createElement('div');
+                    layer.classList.add('layer');
+
+                    const downloadLink = document.createElement('a');
+                    downloadLink.download = '';
+
+                    const icon = document.createElement('i');
+                    icon.classList.add('bx', 'bx-download');
+
+                    fetchImage(image.id)
+                        .then(imageURL => {
+                            img.src = imageURL;
+                            downloadLink.href = imageURL;
+                        })
+                        .catch(error => {
+                            console.error(`Erro ao carregar imagem ${image.id}:`, error);
+                        })
+                        .finally(() => {
+                            downloadLink.appendChild(icon);
+                            layer.appendChild(downloadLink);
+                            row.appendChild(img);
+                            row.appendChild(layer);
+                            gallery.appendChild(row);
+                        });
+                });
+
+                function fetchImage(imageId) {
+                    const cache = new Map();
+                    const REQUEST_LIMIT = 5;
+                    const TIME_WINDOW = 60000;
+                    let requestCount = 0;
+                    let lastRequestTime = Date.now();
+
+                    const now = Date.now();
+                    if (now - lastRequestTime > TIME_WINDOW) {
+                        requestCount = 0;
+                        lastRequestTime = now;
+                    }
+
+                    if (requestCount >= REQUEST_LIMIT) {
+                        console.log("Muitas solicitações. Por favor, tente novamente mais tarde.");
+                        return;
+                    }
+
+                    if (cache.has(imageId)) {
+                        return cache.get(imageId);
+                    }
+
+                    requestCount++;
+                    const url = `${baseUrl}${imageId}?alt=media&key=${apiKey}`;
+                    return fetch(url)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            const objectURL = URL.createObjectURL(blob);
+                            cache.set(imageId, objectURL);
+                            return objectURL;
+                        })
+                        .catch(error => {
+                            console.error("Erro ao buscar a imagem:", error);
+                        });
+                }
+            });
+        </script>
     </section>
 
     <!---end section design--->
@@ -71,272 +379,6 @@
         }
         gtag('js', new Date());
         gtag('config', 'G-YTW99R9W7X');
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const galleryContainer = document.getElementById('gallery-container');
-            const imgFolder = 'img/27-01-24/';
-            const imageFiles = [
-                'DSC_0129.jpg',
-                'DSC_0130.jpg',
-                'DSC_0131.jpg',
-                'DSC_0132.jpg',
-                'DSC_0133.jpg',
-                'DSC_0134.jpg',
-                'DSC_0135.jpg',
-                'DSC_0136.jpg',
-                'DSC_0137.jpg',
-                'DSC_0138.jpg',
-                'DSC_0139.jpg',
-                'DSC_0140.jpg',
-                'DSC_0141.jpg',
-                'DSC_0142.jpg',
-                'DSC_0143.jpg',
-                'DSC_0144.jpg',
-                'DSC_0145.jpg',
-                'DSC_0146.jpg',
-                'DSC_0147.jpg',
-                'DSC_0148.jpg',
-                'DSC_0149.jpg',
-                'DSC_0151.jpg',
-                'DSC_0152.jpg',
-                'DSC_0153.jpg',
-                'DSC_0154.jpg',
-                'DSC_0155.jpg',
-                'DSC_0157.jpg',
-                'DSC_0158.jpg',
-                'DSC_0159.jpg',
-                'DSC_0160.jpg',
-                'DSC_0162.jpg',
-                'DSC_0164.jpg',
-                'DSC_0167.jpg',
-                'DSC_0168.jpg',
-                'DSC_0169.jpg',
-                'DSC_0170.jpg',
-                'DSC_0171.jpg',
-                'DSC_0172.jpg',
-                'DSC_0173.jpg',
-                'DSC_0174.jpg',
-                'DSC_0175.jpg',
-                'DSC_0176.jpg',
-                'DSC_0178.jpg',
-                'DSC_0179.jpg',
-                'DSC_0180.jpg',
-                'DSC_0181.jpg',
-                'DSC_0185.jpg',
-                'DSC_0186.jpg',
-                'DSC_0187.jpg',
-                'DSC_0188.jpg',
-                'DSC_0189.jpg',
-                'DSC_0190.jpg',
-                'DSC_0191.jpg',
-                'DSC_0192.jpg',
-                'DSC_0193.jpg',
-                'DSC_0194.jpg',
-                'DSC_0195.jpg',
-                'DSC_0196.jpg',
-                'DSC_0197.jpg',
-                'DSC_0199.jpg',
-                'DSC_0200.jpg',
-                'DSC_0201.jpg',
-                'DSC_0202.jpg',
-                'DSC_0205.jpg',
-                'DSC_0206.jpg',
-                'DSC_0207.jpg',
-                'DSC_0208.jpg',
-                'DSC_0210.jpg',
-                'DSC_0211.jpg',
-                'DSC_0212.jpg',
-                'DSC_0216.jpg',
-                'DSC_0217.jpg',
-                'DSC_0219.jpg',
-                'DSC_0220.jpg',
-                'DSC_0221.jpg',
-                'DSC_0222.jpg',
-                'DSC_0223.jpg',
-                'DSC_0225.jpg',
-                'DSC_0226.jpg',
-                'DSC_0227.jpg',
-                'DSC_0228.jpg',
-                'DSC_0229.jpg',
-                'DSC_0230.jpg',
-                'DSC_0231.jpg',
-                'DSC_0232.jpg',
-                'DSC_0233.jpg',
-                'DSC_0235.jpg',
-                'DSC_0236.jpg',
-                'DSC_0241.jpg',
-                'DSC_0244.jpg',
-                'DSC_0245.jpg',
-                'DSC_0246.jpg',
-                'DSC_0248.jpg',
-                'DSC_0249.jpg',
-                'DSC_0250.jpg',
-                'DSC_0251.jpg',
-                'DSC_0252.jpg',
-                'DSC_0253.jpg',
-                'DSC_0254.jpg',
-                'DSC_0255.jpg',
-                'DSC_0256.jpg',
-                'DSC_0257.jpg',
-                'DSC_0260.jpg',
-                'DSC_0263.jpg',
-                'DSC_0268.jpg',
-                'DSC_0270.jpg',
-                'DSC_0272.jpg',
-                'DSC_0273.jpg',
-                'DSC_0276.jpg',
-                'DSC_0278.jpg',
-                'DSC_0281.jpg',
-                'DSC_0282.jpg',
-                'DSC_0283.jpg',
-                'DSC_0285.jpg',
-                'DSC_0287.jpg',
-                'DSC_0289.jpg',
-                'DSC_0290.jpg',
-                'DSC_0001.jpg',
-                'DSC_0002.jpg',
-                'DSC_0003.jpg',
-                'DSC_0007.jpg',
-                'DSC_0008.jpg',
-                'DSC_0009.jpg',
-                'DSC_0010.jpg',
-                'DSC_0011.jpg',
-                'DSC_0012.jpg',
-                'DSC_0014.jpg',
-                'DSC_0015.jpg',
-                'DSC_0016.jpg',
-                'DSC_0017.jpg',
-                'DSC_0018.jpg',
-                'DSC_0019.jpg',
-                'DSC_0020.jpg',
-                'DSC_0021.jpg',
-                'DSC_0022.jpg',
-                'DSC_0023.jpg',
-                'DSC_0024.jpg',
-                'DSC_0025.jpg',
-                'DSC_0026.jpg',
-                'DSC_0027.jpg',
-                'DSC_0028.jpg',
-                'DSC_0029.jpg',
-                'DSC_0031.jpg',
-                'DSC_0032.jpg',
-                'DSC_0033.jpg',
-                'DSC_0034.jpg',
-                'DSC_0035.jpg',
-                'DSC_0037.jpg',
-                'DSC_0038.jpg',
-                'DSC_0039.jpg',
-                'DSC_0040.jpg',
-                'DSC_0041.jpg',
-                'DSC_0042.jpg',
-                'DSC_0043.jpg',
-                'DSC_0044.jpg',
-                'DSC_0045.jpg',
-                'DSC_0046.jpg',
-                'DSC_0047.jpg',
-                'DSC_0048.jpg',
-                'DSC_0049.jpg',
-                'DSC_0050.jpg',
-                'DSC_0051.jpg',
-                'DSC_0052.jpg',
-                'DSC_0053.jpg',
-                'DSC_0054.jpg',
-                'DSC_0055.jpg',
-                'DSC_0056.jpg',
-                'DSC_0057.jpg',
-                'DSC_0058.jpg',
-                'DSC_0059.jpg',
-                'DSC_0060.jpg',
-                'DSC_0061.jpg',
-                'DSC_0062.jpg',
-                'DSC_0063.jpg',
-                'DSC_0064.jpg',
-                'DSC_0065.jpg',
-                'DSC_0066.jpg',
-                'DSC_0067.jpg',
-                'DSC_0068.jpg',
-                'DSC_0069.jpg',
-                'DSC_0070.jpg',
-                'DSC_0071.jpg',
-                'DSC_0072.jpg',
-                'DSC_0073.jpg',
-                'DSC_0074.jpg',
-                'DSC_0075.jpg',
-                'DSC_0076.jpg',
-                'DSC_0077.jpg',
-                'DSC_0079.jpg',
-                'DSC_0080.jpg',
-                'DSC_0081.jpg',
-                'DSC_0082.jpg',
-                'DSC_0083.jpg',
-                'DSC_0084.jpg',
-                'DSC_0085.jpg',
-                'DSC_0086.jpg',
-                'DSC_0087.jpg',
-                'DSC_0089.jpg',
-                'DSC_0091.jpg',
-                'DSC_0092.jpg',
-                'DSC_0093.jpg',
-                'DSC_0094.jpg',
-                'DSC_0095.jpg',
-                'DSC_0096.jpg',
-                'DSC_0097.jpg',
-                'DSC_0098.jpg',
-                'DSC_0099.jpg',
-                'DSC_0100.jpg',
-                'DSC_0101.jpg',
-                'DSC_0103.jpg',
-                'DSC_0104.jpg',
-                'DSC_0105.jpg',
-                'DSC_0106.jpg',
-                'DSC_0107.jpg',
-                'DSC_0110.jpg',
-                'DSC_0111.jpg',
-                'DSC_0112.jpg',
-                'DSC_0113.jpg',
-                'DSC_0114.jpg',
-                'DSC_0117.jpg',
-                'DSC_0118.jpg',
-                'DSC_0119.jpg',
-                'DSC_0120.jpg',
-                'DSC_0121.jpg',
-                'DSC_0122.jpg',
-                'DSC_0123.jpg',
-                'DSC_0124.jpg',
-                'DSC_0125.jpg',
-                'DSC_0127.jpg',
-                'DSC_0128.jpg',
-            ];
-
-            // Loop para criar elementos HTML para cada imagem
-            imageFiles.forEach((fileName) => {
-                const imgSrc = `${imgFolder}${fileName}`;
-
-                const row = document.createElement('div');
-                row.classList.add('row');
-
-                const img = document.createElement('img');
-                img.src = imgSrc;
-
-                const layer = document.createElement('div');
-                layer.classList.add('layer');
-
-                const downloadLink = document.createElement('a');
-                downloadLink.href = imgSrc;
-                downloadLink.setAttribute('download', '');
-
-                const downloadIcon = document.createElement('i');
-                downloadIcon.classList.add('bx', 'bx-download');
-
-                downloadLink.appendChild(downloadIcon);
-                layer.appendChild(downloadLink);
-                row.appendChild(img);
-                row.appendChild(layer);
-                galleryContainer.appendChild(row);
-            });
-        });
     </script>
 
 </body>
