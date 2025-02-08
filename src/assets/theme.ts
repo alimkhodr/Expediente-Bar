@@ -3,26 +3,23 @@ import { createTheme, responsiveFontSizes } from "@mui/material";
 let theme = createTheme({
     palette: {
         primary: {
-            main: '#253127',
+            main: '#ffa507',
         },
         secondary: {
-            main: '#383838',
-            A100: '#0D7977',
-            A200: '#0A6060',
-            A400: '#2ba048',
+            main: '#ffffff',
         },
         background: {
-            default: '#E2D8BC',
-            paper: '#FFFFFF',
+            default: '#000000',
+            paper: '#111111',
         },
         text: {
-            primary: '#253127',
-            secondary: '#383838',
-            disabled: '#A6A6A6',
+            primary: '#ffffff',
+            secondary: '#000000',
+            disabled: '#111111',
         },
     },
     typography: {
-        fontFamily: "Merriweather"
+        fontFamily: "Montserrat, sans-serif",
     }
 });
 

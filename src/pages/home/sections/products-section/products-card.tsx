@@ -1,5 +1,5 @@
 import { Box, CardActions, CardContent, CardMedia, Chip, styled, Typography } from "@mui/material";
-import StyledButtonGreen from "../../../../components/styled-button/styled-button-green";
+import StyledButtonGreen from "../../../../components/styled-button/styled-button";
 
 interface Props {
   image: string;

@@ -1,8 +1,10 @@
-import { AppBar, MenuItem, styled, Toolbar, IconButton, Drawer, List, ListItemText, Typography, keyframes, ListItem } from "@mui/material";
+import { AppBar, MenuItem, Toolbar, IconButton, Drawer, List, ListItemText, ListItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState, useEffect } from "react";
 import theme from "../../assets/theme";
-import logo_linear from "../../assets/images/logos/logo-linear.svg";
+import { keyframes } from "@mui/system";
+import logo from '../../assets/images/logos/logo.svg';
+
 const slideDown = keyframes`
   from {
     transform: translateY(-100%);
@@ -15,23 +17,14 @@ const slideDown = keyframes`
 const NavBar = () => {
     const [open, setOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('slide');
-    
     const sections = [
-        { id: 'slide', label: 'Home' },
-        { id: 'services', label: 'Procedimentos' },
-        { id: 'products', label: 'Produtos' },
-        { id: 'gallery', label: 'Fotos' },
-        { id: 'contact', label: 'Contato' },
-        { id: 'address', label: 'Endereço' },
+        { id: 'home', label: 'Home' },
+        { id: 'servicos', label: 'Serviços' },
+        { id: 'fotos', label: 'Fotos' },
+        { id: 'reserva', label: 'Reserva' },
+        { id: 'contato', label: 'Contato' },
+        { id: 'cardapio', label: 'Cardápio' },
     ];
-
-    const StyledToolbar = styled(Toolbar)(() => ({
-        display: "flex",
-        justifyContent: "center",
-        backgroundColor: theme.palette.primary.main,
-        height: '90px',
-        boxShadow: '0px 0px 10px 5px rgba(0,0,0,0.2)'
-    }));
 
     const handleDrawerToggle = () => {
         setOpen(!open);
@@ -52,9 +45,9 @@ const NavBar = () => {
         });
 
         if (!foundSection) {
-            setActiveSection('slide');
-            if (window.location.hash !== '#slide') {
-                window.history.pushState(null, '', '#slide');
+            setActiveSection('home');
+            if (window.location.hash !== '#home') {
+                window.history.pushState(null, '', '#home');
             }
         }
     };
@@ -89,49 +82,37 @@ const NavBar = () => {
                 sx={{
                     boxShadow: 'none',
                     backgroundColor: 'transparent',
-                    display: "flex",
-                    alignItems: { xs: 'stretch', lg: 'center' },
-                    padding: { xs: '0px', lg: '15px' },
                     animation: `${slideDown} 0.5s ease-out`,
                 }}
             >
-                <StyledToolbar sx={{ borderRadius: { xs: 0, lg: 20 }, padding: { xs: "30px 30px 30px 10px", lg: 7 }}}>
+                <Toolbar sx={{ backgroundColor: theme.palette.background.default, animation: `${slideDown} 0.5s`, padding: 3 }}>
                     <img
-                        src={logo_linear}
+                        src={logo}
                         alt="Logo"
-                        style={{ height: "65px", margin: '20px 20px 30px 15px', cursor: 'pointer' }}
-                        onClick={() => handleScrollToSection('slide')}
+                        style={{ height: "50px", cursor: 'pointer' }}
+                        onClick={() => handleScrollToSection('home')}
                     />
                     <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', alignItems: 'center' }}>
-                        {sections.map((section, index) => (
+                        {sections.map((section) => (
                             <>
                                 <MenuItem
                                     key={section.id}
                                     sx={{
                                         fontSize: '1.2rem',
-                                        padding: '1px 15px',
-                                        borderRadius: '15px',
-                                        margin: '0 10px',
-                                        backgroundColor: activeSection === section.id ? theme.palette.background.default : 'transparent',
-                                        color: activeSection === section.id ? theme.palette.secondary.main : 'inherit',
+                                        fontWeight: 'bold',
+                                        marginX: 1,
+                                        color: activeSection === section.id ? theme.palette.primary.main : theme.palette.secondary.main,
+                                        display: { xs: 'none', lg: 'block' },
                                         transition: 'background-color 0.3s ease, color 0.3s ease',
                                         '&:hover': {
-                                            backgroundColor: theme.palette.background.default,
-                                            color: theme.palette.secondary.main,
+                                            color: theme.palette.primary.main,
                                         },
-                                        display: { xs: 'none', lg: 'block' }
                                     }}
                                     component="a"
                                     onClick={() => handleScrollToSection(section.id)}
                                 >
                                     {section.label}
                                 </MenuItem>
-
-                                {index < sections.length - 1 && (
-                                    <Typography sx={{ display: { xs: 'none', lg: 'block', color: theme.palette.background.default } }}>
-                                        \\
-                                    </Typography>
-                                )}
                             </>
                         ))}
                     </div>
@@ -139,18 +120,18 @@ const NavBar = () => {
                         edge="end"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ display: { xs: 'flex', lg: 'none' } }}
+                        sx={{ display: { xs: 'flex', lg: 'none' }, color: 'white' }}
                         onClick={handleDrawerToggle}
                     >
                         <MenuIcon />
                     </IconButton>
-                </StyledToolbar>
+                </Toolbar>
             </AppBar>
             <Drawer
                 anchor="right"
                 open={open}
                 onClose={handleDrawerToggle}
-                sx={{ display: { xs: 'block', lg: 'none' }}}
+                sx={{ display: { xs: 'block', lg: 'none' } }}
             >
                 <List>
                     {sections.map((section) => (
@@ -159,8 +140,13 @@ const NavBar = () => {
                             onClick={() => handleDrawerItemClick(section.id)}
                             component="div"
                             sx={{
-                                backgroundColor: activeSection === section.id ? theme.palette.background.default : 'transparent',
-                                color: activeSection === section.id ? theme.palette.primary.main : 'inherit'
+                                fontSize: '1.2rem',
+                                fontWeight: 'bold',
+                                color: activeSection === section.id ? theme.palette.primary.main : theme.palette.secondary.main,
+                                transition: 'background-color 0.3s ease, color 0.3s ease',
+                                '&:hover': {
+                                    color: theme.palette.primary.main,
+                                },
                             }}
                         >
                             <ListItemText primary={section.label} />

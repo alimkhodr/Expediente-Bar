@@ -3,7 +3,7 @@ import { Container, TextField, MenuItem, Select, InputLabel, FormControl, styled
 import theme from "../../../../assets/theme";
 import services from "../../../../assets/data/services-data";
 import CircularProgress from '@mui/material/CircularProgress';
-import StyledButtonGreen from "../../../../components/styled-button/styled-button-green";
+import StyledButtonGreen from "../../../../components/styled-button/styled-button";
 import { useSnackbar } from 'notistack';
 
 const Form = () => {
