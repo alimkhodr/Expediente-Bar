@@ -6,7 +6,7 @@ interface Props {
   bgColor: string;
 }
 
-const StyledButtonGreen = styled(Button)<Props>(({ bgColor, color }) => ({
+const StyledButtonGreen = styled(Button)<Props>(({ bgColor }) => ({
   boxShadow: 'none',
   backgroundColor: bgColor,
   border: 'none',
