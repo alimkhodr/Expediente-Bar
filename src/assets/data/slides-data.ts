@@ -1,11 +1,11 @@
-import sobrancelha from "./../images/sobrancelha.webp"
+import batucada from "./../images/batucada.webp"
 
 const slides = [
   {
-    img: sobrancelha,
-    title: 'Massagem',
-    text: '5 sessões - <span style="font-weight:bold">R$475,00</span><br/>8 sessões - <span style="font-weight:bold">R$696,00</span>',
-    buttonText: 'Agendar',
+    img: batucada,
+    title: 'Música ao vivo',
+    text: 'Aqui a música ganha vida! Desfrute de noites inesquecíveis com nossa seleção variada de música ao vivo, incluindo sertanejo, pop, MPB e nosso imperdível pagode de sábado, que é a grande estrela da casa. Venha curtir a vibe e mergulhar na melhor experiência musical da cidade!',
+    buttonText: 'Confira a Agenda',
   },
 ];
 
