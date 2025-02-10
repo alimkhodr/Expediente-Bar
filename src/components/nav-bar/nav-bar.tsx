@@ -85,7 +85,13 @@ const NavBar = () => {
                     animation: `${slideDown} 0.5s ease-out`,
                 }}
             >
-                <Toolbar sx={{ backgroundColor: theme.palette.background.default, animation: `${slideDown} 0.5s`, padding: 3 }}>
+                <Toolbar 
+                    sx={{ 
+                        backgroundColor: activeSection === 'home' ? 'rgba(0, 0, 0, 0.74)' : '#000000',
+                        backdropFilter: 'blur(5px)',
+                        animation: `${slideDown} 0.5s`,
+                        padding: 3 
+                    }}>
                     <img
                         src={logo}
                         alt="Logo"

@@ -7,7 +7,6 @@ import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import theme from '../../../../assets/theme';
 import slides from '../../../../assets/data/slides-data';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import StyledButton from '../../../../components/styled-button/styled-button';
 
 const SwiperContainer = styled(Box)(({ theme }) => ({
@@ -72,13 +71,14 @@ const Slide = () => {
                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
                 backdropFilter: 'blur(5px)',
                 boxShadow: '0 0px 20px 20px rgba(0, 0, 0, 0.3)',
+                maxWidth: { xs: '80%', sm: '50%' },
               }}
             >
               <Box>
                 <Typography
                   variant="h4"
                   fontWeight="bold"
-                  sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
+                  sx={{ whiteSpace: 'normal', wordWrap: 'break-word' }}
                   color="primary"
                 >
                   {slide.title}
@@ -89,14 +89,13 @@ const Slide = () => {
                 component="div"
                 dangerouslySetInnerHTML={{ __html: slide.text }}
                 sx={{
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
+                  whiteSpace: 'normal',
+                  wordWrap: 'break-word',
                 }}
               />
               <StyledButton
                 variant="contained"
-                startIcon={<WhatsAppIcon />}
+                startIcon={<slide.buttonIcon />}
                 sx={{ mt: 1 }}
                 bgColor={theme.palette.primary.main}
               >

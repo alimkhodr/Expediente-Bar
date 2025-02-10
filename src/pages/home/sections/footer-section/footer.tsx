@@ -4,17 +4,16 @@ import NorthIcon from '@mui/icons-material/North';
 const Footer = () => {
     const StyledFooter = styled('div')(({ theme }) => ({
         padding: '40px 0px',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.background.paper,
     }));
 
     const StyledIconButton = styled(IconButton)(({ theme }) => ({
-        backgroundColor: theme.palette.background.default,
-        color: theme.palette.primary.main,
-        transition: "transform 0.3s ease",
+        backgroundColor: theme.palette.text.primary,
+        color: theme.palette.text.secondary,
+        transition: "background-color 0.3s ease",
         "&:hover": {
-            backgroundColor: theme.palette.background.default,
-            color: theme.palette.primary.main,
-            transform: 'scale(1.04)',
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.text.secondary,
         },
     }));
 
@@ -25,9 +24,8 @@ const Footer = () => {
                 <Typography
                     variant="body2"
                     textAlign="center"
-                    color={'background.default'}
                 >
-                    © 2025 por Ali Mohamed. - @alikhodr10
+                    © 2022 por Ali Mohamed. - @alikhodr10
                 </Typography>
                 <StyledIconButton
                     aria-label="top"

@@ -9,7 +9,7 @@ import theme from '../../../../assets/theme';
 const Gallery = () => {
   const StyledGallery = styled('div')(({ theme }) => ({
     padding: '40px 0px',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.background.default,
   }));
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
