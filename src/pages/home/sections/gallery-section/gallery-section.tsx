@@ -22,16 +22,16 @@ const Gallery = () => {
           variant="h3"
           textAlign="center"
           fontWeight="bold"
-          color={'background.default'}
+          color={'text.primary'}
         >
           Fotos
         </Typography>
         <Typography
           variant="body1"
           textAlign="center"
-          color={'background.default'}
+          color={'text.primary'}
         >
-          Fotos de serviços realizados
+          Momentos do nosso <span style={{ color: theme.palette.primary.main }}>Bar</span>
         </Typography>
 
         <Box sx={{ mt: 4 }}>

@@ -18,14 +18,14 @@ const Cardapio = () => {
             >
                 <ArrowBackIcon sx={{ color: "background.default" }} />
             </Fab>
-            <Container sx={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:1000}}>
-                <Typography>
-                    Cardápio aqui!
-                </Typography>
-            </Container>
-            <div id="footer">
-                <Footer />
+            <div style={{
+                minHeight: '100vh',
+            }}>
+                <iframe loading="lazy" style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, border: 'none', padding: 0, margin: 0 }}
+                    src="https://www.canva.com/design/DAGbdhINMFk/Ha0j9By6XjF-umx0_ucFAA/view?embed" allowFullScreen allow="fullscreen">
+                </iframe>
             </div>
+            <Footer />
         </>
     )
 }
