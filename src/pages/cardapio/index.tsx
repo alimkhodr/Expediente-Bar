@@ -7,6 +7,7 @@ const Cardapio = () => {
     return (
         <>
             <Fab
+                size="small"
                 color="primary"
                 sx={{
                     position: 'fixed',
