@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import theme from "../../assets/theme";
 import { keyframes } from "@mui/system";
 import logo from '../../assets/images/logos/logo.svg';
+import { Link } from "react-router-dom";
 
 const slideDown = keyframes`
   from {
@@ -23,7 +24,6 @@ const NavBar = () => {
         { id: 'fotos', label: 'Fotos' },
         { id: 'reserva', label: 'Reserva' },
         { id: 'contato', label: 'Contato' },
-        { id: 'cardapio', label: 'Cardápio' },
     ];
 
     const handleDrawerToggle = () => {
@@ -85,12 +85,12 @@ const NavBar = () => {
                     animation: `${slideDown} 0.5s ease-out`,
                 }}
             >
-                <Toolbar 
-                    sx={{ 
+                <Toolbar
+                    sx={{
                         backgroundColor: activeSection === 'home' ? 'rgba(0, 0, 0, 0.74)' : '#000000',
                         backdropFilter: 'blur(5px)',
                         animation: `${slideDown} 0.5s`,
-                        padding: 3 
+                        padding: 3
                     }}>
                     <img
                         src={logo}
@@ -122,6 +122,24 @@ const NavBar = () => {
                                 </MenuItem>
                             </>
                         ))}
+                        <MenuItem
+                            component={Link}
+                            to="/cardapio"
+                            sx={{
+                                fontSize: '1.2rem',
+                                fontWeight: 'bold',
+                                marginX: 1,
+                                color: activeSection === 'cardapio' ? theme.palette.primary.main : theme.palette.secondary.main,
+                                display: { xs: 'none', lg: 'block' },
+                                transition: 'color 0.3s ease',
+                                '&:hover': {
+                                    color: theme.palette.primary.main,
+                                    backgroundColor: 'transparent',
+                                },
+                            }}
+                        >
+                            Cardápio
+                        </MenuItem>
                     </div>
                     <IconButton
                         edge="end"
@@ -159,6 +177,22 @@ const NavBar = () => {
                             <ListItemText primary={section.label} />
                         </ListItem>
                     ))}
+                    <ListItem
+                        component={Link}
+                        to="/cardapio"
+                        onClick={handleDrawerToggle}
+                        sx={{
+                            fontSize: '1.2rem',
+                            fontWeight: 'bold',
+                            color: activeSection === 'cardapio' ? theme.palette.primary.main : theme.palette.secondary.main,
+                            transition: 'background-color 0.3s ease, color 0.3s ease',
+                            '&:hover': {
+                                color: theme.palette.primary.main,
+                            },
+                        }}
+                    >
+                        <ListItemText primary="Cardápio" />
+                    </ListItem>
                 </List>
             </Drawer>
         </>
