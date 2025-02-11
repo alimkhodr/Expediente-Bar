@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 import { Container, TextField, MenuItem, Select, InputLabel, FormControl, styled, Typography } from "@mui/material";
 import theme from "../../../../assets/theme";
-import services from "../../../../assets/data/services-data";
 import CircularProgress from '@mui/material/CircularProgress';
-import StyledButtonGreen from "../../../../components/styled-button/styled-button";
+import StyledButton from "../../../../components/styled-button/styled-button";
 import { useSnackbar } from 'notistack';
 
 const Form = () => {
@@ -29,12 +28,6 @@ const Form = () => {
         maxWidth: 700,
     }));
 
-    const procedimentos = services.flatMap((service) =>
-        service.items.flatMap((item) =>
-            item.service.map((svc) => `${service.title} - ${svc.text}`)
-        )
-    );
-
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
@@ -59,7 +52,7 @@ const Form = () => {
             });
 
             if (response.ok) {
-                enqueueSnackbar("Mensagem enviada com sucesso!", { variant: "success" });
+                enqueueSnackbar("Entraremos em contato em breve!", { variant: "success" });
             } else {
                 enqueueSnackbar("Erro ao enviar a mensagem. Tente novamente.", { variant: "error" });
             }
@@ -92,7 +85,7 @@ const Form = () => {
         <StyledForm>
             <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Typography variant="h3" textAlign="center" fontWeight="bold">
-                    Entre em contato
+                    Entre em <span style={{ color: theme.palette.primary.main }}>contato</span>
                 </Typography>
                 <Typography variant="body1" textAlign="center">
                     Preencha o Formulário
@@ -121,38 +114,37 @@ const Form = () => {
                             required
                         />
                         <FormControl fullWidth>
-                            <InputLabel id="procedimento-label">Procedimento</InputLabel>
+                            <InputLabel id="evento">Evento</InputLabel>
                             <Select
-                                labelId="procedimento-label"
-                                label="Procedimento de Interesse"
-                                name="Procedimento"
+                                labelId="evento"
+                                label="Evento"
+                                name="evento"
                                 autoComplete="off"
                             >
-                                {procedimentos.map((procedimento, index) => (
-                                    <MenuItem key={index} value={procedimento}>
-                                        {procedimento}
-                                    </MenuItem>
-                                ))}
+                                <MenuItem value="HappyHour">Happy Hour</MenuItem>
+                                <MenuItem value="Aniversario">Aniversário</MenuItem>
+                                <MenuItem value="Jogo">Jogo</MenuItem>
                             </Select>
                         </FormControl>
                         <TextField
-                            label="Mensagem"
+                            label="Observação"
                             variant="outlined"
                             fullWidth
-                            name="Mensagem"
+                            name="Observação"
                             multiline
                             rows={4}
                         />
-                        <StyledButtonGreen
+                        <StyledButton
                             variant="contained"
                             color="primary"
+                            bgColor="primary"
                             type="submit"
                             fullWidth
                             endIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
                             disabled={loading}
                         >
                             Enviar
-                        </StyledButtonGreen>
+                        </StyledButton>
                     </form>
                 </StyledCard>
             </Container>

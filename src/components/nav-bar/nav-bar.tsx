@@ -109,9 +109,10 @@ const NavBar = () => {
                                         marginX: 1,
                                         color: activeSection === section.id ? theme.palette.primary.main : theme.palette.secondary.main,
                                         display: { xs: 'none', lg: 'block' },
-                                        transition: 'background-color 0.3s ease, color 0.3s ease',
+                                        transition: 'color 0.3s ease',
                                         '&:hover': {
                                             color: theme.palette.primary.main,
+                                            backgroundColor: 'transparent',
                                         },
                                     }}
                                     component="a"

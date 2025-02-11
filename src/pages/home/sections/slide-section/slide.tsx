@@ -85,7 +85,7 @@ const Slide = () => {
                 </Typography>
               </Box>
               <Typography
-                variant="h6"
+                variant="body1"
                 component="div"
                 dangerouslySetInnerHTML={{ __html: slide.text }}
                 sx={{

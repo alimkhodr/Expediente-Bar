@@ -13,8 +13,8 @@ const ContactButton: React.FC<Props> = ({ icon: Icon, color, backgroundColor, li
     return (
         <Button
             size="large"
-            startIcon={<Icon sx={{ color: color, backgroundColor: backgroundColor, padding: "3px", borderRadius: 1 }} />}
-            sx={{ padding: '0 5px', textTransform: 'none' }}
+            startIcon={<Icon sx={{ color: color, backgroundColor: backgroundColor, padding: "2px", borderRadius: 1 }} />}
+            sx={{ padding: '0 5px', textTransform: 'none', color: 'text.primary' }}
             onClick={() => window.open(`${link}`, '_blank')}
         >
             {text}
