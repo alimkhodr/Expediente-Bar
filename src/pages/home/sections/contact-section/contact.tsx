@@ -17,7 +17,7 @@ const Contact = () => {
             <Container>
                 <Grid container spacing={2} justifyContent="center" alignItems="center">
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5 }}>
                             <Box sx={{ marginBottom: 2 }}>
                                 <Typography variant="h3" fontWeight="bold">Entre em <span style={{ color: theme.palette.primary.main }}>Contato</span></Typography>
                                 <Typography variant="body1">No caso de alguma duvida ou reservas mesas.</Typography>
