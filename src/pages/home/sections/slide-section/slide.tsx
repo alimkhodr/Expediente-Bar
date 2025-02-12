@@ -98,6 +98,7 @@ const Slide = () => {
                 startIcon={<slide.buttonIcon />}
                 sx={{ mt: 1 }}
                 bgColor={theme.palette.primary.main}
+                onClick={() => window.open(slide.link, '_blank')}
               >
                 {slide.buttonText}
               </StyledButton>

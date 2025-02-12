@@ -40,8 +40,8 @@ const Contact = () => {
                                 icon={FacebookIcon}
                                 color={theme.palette.background.default}
                                 backgroundColor={theme.palette.primary.main}
-                                link='https://www.facebook.com/expedientebar_'
-                                text='Expediente Bar'
+                                link='https://www.facebook.com/Expedientebarsjc'
+                                text='Expedientebarsjc'
                             />
                             <ContactButton
                                 icon={MailOutlineIcon}
