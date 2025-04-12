@@ -22,7 +22,6 @@ const NavBar = () => {
         { id: 'home', label: 'Home' },
         { id: 'servicos', label: 'Serviços' },
         { id: 'fotos', label: 'Fotos' },
-        { id: 'reserva', label: 'Reserva' },
         { id: 'contato', label: 'Contato' },
     ];
 
