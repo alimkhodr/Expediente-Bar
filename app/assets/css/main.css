@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+html {
+  scroll-behavior: smooth;
+}
+
+@theme static {
+  --font-sans: 'Poppins', sans-serif;
+
+  --color-yellow-50:  #fff8e6;
+  --color-yellow-100: #ffefcc;
+  --color-yellow-200: #ffdf99;
+  --color-yellow-300: #ffd166;
+  --color-yellow-400: #ffa507;
+  --color-yellow-500: #ffa507;
+  --color-yellow-600: #e69506;
+  --color-yellow-700: #cc8505;
+  --color-yellow-800: #b37404;
+  --color-yellow-900: #996403;
+  --color-yellow-950: #664202;
+}
