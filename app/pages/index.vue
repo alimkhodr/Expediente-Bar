@@ -16,44 +16,39 @@ useSeoMeta({
   <div>
     <ScreenCarousel/>
 
-    <section
-      id="mapa"
-      class="dark:bg-stone-950 light:bg-stone-100"
+    <Container
+      id="agenda"
+      contrast
     >
-      <UContainer id="agenda">
-        <Agenda />
-      </UContainer>
-    </section>
-    <UContainer id="galeria">
+      <Agenda />
+    </Container>
+    <Container id="galeria">
       <Gallery />
-    </UContainer>
-    <section
+    </Container>
+    <Container
       id="mapa"
-      class="dark:bg-stone-950 light:bg-stone-100"
+      contrast
     >
-      <UContainer>
-        <Map />
-      </UContainer>
-    </section>
-    <UContainer id="avaliacoes">
+      <Map />
+    </Container>
+    <Container id="avaliacoes">
       <Reviews />
-    </UContainer>
-    <section
+    </Container>
+    <Container
       id="faq"
-      class="dark:bg-stone-950 light:bg-stone-100"
+      contrast
     >
-      <UContainer>
-        <Faq />
-      </UContainer>
-    </section>
+      <Faq />
+    </Container>
     <BrandsCarousel/>
-    <UContainer
+    <Container
       id="local"
-      class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
     >
-      <Address class="h-full" />
-      <OpeningHours/>
-    </UContainer>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <Address class="h-full" />
+        <OpeningHours/>
+      </div>
+    </Container>
     <Footer class="dark:bg-stone-950 light:bg-stone-100"/>
   </div>
 
