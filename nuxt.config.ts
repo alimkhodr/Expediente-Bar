@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiKey: process.env.NUXT_API_KEY
+      apiKey: process.env.NUXT_API_KEY,
+      clarity: process.env.NUXT_CLARITY
     }
   },
   app: {
@@ -30,7 +31,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/']
+      routes: ['/'],
+      crawlLinks: true
     }
-  }
+  },
+  ssr: true
 })
