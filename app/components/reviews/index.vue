@@ -41,7 +41,7 @@ const filteredReviews = computed(() => {
     :actions="[
       {
         label: 'Avaliar',
-        to: 'https://search.google.com/local/writereview?placeid=ChIJVx-dQk9LzJQR80Am0iwvW10',
+        to: links.review,
         target: '_blank'
       },
     ]"

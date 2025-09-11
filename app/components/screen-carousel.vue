@@ -1,19 +1,33 @@
 <script setup lang="ts">
 const items = [
-  { image: '/images/contra-com-fritras.webp',
-    title: 'Agenda Semanal',
-    text: 'A tasty dish combining contra with crispy fries.',
+  {
+    image: '/images/birthday.jpg',
+    title: 'O melhor do pagode!',
+    text: 'A energia do pagode que você ama é aqui! Confira nossa agenda e venha curtir com a gente.',
     button: {
-      label: 'Order Now',
-      icon: 'mdi-cart'
+      label: 'Reservar',
+      icon: 'mdi-party-popper',
+      to: links.whatsapp('Olá! Gostaria de fazer uma reserva para curtir o pagode com vocês!')
     }
   },
-  { image: '/images/contra-com-fritras.webp',
-    title: 'Reserve sua mesa',
-    text: 'Entre em contato para mais informações.',
+  {
+    image: '/images/birthday.jpg',
+    title: 'Comemore seu aniversário!',
+    text: 'Reserve sua mesa e aproveite condições especiais para tornar seu dia ainda mais inesquecível.',
     button: {
-      label: 'Order Now',
-      icon: 'mdi-cart'
+      label: 'Reservar',
+      icon: 'mdi-party-popper',
+      to: links.whatsapp('Olá! Gostaria de reservar para comemorar meu aniversário!')
+    }
+  },
+  {
+    image: '/images/contra-com-fritras.webp',
+    title: 'Delivery no iFood',
+    text: 'Sabores incríveis onde você estiver! Peça porções, lanches e bebidas no conforto da sua casa.',
+    button: {
+      label: 'Pedir no iFood',
+      icon: 'simple-icons-ifood',
+      to: links.ifood
     }
   }
 ]
@@ -55,6 +69,9 @@ const items = [
             size="xl"
             variant="solid"
             :label="item.button.label"
+            :icon="item.button.icon"
+            :to="item.button.to"
+            target="_blank"
             :ui="{
               label: 'text-black'
             }"

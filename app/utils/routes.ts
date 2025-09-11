@@ -1,5 +1,4 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
-
 export const routes = ref<NavigationMenuItem[][]>([
   [
     {
@@ -30,7 +29,7 @@ export const routes = ref<NavigationMenuItem[][]>([
     {
       label: 'WhatsApp',
       icon: 'i-simple-icons-whatsapp',
-      to: 'https://wa.me/5511999999999',
+      to: links.whatsapp('Olá'),
       class: 'text-green-500',
       target: '_blank'
     }

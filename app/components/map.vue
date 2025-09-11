@@ -19,7 +19,7 @@
         :actions="[
           {
             label: 'Reservar',
-            to: 'https://wa.me/5511999999999',
+            to: links.whatsapp('Olá! Gostaria de fazer uma reserva.'),
             target: '_blank'
           },
         ]"
