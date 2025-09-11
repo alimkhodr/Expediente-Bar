@@ -29,7 +29,7 @@ useHead({
 
 <template>
   <div class="flex flex-col w-full gap-2">
-    <div class="">
+    <div>
       <UText
         size="title"
         weight="bold"
@@ -37,7 +37,7 @@ useHead({
         color="primary"
         class="italic mb-2 md:text-center"
       >
-        Perguntas Frequentes
+        Perguntas <span class="dark:text-white text-black">Frequentes</span>
       </UText>
       <UText
         tag="h2"
@@ -47,7 +47,7 @@ useHead({
       </UText>
     </div>
     <UAccordion
-      :items="faqItems.map((item, index) => ({
+      :items="faqItems.map((item: FAQItem, index: number) => ({
         label: item.question,
         slot: `item-${index}`,
         defaultOpen: false

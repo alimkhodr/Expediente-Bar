@@ -23,8 +23,7 @@ export const routes = ref<NavigationMenuItem[][]>([
     },
     {
       label: 'Cardápio',
-      to: '/cardapio',
-      target: '_blank'
+      to: '/cardapio'
     },
     {
       label: 'WhatsApp',

@@ -22,6 +22,7 @@ useSeoMeta({
     >
       <Agenda />
     </Container>
+    <BrandsCarousel/>
     <Container id="galeria">
       <Gallery />
     </Container>
@@ -40,16 +41,19 @@ useSeoMeta({
     >
       <Faq />
     </Container>
-    <BrandsCarousel/>
+    <Container>
+      <SocialMedia />
+    </Container>
     <Container
       id="local"
+      contrast
     >
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         <Address class="h-full" />
         <OpeningHours/>
       </div>
     </Container>
-    <Footer class="dark:bg-stone-950 light:bg-stone-100"/>
+    <Footer/>
   </div>
 
 </template>
