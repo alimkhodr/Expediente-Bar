@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const items = [
   {
-    image: '/images/birthday.jpg',
+    image: '/images/batucada.webp',
     title: 'O melhor do pagode!',
     text: 'A energia do pagode que você ama é aqui! Confira nossa agenda e venha curtir com a gente.',
     button: {
