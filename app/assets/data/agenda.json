@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Terça-Feira e Quarta-Feira",
+    "description": "Promoção de cerveja",
+    "icon": "ri-beer-fill"
+  },
+  {
+    "title": "Sexta-Feira",
+    "description": "É dia de Sextanejo ou de Pagode e de promoção. #SEXTOU",
+    "icon": "solar-music-notes-bold"
+  },
+  {
+    "title": "Sábado",
+    "description": "É dia do melhor pagode da cidade.",
+    "icon": "streamline-ultimate:instrument-tambourine-bold"
+  }
+]
