@@ -9,10 +9,7 @@ export default defineNuxtConfig({
     fallback: 'dark'
   },
   runtimeConfig: {
-    public: {
-      apiKey: process.env.NUXT_API_KEY,
-      clarity: process.env.NUXT_CLARITY
-    }
+    apiKey: process.env.NUXT_API_KEY
   },
   app: {
     head: {

@@ -1,11 +1,9 @@
 import clarity from '@microsoft/clarity'
 
 export default defineNuxtPlugin(() => {
-  const config = useRuntimeConfig()
-
-  if (import.meta.client && process.env.NODE_ENV === 'production' && config.public.clarity) {
+  if (import.meta.client && process.env.NODE_ENV === 'production') {
     nextTick(() => {
-      clarity.init(config.public.clarity as string)
+      clarity.init('t8ownucnt6')
     })
   }
 })
