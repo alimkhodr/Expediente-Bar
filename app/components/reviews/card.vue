@@ -18,7 +18,7 @@ const getStars = (rating: number) => {
       <div class="flex items-center space-x-3">
         <UAvatar
           :src="props.item.authorAttribution.photoUri"
-          :alt="`Foto de ${props.item.authorAttribution.displayName}`"
+          :alt="props.item.authorAttribution.displayName"
           size="md"
         />
         <div>
