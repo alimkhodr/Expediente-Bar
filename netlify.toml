@@ -10,3 +10,5 @@
 [build.environment]
   NODE_VERSION = "22.19.0"
   SECRETS_SCAN_ENABLED = "false"
+  NODE_OPTIONS = "--max-old-space-size=4096"
+  SHARP_IGNORE_GLOBAL_LIBVIPS = "1"
