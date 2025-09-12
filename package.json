@@ -3,10 +3,10 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": ">=20.0.0",
+    "node": ">=20.19.0",
     "npm": ">=10.0.0"
   },
-  "packageManager": "npm@10.9.0",
+  "packageManager": "npm@10.8.2",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
