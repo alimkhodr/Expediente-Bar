@@ -1,6 +1,6 @@
 [build]
-  command = "corepack disable && npm run build"
-  publish = ".output/public"
+  command = "corepack disable && npm run generate"
+  publish = "dist"
 
 [[redirects]]
   from = "/*"
