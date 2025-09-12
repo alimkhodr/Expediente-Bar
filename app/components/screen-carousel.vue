@@ -72,9 +72,6 @@ const items = [
             :icon="item.button.icon"
             :to="item.button.to"
             target="_blank"
-            :ui="{
-              label: 'text-black'
-            }"
           />
         </template>
       </UCard>
