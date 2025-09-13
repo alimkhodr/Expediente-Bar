@@ -39,7 +39,12 @@ const items = [
     :items="items"
     class="w-full h-screen"
     loop
+    dots
     :autoplay="{ delay: 6000 }"
+    :ui="{
+      dots: '-bottom-[-20px]',
+
+    }"
   >
     <div
       class="h-screen w-full flex items-center justify-start p-8 bg-cover bg-center bg-no-repeat"
