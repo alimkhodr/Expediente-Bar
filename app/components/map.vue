@@ -1,3 +1,6 @@
+<script setup lang="ts">
+const { trackEvent } = useClarity()
+</script>
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-center">
     <div class="flex flex-col gap-4 lg:col-span-2">
@@ -20,7 +23,8 @@
           {
             label: 'Reservar',
             to: links.whatsapp('Olá! Gostaria de fazer uma reserva.'),
-            target: '_blank'
+            target: '_blank',
+            onClick: () => trackEvent('reserve_button_click')
           },
         ]"
         icon="tabler-brand-whatsapp-filled"

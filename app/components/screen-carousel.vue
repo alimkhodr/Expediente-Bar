@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { trackEvent } = useClarity()
+
 const items = [
   {
     image: '/images/batucada.webp',
@@ -77,6 +79,7 @@ const items = [
             :icon="item.button.icon"
             :to="item.button.to"
             target="_blank"
+            @click="trackEvent('carousel_' + item.button.label.toLowerCase() + '_button_click')"
           />
         </template>
       </UCard>

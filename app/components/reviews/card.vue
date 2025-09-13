@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Review } from '~/types/reviews'
 
+const { trackEvent } = useClarity()
 const props = defineProps<{ item: Review }>()
 
 const getStars = (rating: number) => {
@@ -9,7 +10,6 @@ const getStars = (rating: number) => {
   return fullStars + emptyStars
 }
 </script>
-
 <template>
   <UCard
     class="m-1 flex flex-col flex-1 h-[170px] md:h-[220px]"
@@ -63,6 +63,7 @@ const getStars = (rating: number) => {
         size="xs"
         icon="i-heroicons-arrow-top-right-on-square"
         trailing
+        @click="trackEvent('read_review_button_click')"
       >
         Ver no Google Maps
       </UButton>
