@@ -14,26 +14,27 @@ Com ele, você pode acompanhar:
 
 ## 🔹 2. Instalação
 
-### 2.1. Instalar via npm
-
-```bash
-npm install @microsoft/clarity
-# ou
-yarn add @microsoft/clarity
-```
-
-### 2.2. Criar plugin no Nuxt
+### 2.1. Criar plugin no Nuxt
 
 📁 **Arquivo:** `plugins/clarity.client.ts`
 
 ```typescript
-import clarity from "@microsoft/clarity";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default defineNuxtPlugin(() => {
-  if (import.meta.client && process.env.NODE_ENV === "production") {
-    clarity.init("SEU_PROJECT_ID"); // substitua pelo ID do Clarity
+  if (import.meta.client && process.env.NODE_ENV === 'production') {
+    // Initialize Microsoft Clarity using the official script method
+    (function (c: any, l: any, a: any, r: any, i: any, t: any, y: any) {
+      c[a] = c[a] || function (...args: any[]) {
+        (c[a].q = c[a].q || []).push(args)
+      }
+      t = l.createElement(r)
+      t.async = 1
+      t.src = 'https://www.clarity.ms/tag/' + i
+      y = l.getElementsByTagName(r)[0]
+      y.parentNode.insertBefore(t, y)
+    })(window, document, 'clarity', 'script', 'SEU_PROJECT_ID', undefined, undefined)
   }
-});
+})
 ```
 
 ⚠️ **O Project ID é encontrado no snippet fornecido pelo Clarity:**
@@ -76,16 +77,21 @@ Para facilitar o uso em todo o app, crie um composable:
 📁 **Arquivo:** `composables/useClarity.ts`
 
 ```typescript
-import clarity from "@microsoft/clarity";
+// Declare the global clarity function
+declare global {
+  interface Window {
+    clarity: (action: string, ...args: unknown[]) => void
+  }
+}
 
-export function useClarity() {
+export function useClarity () {
   const trackEvent = (name: string) => {
-    if (import.meta.client) {
-      clarity.event(name);
+    if (import.meta.client && typeof window !== 'undefined' && window.clarity) {
+      window.clarity('event', name)
     }
-  };
+  }
 
-  return { trackEvent };
+  return { trackEvent }
 }
 ```
 

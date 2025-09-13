@@ -20,7 +20,6 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@microsoft/clarity": "^1.0.0",
     "@nuxt/eslint": "^1.9.0",
     "@nuxt/fonts": "^0.11.4",
     "@nuxt/image": "^1.11.0",

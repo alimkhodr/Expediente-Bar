@@ -2,11 +2,11 @@
 const { trackEvent } = useClarity()
 const socialMedia = [
   {
-    id: 'instagram',
-    icon: 'mdi-instagram',
-    title: 'Instagram',
-    trackingText: 'instagram_button_click',
-    to: links.instagram
+    id: 'whatsapp',
+    icon: 'mdi-whatsapp',
+    title: 'WhatsApp',
+    trackingText: 'whatsapp_button_click',
+    to: links.whatsapp('Olá!')
   },
   {
     id: 'facebook',
@@ -16,11 +16,11 @@ const socialMedia = [
     to: links.facebook
   },
   {
-    id: 'whatsapp',
-    icon: 'mdi-whatsapp',
-    title: 'WhatsApp',
-    trackingText: 'whatsapp_button_click',
-    to: links.whatsapp('Olá!')
+    id: 'instagram',
+    icon: 'mdi-instagram',
+    title: 'Instagram',
+    trackingText: 'instagram_button_click',
+    to: links.instagram
   }
 ]
 </script>
@@ -47,6 +47,8 @@ const socialMedia = [
         variant="outline"
         class="w-full justify-start"
         :to="value.to"
+        target="_blank"
+        rel="noopener noreferrer"
         :ui="{
           leadingIcon: 'text-primary'
         }"
