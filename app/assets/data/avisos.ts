@@ -17,7 +17,7 @@ export const avisos: Aviso[] = [
         label: 'Ingressos',
         color: 'neutral',
         variant: 'outline',
-        link: 'https://meusite.com/ingressos'
+        link: 'https://queroingressos.com/expedientebar1110'
       }
     ]
   },
