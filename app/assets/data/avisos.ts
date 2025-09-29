@@ -10,7 +10,7 @@ export const avisos: Aviso[] = [
       alt: 'Inauguração'
     },
     days: ['all'],
-    status: false,
+    status: true,
     actions: [
       {
         trailingIcon: 'material-symbols-arrow-right-alt',
