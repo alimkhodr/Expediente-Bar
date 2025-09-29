@@ -3,17 +3,8 @@ const { trackEvent } = useClarity()
 
 const items = [
   {
-    image: '/images/batucada.webp',
-    title: 'O melhor do pagode!',
-    text: 'A energia do pagode que você ama é aqui! Confira nossa agenda e venha curtir com a gente.',
-    button: {
-      label: 'Reservar',
-      icon: 'mdi-party-popper',
-      to: links.whatsapp('Olá! Gostaria de fazer uma reserva para curtir o pagode com vocês!')
-    }
-  },
-  {
     image: '/images/birthday.jpg',
+    imageMobile: '/images/birthday.jpg',
     title: 'Comemore seu aniversário!',
     text: 'Reserve sua mesa e aproveite condições especiais para tornar seu dia ainda mais inesquecível.',
     button: {
@@ -23,7 +14,19 @@ const items = [
     }
   },
   {
+    image: '/images/batucada.webp',
+    imageMobile: '/images/batucada.webp',
+    title: 'O melhor do pagode!',
+    text: 'A energia do pagode que você ama é aqui! Confira nossa agenda e venha curtir com a gente.',
+    button: {
+      label: 'Reservar',
+      icon: 'mdi-party-popper',
+      to: links.whatsapp('Olá! Gostaria de fazer uma reserva para curtir o pagode com vocês!')
+    }
+  },
+  {
     image: '/images/contra-com-fritras.webp',
+    imageMobile: '/images/contra-com-fritras.webp',
     title: 'Delivery no iFood',
     text: 'Sabores incríveis onde você estiver! Peça porções, lanches e bebidas no conforto da sua casa.',
     button: {
@@ -50,7 +53,10 @@ const items = [
   >
     <div
       class="h-screen w-full flex items-center justify-start p-8 bg-cover bg-center bg-no-repeat"
-      :style="`background-image: url(${item.image});`"
+      :style="`background-image: image-set(
+        url(${item.image}) 1x,
+        url(${item.imageMobile}) 2x
+      );`"
     >
       <UCard
         variant="solid"

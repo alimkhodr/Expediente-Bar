@@ -10,7 +10,6 @@ const isDark = computed({
   }
 })
 
-// estado para esconder o header
 const hidden = ref(false)
 let lastScroll = 0
 
@@ -19,9 +18,9 @@ onMounted(() => {
     const currentScroll = window.scrollY
 
     if (currentScroll > lastScroll && currentScroll > 50) {
-      hidden.value = true // rolando pra baixo
+      hidden.value = true
     } else {
-      hidden.value = false // rolando pra cima
+      hidden.value = false
     }
 
     lastScroll = currentScroll
@@ -36,15 +35,7 @@ onMounted(() => {
   >
     <div class="w-full px-6 py-4 bg-stone-950/85 backdrop-blur-md flex flex-row justify-between">
       <div class="flex flex-row justify-between items-center w-full">
-        <NuxtLink to="/">
-          <NuxtImg
-            format="webp"
-            src="/logo.svg"
-            alt="logo"
-            width="100"
-            height="30"
-          />
-        </NuxtLink>
+        <Logo class="h-8 md:h-10" />
         <UDrawer direction="right">
           <UButton
             icon="i-material-symbols-menu"
@@ -60,14 +51,6 @@ onMounted(() => {
                 orientation="vertical"
                 :items="routes"
                 class="size-full my-4"
-              />
-              <NuxtImg
-                format="webp"
-                src="/icon.svg"
-                alt="logo"
-                width="25"
-                height="100"
-                class="grayscale opacity-5 my-5"
               />
             </div>
           </template>

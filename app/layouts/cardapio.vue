@@ -1,13 +1,23 @@
+<script setup lang="ts">
+import type { BreadcrumbItem } from '@nuxt/ui'
+
+const items = ref<BreadcrumbItem[]>([
+  {
+    label: 'Home',
+    to: '/'
+  },
+  {
+    label: 'Cardápio',
+    to: '/cardapio'
+  }
+])
+</script>
+
 <template>
   <div class="min-h-screen relative overflow-hidden">
-    <UButton
-      icon="material-symbols-arrow-left-alt"
-      size="md"
-      color="primary"
-      variant="solid"
-      class="fixed top-5 left-5 z-10 shadow-xl/30"
-      to="/"
-      label="Home"
+    <UBreadcrumb
+      :items="items"
+      class="fixed top-5 left-5 z-10"
     />
     <main class="h-screen w-full">
       <slot />
