@@ -3,21 +3,19 @@ import type { Aviso } from '~/types/aviso'
 
 export const avisos: Aviso[] = [
   {
-    title: 'Inauguração Expediente Anexo',
-    description: 'Garanta já seu ingresso! Dia 11/10',
+    title: '4 anos Expediente',
+    description: 'Garanta já seu ingresso! Dia 08/11',
     avatar: {
-      src: '/images/avisos/inauguracao.png',
+      src: '/images/avisos/4-anos.png',
       alt: 'Inauguração'
     },
     days: ['all'],
-    status: false,
+    status: true,
     actions: [
       {
         trailingIcon: 'material-symbols-arrow-right-alt',
         label: 'Ingressos',
-        color: 'neutral',
-        variant: 'outline',
-        link: 'https://queroingressos.com/expedientebar1110'
+        link: 'https://queroingresso.com/04anosexpedientebar'
       }
     ]
   },
@@ -34,8 +32,6 @@ export const avisos: Aviso[] = [
       {
         trailingIcon: 'material-symbols-arrow-right-alt',
         label: 'Reservar',
-        color: 'neutral',
-        variant: 'outline',
         link: links.whatsapp('Olá! Gostaria de reservar para essa sexta-feira!')
       }
     ]
@@ -53,8 +49,6 @@ export const avisos: Aviso[] = [
       {
         trailingIcon: 'material-symbols-arrow-right-alt',
         label: 'Reservar',
-        color: 'neutral',
-        variant: 'outline',
         link: links.whatsapp('Olá! Gostaria de reservar uma mesa!')
       }
     ]

@@ -1,8 +1,6 @@
 export interface AvisoAction {
   trailingIcon: string
   label: string
-  color: string
-  variant: string
   link: string
 }
 

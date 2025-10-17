@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { avisos } from '~/assets/data/avisos'
 import type { AvisoAction } from '~/types/aviso'
-import type { ButtonProps } from '#ui/types'
 
 const toast = useToast()
 const { trackEvent } = useClarity()
@@ -30,8 +29,8 @@ function showToasts () {
         ...aviso,
         actions: aviso.actions?.map((a: AvisoAction) => ({
           ...a,
-          color: a.color as ButtonProps['color'],
-          variant: a.variant as ButtonProps['variant'],
+          color: 'primary',
+          variant: 'solid',
           onClick: () => handleAvisoClick(a)
         }))
       })
