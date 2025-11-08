@@ -34,7 +34,7 @@ function showToasts () {
           onClick: () => handleAvisoClick(a)
         }))
       })
-    }, index * 500)
+    }, index * 1000)
   })
 }
 </script>
