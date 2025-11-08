@@ -4,10 +4,14 @@ definePageMeta({
 })
 
 const items = [
-  '/images/cardapio/1.png',
-  '/images/cardapio/2.png',
-  '/images/cardapio/3.png',
-  '/images/cardapio/4.png'
+  // '/images/cardapio/1.png',
+  // '/images/cardapio/2.png',
+  // '/images/cardapio/3.png',
+  // '/images/cardapio/4.png'
+  '/images/cardapio/4anos/1.png',
+  '/images/cardapio/4anos/2.png',
+  '/images/cardapio/4anos/3.png',
+  '/images/cardapio/4anos/4.png'
 ]
 </script>
 
