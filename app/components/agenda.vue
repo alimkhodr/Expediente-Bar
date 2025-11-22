@@ -13,7 +13,7 @@ const items = agendaData.map(item => ({
 const iframeUrl = ref<string | null>(null)
 
 onMounted(() => {
-  iframeUrl.value = 'https://www.canva.com/design/DAGpQh_AJCg/eINNdV9RCRv9JAId9I4yDQ/view?embed'
+  iframeUrl.value = 'https://www.canva.com/design/DAG3r7dWw3Q/NoXTlT4r6JmNkAh8Dd-0iw/view?embed'
 })
 </script>
 
