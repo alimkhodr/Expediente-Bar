@@ -2,14 +2,18 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxt/ui', '@nuxt/fonts'],
+  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxt/ui', '@nuxt/fonts', '@nuxtjs/supabase'],
   css: ['~/assets/css/main.css'],
   colorMode: {
     preference: 'dark',
     fallback: 'dark'
   },
   runtimeConfig: {
-    apiKey: process.env.NUXT_API_KEY
+    apiKey: process.env.NUXT_API_KEY,
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: process.env.SUPABASE_KEY
+    }
   },
   app: {
     head: {
