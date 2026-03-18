@@ -17,7 +17,8 @@
     "lint:fix": "eslint . --fix",
     "lint:check": "eslint . --max-warnings 0",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.9.0",
