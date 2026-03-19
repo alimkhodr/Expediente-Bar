@@ -7,35 +7,35 @@ definePageMeta({
 
 const supabase = useSupabaseClient()
 
-const senhaAtual = ref(null)
-const historico = ref([])
+const currentOrder = ref(null)
+const history = ref([])
 const animating = ref(false)
 
-async function carregarSenhas () {
+async function loadOrders () {
   const { data } = await supabase
     .from('senhas')
     .select('*')
+    .gte('criado_em', since)
     .order('criado_em', { ascending: false })
     .limit(4)
 
   if (data && data.length > 0) {
     const novaSenha = data[0]
 
-    // Só anima se for uma senha diferente
-    if (senhaAtual.value && novaSenha.id !== senhaAtual.value.id) {
+    if (currentOrder.value && novaSenha.id !== currentOrder.value.id) {
       animating.value = true
       setTimeout(() => { animating.value = false }, 600)
     }
 
-    senhaAtual.value = novaSenha
-    historico.value = data.slice(1)
+    currentOrder.value = novaSenha
+    history.value = data.slice(1)
   }
 }
 
 let channel = null
 
 onMounted(() => {
-  carregarSenhas()
+  loadOrders()
 
   channel = supabase
     .channel('senhas-changes')
@@ -43,12 +43,8 @@ onMounted(() => {
       event: '*',
       schema: 'public',
       table: 'senhas'
-    }, (payload) => {
-      console.log('Senha atualizada:', payload)
-      carregarSenhas()
-    })
-    .subscribe((status) => {
-      console.log('Status do canal:', status)
+    }, () => {
+      loadOrders()
     })
 })
 
@@ -91,7 +87,7 @@ const currentUrl = computed(() => {
     </header>
 
     <div
-      v-if="!senhaAtual"
+      v-if="!currentOrder"
       class="h-full flex items-center"
     >
       <UCard>
@@ -107,20 +103,20 @@ const currentUrl = computed(() => {
         class="row-span-3 flex items-center justify-center col-span-3 lg:col-span-2 overflow-hidden"
       >
         <span
-          :key="senhaAtual?.id"
+          :key="currentOrder?.id"
           :class="['text-8xl sm:text-[300px] 2xl:text-[450px] font-bold text-primary senha-entrada', { 'senha-flip': animating }]"
         >
-          {{ String(senhaAtual?.numero ?? 0).padStart(3, '0') }}
+          {{ String(currentOrder?.numero ?? 0).padStart(3, '0') }}
         </span>
       </UCard>
 
       <UCard
-        v-for="(s, index) in historico"
+        v-for="(s, index) in history"
         :key="s.id"
         class="flex items-center justify-center col-span-3 lg:col-span-1 overflow-hidden"
       >
         <span
-          :class="['text-6xl xl:text-9xl font-bold historico-item']"
+          :class="['text-6xl xl:text-9xl font-bold history-item']"
           :style="{ animationDelay: `${index * 60}ms` }"
         >
           {{ String(s.numero).padStart(3, '0') }}
@@ -146,7 +142,7 @@ const currentUrl = computed(() => {
   100% { transform: translateY(0) scaleY(1); opacity: 1; }
 }
 
-.historico-item {
+.history-item {
   animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
