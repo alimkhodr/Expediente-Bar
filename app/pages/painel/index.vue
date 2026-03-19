@@ -104,7 +104,6 @@ const currentUrl = computed(() => {
       v-else
       class="grid grid-flow-row-dense grid-cols-3 grid-rows-6 lg:grid-rows-3 gap-4 h-full w-full"
     >
-      <!-- Card principal com animação -->
       <UCard class="row-span-3 flex items-center justify-center col-span-3 lg:col-span-2 overflow-hidden">
         <span
           :key="senhaAtual?.id"
@@ -114,7 +113,6 @@ const currentUrl = computed(() => {
         </span>
       </UCard>
 
-      <!-- Histórico com slide -->
       <UCard
         v-for="(s, index) in historico"
         :key="s.id"
@@ -132,12 +130,10 @@ const currentUrl = computed(() => {
 </template>
 
 <style scoped>
-/* Entrada inicial da senha principal */
 .senha-entrada {
   display: inline-block;
 }
 
-/* Animação ao trocar a senha: sobe com bounce */
 .senha-flip {
   animation: senhaFlip 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -149,7 +145,6 @@ const currentUrl = computed(() => {
   100% { transform: translateY(0) scaleY(1); opacity: 1; }
 }
 
-/* Slide-in dos itens do histórico */
 .historico-item {
   animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }

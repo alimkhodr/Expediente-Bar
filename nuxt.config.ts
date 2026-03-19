@@ -44,5 +44,10 @@ export default defineNuxtConfig({
       crawlLinks: true
     }
   },
-  ssr: true
+  ssr: true,
+  vite: {
+    ssr: {
+      external: ['reka-ui']
+    }
+  }
 })
