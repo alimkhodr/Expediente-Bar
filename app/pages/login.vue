@@ -6,10 +6,17 @@ definePageMeta({
 
 const supabase = useSupabaseClient()
 const toast = useToast()
+const user = useSupabaseUser()
 
-const redirect = useRoute().query.redirect as string || undefined
+const redirect = useRoute().query.redirect as string || '/painel/admin'
 
 const loading = ref(false)
+
+watch(user, (newUser) => {
+  if (newUser) {
+    navigateTo(redirect)
+  }
+}, { immediate: true })
 
 const loginFields = ref([
   {
@@ -56,7 +63,7 @@ async function login (event: FormSubmitEvent) {
         title: 'Login realizado com sucesso',
         color: 'success'
       })
-      if (redirect) navigateTo(redirect)
+      navigateTo(redirect)
     }
   } finally {
     loading.value = false
