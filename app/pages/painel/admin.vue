@@ -1,66 +1,15 @@
 <script setup lang="ts">
 
 definePageMeta({
-  layout: 'painel'
+  layout: 'blank',
+  middleware: ['auth']
 })
 
 const supabase = useSupabaseClient()
-const user = useSupabaseUser()
 const toast = useToast()
 
 const loading = ref(false)
 const numero = ref('')
-
-const loginFields = ref([
-  {
-    name: 'email',
-    type: 'email' as const,
-    label: 'E-mail',
-    placeholder: 'seu@email.com',
-    required: true
-  },
-  {
-    name: 'password',
-    type: 'password' as const,
-    label: 'Senha',
-    placeholder: '••••••••',
-    required: true
-  }
-])
-
-interface FormData {
-  [key: string]: unknown
-}
-
-interface FormSubmitEvent {
-  data: FormData
-}
-
-async function login (event: FormSubmitEvent) {
-  loading.value = true
-  try {
-    const data = event.data
-    const { error } = await supabase.auth.signInWithPassword({
-      email: data.email as string,
-      password: data.password as string
-    })
-
-    if (error) {
-      toast.add({
-        title: 'Erro ao fazer login',
-        description: error.message,
-        color: 'error'
-      })
-    } else {
-      toast.add({
-        title: 'Login realizado com sucesso',
-        color: 'success'
-      })
-    }
-  } finally {
-    loading.value = false
-  }
-}
 
 async function chamarSenha () {
   if (!numero.value) {
@@ -104,80 +53,61 @@ async function logout () {
     title: 'Logout realizado',
     color: 'info'
   })
+  navigateTo('/login')
 }
 </script>
 
 <template>
-  <UContainer class="py-8 h-screen">
-    <div class="flex flex-col items-center justify-center h-full">
-
-      <UPageCard
-        v-if="!user"
-        class="w-full max-w-md"
-      >
-        <UAuthForm
-          :fields="loginFields"
-          title="Login"
-          description="Faça login para continuar"
-          submit-label="Entrar"
-          :loading="loading"
-          class="max-w-md w-full"
-          @submit="login"
-        />
-      </UPageCard>
-
-      <UPageCard
-        v-else
-        class="w-full max-w-md"
-      >
-        <div class="flex items-start justify-between mb-6">
-          <div>
-            <h2 class="text-xl font-semibold">Chamar Senha</h2>
-            <p class="text-sm text-muted mt-1">Digite o número da senha</p>
-          </div>
-          <UButton
-            icon="i-heroicons-arrow-right-on-rectangle"
-            color="neutral"
-            variant="link"
-            label="Sair"
-            @click="logout"
-          />
+  <UContainer class="flex flex-col items-center justify-center py-8 h-screen">
+    <UPageCard
+      class="w-full max-w-md"
+    >
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-semibold">Chamar Senha</h2>
+          <p class="text-sm text-muted mt-1">Digite o número da senha</p>
         </div>
+        <UButton
+          icon="i-heroicons-arrow-right-on-rectangle"
+          color="neutral"
+          variant="link"
+          label="Sair"
+          @click="logout"
+        />
+      </div>
 
-        <UForm
-          :state="{ numero }"
-          class="space-y-6"
-          @submit="chamarSenha"
+      <UForm
+        :state="{ numero }"
+        class="space-y-6"
+        @submit="chamarSenha"
+      >
+        <UFormField
+          label="Número da Senha"
+          name="numero"
+          required
         >
-          <UFormField
-            label="Número da Senha"
-            name="numero"
-            required
-          >
-            <UInput
-              v-model="numero"
-              type="number"
-              placeholder="123"
-              min="1"
-              max="999"
-              size="xl"
-              :disabled="loading"
-              class="w-full font-bold"
-            />
-          </UFormField>
-
-          <UButton
-            type="submit"
-            block
+          <UInput
+            v-model="numero"
+            type="number"
+            placeholder="123"
+            min="1"
+            max="999"
             size="xl"
-            icon="fluent:megaphone-loud-48-filled"
-            :loading="loading"
-          >
-            Chamar Senha
-          </UButton>
-        </UForm>
-      </UPageCard>
+            :disabled="loading"
+            class="w-full font-bold"
+          />
+        </UFormField>
 
-    </div>
+        <UButton
+          type="submit"
+          block
+          size="xl"
+          icon="fluent:megaphone-loud-48-filled"
+          :loading="loading"
+        >
+          Chamar Senha
+        </UButton>
+      </UForm>
+    </UPageCard>
   </UContainer>
 </template>

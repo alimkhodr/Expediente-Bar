@@ -2,14 +2,14 @@
 import QRCode from 'qrcode.vue'
 
 definePageMeta({
-  layout: 'painel'
+  layout: 'blank'
 })
 
 const supabase = useSupabaseClient()
 
 const senhaAtual = ref(null)
 const historico = ref([])
-const animating = ref(false) // <-- controla a animação
+const animating = ref(false)
 
 async function carregarSenhas () {
   const { data } = await supabase
