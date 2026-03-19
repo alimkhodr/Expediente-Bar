@@ -10,7 +10,7 @@ export const avisos: Aviso[] = [
       alt: 'Caipirinha'
     },
     days: ['friday'],
-    status: true,
+    status: false,
     actions: [
       {
         trailingIcon: 'material-symbols-arrow-right-alt',
@@ -27,7 +27,7 @@ export const avisos: Aviso[] = [
       alt: 'Litrão'
     },
     days: ['tuesday', 'wednesday'],
-    status: true,
+    status: false,
     actions: [
       {
         trailingIcon: 'material-symbols-arrow-right-alt',
