@@ -47,7 +47,8 @@ export default defineNuxtConfig({
   ssr: true,
   vite: {
     ssr: {
-      external: ['reka-ui']
+      external: ['reka-ui'],
+      noExternal: ['vaul-vue']
     }
   }
 })
