@@ -65,18 +65,17 @@ const currentUrl = computed(() => {
 </script>
 
 <template>
-  <div class="h-screen w-full p-6 lg:p-16 flex flex-col items-start justify-center gap-4 lg:gap-8">
+  <div class="min-h-screen h-full w-full p-6 lg:p-16 flex flex-col items-start justify-center gap-4 lg:gap-8">
     <header class="w-full flex flex-row items-center justify-between">
       <div class="w-full flex flex-col lg:flex-row items-start justify-start lg:items-center gap-6 lg:gap-8">
         <Logo class="h-8 lg:h-18" />
-        <span class="text-6xl text-primary hidden lg:inline">|</span>
-        <h1 class="text-2xl lg:text-6xl text-center">
+        <h1 class="text-4xl lg:text-7xl text-center">
           Painel de Senhas
         </h1>
       </div>
-      <div class="hidden lg:flex flex-row items-center gap-2 shrink-0">
-        <div class="max-w-32">
-          <span class="text-xl">Acompanhe pelo celular</span>
+      <div class="hidden lg:flex flex-row items-center shrink-0">
+        <div class="max-w-62">
+          <span class="text-4xl">Acompanhe pelo celular</span>
         </div>
         <UCard
           :ui="{ body: 'p-2 sm:p-2' }"
@@ -84,7 +83,7 @@ const currentUrl = computed(() => {
         >
           <QRCode
             :value="currentUrl"
-            :size="68"
+            :size="140"
             level="H"
           />
         </UCard>
@@ -102,9 +101,11 @@ const currentUrl = computed(() => {
 
     <div
       v-else
-      class="grid grid-flow-row-dense grid-cols-3 grid-rows-6 lg:grid-rows-3 gap-4 h-full w-full"
+      class="grid grid-flow-row-dense grid-cols-3 grid-rows-6 lg:grid-rows-3 gap-6 h-full w-full"
     >
-      <UCard class="row-span-3 flex items-center justify-center col-span-3 lg:col-span-2 overflow-hidden">
+      <UCard
+        class="row-span-3 flex items-center justify-center col-span-3 lg:col-span-2 overflow-hidden"
+      >
         <span
           :key="senhaAtual?.id"
           :class="['text-8xl sm:text-[300px] 2xl:text-[450px] font-bold text-primary senha-entrada', { 'senha-flip': animating }]"
