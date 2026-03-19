@@ -65,7 +65,7 @@ const currentUrl = computed(() => {
 </script>
 
 <template>
-  <div class="min-h-screen h-full w-full p-6 lg:p-16 flex flex-col items-start justify-center gap-4 lg:gap-8">
+  <div class="min-h-screen h-auto md:h-full w-full p-6 lg:p-14 flex flex-col items-start justify-center gap-4 lg:gap-8">
     <header class="w-full flex flex-row items-center justify-between">
       <div class="w-full flex flex-col lg:flex-row items-start justify-start lg:items-center gap-6 lg:gap-8">
         <Logo class="h-8 lg:h-18" />
