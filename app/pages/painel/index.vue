@@ -15,7 +15,6 @@ async function loadOrders () {
   const { data } = await supabase
     .from('senhas')
     .select('*')
-    .gte('criado_em', since)
     .order('criado_em', { ascending: false })
     .limit(4)
 
