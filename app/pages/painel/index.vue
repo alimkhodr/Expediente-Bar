@@ -45,6 +45,7 @@ onMounted(() => {
     }, () => {
       loadOrders()
     })
+    .subscribe()
 })
 
 onUnmounted(() => {
