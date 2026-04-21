@@ -14,45 +14,44 @@ useSeoMeta({
 </script>
 <template>
   <div>
-    <ScreenCarousel/>
+    <ScreenCarousel />
     <Container
       id="agenda"
       contrast
     >
       <Agenda />
     </Container>
-    <BrandsCarousel/>
+    <LazyBrandsCarousel />
     <Container id="galeria">
-      <Gallery />
+      <LazyGallery />
     </Container>
     <Container
       id="mapa"
       contrast
     >
-      <Map />
+      <LazyMap />
     </Container>
     <Container id="avaliacoes">
-      <Reviews />
+      <LazyReviews />
     </Container>
     <Container
       id="faq"
       contrast
     >
-      <Faq />
+      <LazyFaq />
     </Container>
     <Container>
-      <SocialMedia />
+      <LazySocialMedia />
     </Container>
     <Container
       id="local"
       contrast
     >
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <Address class="h-full" />
-        <OpeningHours/>
+        <LazyAddress class="h-full" />
+        <LazyOpeningHours />
       </div>
     </Container>
-    <Footer/>
+    <LazyFooter />
   </div>
-
 </template>
