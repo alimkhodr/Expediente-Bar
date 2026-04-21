@@ -1,25 +1,22 @@
 <script setup lang="ts">
-const { trackEvent } = useClarity()
+const { trackEvent } = useAnalytics()
 const socialMedia = [
   {
     id: 'whatsapp',
     icon: 'mdi-whatsapp',
     title: 'WhatsApp',
-    trackingText: 'whatsapp_button_click',
     to: links.whatsapp('Olá!')
   },
   {
     id: 'facebook',
     icon: 'mdi-facebook',
     title: 'Facebook',
-    trackingText: 'facebook_button_click',
     to: links.facebook
   },
   {
     id: 'instagram',
     icon: 'mdi-instagram',
     title: 'Instagram',
-    trackingText: 'instagram_button_click',
     to: links.instagram
   }
 ]
@@ -52,7 +49,7 @@ const socialMedia = [
         :ui="{
           leadingIcon: 'text-primary'
         }"
-        @click="trackEvent(value.trackingText)"
+        @click="trackEvent('social_media_click', { platform: value.id })"
       >
         {{ value.title }}
       </UButton>

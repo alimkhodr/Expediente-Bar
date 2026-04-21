@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { trackEvent } = useClarity()
+const { trackEvent } = useAnalytics()
 
 const items = [
   {
@@ -40,7 +40,7 @@ const items = [
 
 <template>
   <UCarousel
-    v-slot="{ item, index }"
+    v-slot="{ item }"
     :items="items"
     class="w-full h-screen"
     loop
@@ -51,16 +51,10 @@ const items = [
 
     }"
   >
-    <div class="h-screen w-full relative flex items-center justify-start p-8">
-      <NuxtImg
-        :src="item.image"
-        :alt="item.title"
-        :fetchpriority="index === 0 ? 'high' : 'auto'"
-        :loading="index === 0 ? 'eager' : 'lazy'"
-        sizes="100vw"
-        format="webp"
-        class="absolute inset-0 w-full h-full object-cover object-center -z-10"
-      />
+    <div
+      class="h-screen w-full flex items-center justify-start p-8 bg-cover bg-center bg-no-repeat"
+      :style="`background-image: url(${item.image})`"
+    >
       <UCard
         variant="solid"
         class="bg-stone-950/85 backdrop-blur-md md:max-w-1/3"
@@ -88,7 +82,7 @@ const items = [
             :icon="item.button.icon"
             :to="item.button.to"
             target="_blank"
-            @click="trackEvent('carousel_' + item.button.label.toLowerCase() + '_button_click')"
+            @click="trackEvent('carousel_button_click', { slide_title: item.title, button_label: item.button.label })"
           />
         </template>
       </UCard>

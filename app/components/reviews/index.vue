@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ReviewsResponse } from '~/types/reviews'
 
-const { trackEvent } = useClarity()
+const { trackEvent } = useAnalytics()
 
 const { data: reviews } = await useAsyncData<ReviewsResponse>(
   'reviews',
@@ -44,7 +44,7 @@ const filteredReviews = computed(() => {
         label: 'Avaliar',
         to: links.review,
         target: '_blank',
-        onClick: () => trackEvent('review_button_click')
+        onClick: () => trackEvent('review_click', { source: 'cta_banner' })
       },
     ]"
     icon="ic-baseline-star-rate"

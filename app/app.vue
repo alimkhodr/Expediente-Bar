@@ -2,7 +2,7 @@
 import type { AvisoAction, Aviso } from '~/types/aviso'
 
 const toast = useToast()
-const { trackEvent } = useClarity()
+const { trackEvent } = useAnalytics()
 const supabase = useSupabaseClient()
 
 onMounted(() => {
@@ -14,8 +14,13 @@ async function fetchAvisos (): Promise<Aviso[]> {
   return (data ?? []) as Aviso[]
 }
 
-function handleAvisoClick (action: AvisoAction) {
-  trackEvent(`click_${action.label}`)
+function handleAvisoClick (action: AvisoAction, aviso: Aviso) {
+  trackEvent('aviso_action_click', {
+    aviso_title: aviso.title,
+    aviso_description: aviso.description,
+    action_label: action.label,
+    action_link: action.link
+  })
   if (action.link) {
     window.open(action.link, '_blank')
   }
@@ -39,7 +44,7 @@ function showToasts (avisos: Aviso[]) {
           trailingIcon: a.trailingIcon,
           color: 'primary' as const,
           variant: 'solid' as const,
-          onClick: () => handleAvisoClick(a)
+          onClick: () => handleAvisoClick(a, aviso)
         }))
       })
     }, index * 1000)

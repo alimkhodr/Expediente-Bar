@@ -28,6 +28,7 @@
     "@nuxtjs/supabase": "^2.0.4",
     "eslint": "^9.33.0",
     "nuxt": "^4.0.3",
+    "posthog-js": "^1.369.5",
     "qrcode.vue": "^3.8.0",
     "sharp": "^0.34.3",
     "typescript": "^5.9.2",

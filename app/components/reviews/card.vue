@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Review } from '~/types/reviews'
 
-const { trackEvent } = useClarity()
+const { trackEvent } = useAnalytics()
 const props = defineProps<{ item: Review }>()
 
 const getStars = (rating: number) => {
@@ -63,7 +63,7 @@ const getStars = (rating: number) => {
         size="xs"
         icon="i-heroicons-arrow-top-right-on-square"
         trailing
-        @click="trackEvent('read_review_button_click')"
+        @click="trackEvent('read_review_click', { reviewer_name: props.item.authorAttribution.displayName, rating: props.item.rating })"
       >
         Ver no Google Maps
       </UButton>

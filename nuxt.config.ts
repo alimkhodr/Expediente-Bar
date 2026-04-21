@@ -19,7 +19,8 @@ export default defineNuxtConfig({
     apiKey: process.env.NUXT_API_KEY,
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
-      supabaseKey: process.env.SUPABASE_KEY
+      supabaseKey: process.env.SUPABASE_KEY,
+      posthogKey: process.env.NUXT_PUBLIC_POSTHOG_KEY
     }
   },
   app: {
