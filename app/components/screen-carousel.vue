@@ -57,7 +57,6 @@ const items = [
         :alt="item.title"
         :fetchpriority="index === 0 ? 'high' : 'auto'"
         :loading="index === 0 ? 'eager' : 'lazy'"
-        :preload="index === 0"
         sizes="100vw"
         format="webp"
         class="absolute inset-0 w-full h-full object-cover object-center -z-10"

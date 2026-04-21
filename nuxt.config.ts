@@ -33,7 +33,8 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' }
+        { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
+        { rel: 'preload', as: 'image', href: '/images/birthday.jpg', fetchpriority: 'high' }
       ]
     }
   },
@@ -49,7 +50,8 @@ export default defineNuxtConfig({
     preset: 'netlify',
     prerender: {
       routes: ['/'],
-      crawlLinks: true
+      crawlLinks: true,
+      ignore: ['/.netlify']
     }
   },
   ssr: true,
