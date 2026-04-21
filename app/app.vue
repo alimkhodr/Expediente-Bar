@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { avisos } from '~/assets/data/avisos'
-import type { AvisoAction } from '~/types/aviso'
+import type { AvisoAction, Aviso } from '~/types/aviso'
 
 const toast = useToast()
 const { trackEvent } = useClarity()
+const supabase = useSupabaseClient()
 
 onMounted(() => {
-  showToasts()
+  fetchAvisos().then(showToasts)
 })
+
+async function fetchAvisos (): Promise<Aviso[]> {
+  const { data } = await supabase.from('avisos').select('*')
+  return (data ?? []) as Aviso[]
+}
 
 function handleAvisoClick (action: AvisoAction) {
   trackEvent(`click_${action.label}`)
@@ -16,7 +21,7 @@ function handleAvisoClick (action: AvisoAction) {
   }
 }
 
-function showToasts () {
+function showToasts (avisos: Aviso[]) {
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase()
 
   const avisosHoje = avisos.filter(aviso =>
@@ -26,11 +31,14 @@ function showToasts () {
   avisosHoje.forEach((aviso, index) => {
     setTimeout(() => {
       toast.add({
-        ...aviso,
+        title: aviso.title,
+        description: aviso.description,
+        avatar: aviso.avatar,
         actions: aviso.actions?.map((a: AvisoAction) => ({
-          ...a,
-          color: 'primary',
-          variant: 'solid',
+          label: a.label,
+          trailingIcon: a.trailingIcon,
+          color: 'primary' as const,
+          variant: 'solid' as const,
           onClick: () => handleAvisoClick(a)
         }))
       })

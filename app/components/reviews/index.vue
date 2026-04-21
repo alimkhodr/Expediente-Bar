@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import type { ReviewsResponse } from '~/types/reviews'
 
-const config = useRuntimeConfig()
 const { trackEvent } = useClarity()
 
 const { data: reviews } = await useAsyncData<ReviewsResponse>(
   'reviews',
-  () => $fetch(`https://places.googleapis.com/v1/places/ChIJVx-dQk9LzJQR80Am0iwvW10?fields=reviews&languageCode=pt-BR&key=${config.apiKey}`)
+  () => $fetch('/api/places/reviews')
 )
 
 const filteredReviews = computed(() => {

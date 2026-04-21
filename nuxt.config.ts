@@ -33,9 +33,17 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' }
+        { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
+        { rel: 'preload', as: 'image', href: '/images/birthday.jpg', fetchpriority: 'high' }
       ]
     }
+  },
+  image: {
+    quality: 80,
+    format: ['webp'],
+  },
+  routeRules: {
+    '/api/places/**': { cache: { maxAge: 60 * 60 } },
   },
   nitro: {
     preset: 'netlify',

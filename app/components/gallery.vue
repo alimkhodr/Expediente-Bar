@@ -93,6 +93,8 @@ const items = [
         format="webp"
         :src="item.src"
         :alt="item.alt"
+        loading="lazy"
+        sizes="50vw lg:20vw"
         class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
       />
     </div>

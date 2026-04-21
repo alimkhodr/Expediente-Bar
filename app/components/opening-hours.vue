@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import type { CurrentOpeningHoursResponse } from '~/types/currentOpeningHours'
-const config = useRuntimeConfig()
 
 const { data: openingHours } = await useAsyncData<CurrentOpeningHoursResponse>(
   'currentOpeningHours',
-  () => $fetch(`https://places.googleapis.com/v1/places/ChIJVx-dQk9LzJQR80Am0iwvW10?fields=currentOpeningHours&languageCode=pt-BR&key=${config.apiKey}`)
+  () => $fetch('/api/places/opening-hours')
 )
 </script>
 <template>
