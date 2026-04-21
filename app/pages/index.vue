@@ -21,15 +21,15 @@ useSeoMeta({
     >
       <Agenda />
     </Container>
-    <LazyBrandsCarousel />
+    <BrandsCarousel />
     <Container id="galeria">
-      <LazyGallery />
+      <Gallery />
     </Container>
     <Container
       id="mapa"
       contrast
     >
-      <LazyMap />
+      <Map />
     </Container>
     <Container id="avaliacoes">
       <Reviews />
@@ -38,20 +38,20 @@ useSeoMeta({
       id="faq"
       contrast
     >
-      <LazyFaq />
+      <Faq />
     </Container>
     <Container>
-      <LazySocialMedia />
+      <SocialMedia />
     </Container>
     <Container
       id="local"
       contrast
     >
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <LazyAddress class="h-full" />
+        <Address class="h-full" />
         <OpeningHours />
       </div>
     </Container>
-    <LazyFooter />
+    <Footer />
   </div>
 </template>
