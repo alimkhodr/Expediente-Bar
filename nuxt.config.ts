@@ -59,17 +59,6 @@ export default defineNuxtConfig({
   vite: {
     ssr: {
       external: ['reka-ui', 'vaul-vue']
-    },
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks (id) {
-            if (id.includes('@supabase/')) return 'supabase'
-            if (id.includes('embla-carousel')) return 'embla'
-            if (id.includes('@nuxt/ui')) return 'nuxt-ui'
-          }
-        }
-      }
     }
   }
 })

@@ -32,7 +32,7 @@ useSeoMeta({
       <LazyMap />
     </Container>
     <Container id="avaliacoes">
-      <LazyReviews />
+      <Reviews />
     </Container>
     <Container
       id="faq"
@@ -49,7 +49,7 @@ useSeoMeta({
     >
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         <LazyAddress class="h-full" />
-        <LazyOpeningHours />
+        <OpeningHours />
       </div>
     </Container>
     <LazyFooter />
