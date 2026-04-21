@@ -40,7 +40,7 @@ const items = [
 
 <template>
   <UCarousel
-    v-slot="{ item }"
+    v-slot="{ item, index }"
     :items="items"
     class="w-full h-screen"
     loop
@@ -51,13 +51,17 @@ const items = [
 
     }"
   >
-    <div
-      class="h-screen w-full flex items-center justify-start p-8 bg-cover bg-center bg-no-repeat"
-      :style="`background-image: image-set(
-        url(${item.image}) 1x,
-        url(${item.imageMobile}) 2x
-      );`"
-    >
+    <div class="h-screen w-full relative flex items-center justify-start p-8">
+      <NuxtImg
+        :src="item.image"
+        :alt="item.title"
+        :fetchpriority="index === 0 ? 'high' : 'auto'"
+        :loading="index === 0 ? 'eager' : 'lazy'"
+        :preload="index === 0"
+        sizes="100vw"
+        format="webp"
+        class="absolute inset-0 w-full h-full object-cover object-center -z-10"
+      />
       <UCard
         variant="solid"
         class="bg-stone-950/85 backdrop-blur-md md:max-w-1/3"

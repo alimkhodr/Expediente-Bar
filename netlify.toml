@@ -2,6 +2,13 @@
   command = "corepack disable && npm run generate"
   publish = "dist"
 
+[images]
+  remote_images = [
+    "https://lh3.googleusercontent.com/.*",
+    "https://lh4.googleusercontent.com/.*",
+    "https://akrnjowlqqfiqvfgsojs.supabase.co/.*"
+  ]
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
