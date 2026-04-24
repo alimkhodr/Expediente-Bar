@@ -5,14 +5,13 @@ definePageMeta({
 
 const loaded = ref(false)
 const iframeRef = ref<HTMLIFrameElement | null>(null)
-
-function toggleFullscreen() {
-  iframeRef.value?.requestFullscreen()
-}
 </script>
 
 <template>
-  <div class="w-full bg-stone-900 flex justify-center relative" style="height: 100svh; padding: 3rem 1rem 1rem;">
+  <div
+    class="w-full bg-stone-900 flex justify-center relative"
+    style="height: 100svh; padding: 3rem 1rem 1rem;"
+  >
     <USkeleton
       v-if="!loaded"
       class="absolute w-full max-w-3xl rounded-lg"
@@ -30,15 +29,5 @@ function toggleFullscreen() {
       allow="fullscreen"
       @load="loaded = true"
     />
-
-    <UTooltip text="Tela cheia">
-      <UButton
-        icon="i-lucide-expand"
-        color="neutral"
-        variant="soft"
-        class="absolute bottom-4 right-4"
-        @click="toggleFullscreen"
-      />
-    </UTooltip>
   </div>
 </template>
