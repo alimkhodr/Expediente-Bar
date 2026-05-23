@@ -44,7 +44,7 @@ onMounted(() => {
         v-if="iframeUrl"
         :src="iframeUrl"
         loading="lazy"
-        class="w-full lg:col-span-3 aspect-[4/5] rounded-xl md:rounded-4xl border-none"
+        class="w-full lg:col-span-3 aspect-4/5 rounded-xl md:rounded-4xl border-none"
       />
     </ClientOnly>
   </div>

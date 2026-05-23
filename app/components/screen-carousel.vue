@@ -3,6 +3,18 @@ const { trackEvent } = useAnalytics()
 
 const items = [
   {
+    image: '/images/copa-do-mundo.jpg',
+    imageMobile: '/images/copa-do-mundo-mobile.jpg',
+    title: 'Copa do Mundo',
+    color: 'success' as const,
+    text: 'Seremos o ponto de encontro de diferentes galera porém na mesma torcida, todos juntos pela nossa seleção',
+    button: {
+      label: 'Ver agenda',
+      icon: 'mdi:calendar',
+      to: 'https://www.canva.com/design/DAHJMeXi3DE/JtbzDwqxF-I_gmmJM23NBA/view'
+    }
+  },
+  {
     image: '/images/birthday.jpg',
     imageMobile: '/images/birthday.jpg',
     title: 'Comemore seu aniversário!',
@@ -52,18 +64,18 @@ const items = [
     }"
   >
     <div
-      class="h-screen w-full flex items-center justify-start p-8 bg-cover bg-center bg-no-repeat"
-      :style="`background-image: url(${item.image})`"
+      class="h-screen w-full flex items-center justify-start p-8 bg-cover bg-center bg-no-repeat bg-(image:--bg-mobile) md:bg-(image:--bg-desktop)"
+      :style="`--bg-mobile: url(${item.imageMobile}); --bg-desktop: url(${item.image})`"
     >
       <UCard
         variant="solid"
-        class="bg-stone-950/85 backdrop-blur-md md:max-w-1/3"
+        class="bg-stone-100 dark:bg-stone-950/85 backdrop-blur-md md:max-w-1/3"
       >
         <template #header>
           <UText
             size="title"
             weight="bold"
-            color="primary"
+            :color="item.color || 'primary'"
             tag="h2"
           >
             {{ item.title }}
@@ -71,6 +83,7 @@ const items = [
         </template>
         <UText
           tag="p"
+          class="dark:text-white text-black"
         >
           {{ item.text }}
         </UText>
@@ -81,6 +94,7 @@ const items = [
             :label="item.button.label"
             :icon="item.button.icon"
             :to="item.button.to"
+            :color="item.color || 'primary'"
             target="_blank"
             @click="trackEvent('carousel_button_click', { slide_title: item.title, button_label: item.button.label })"
           />
