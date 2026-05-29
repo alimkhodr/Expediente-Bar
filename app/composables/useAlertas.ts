@@ -5,6 +5,12 @@ export function useAlertas () {
     return import.meta.client && 'Notification' in window
   }
 
+  // Sincroniza o estado com a permissão real do navegador (ex.: após reload
+  // com senha restaurada do localStorage, sem ter pedido permissão de novo).
+  onMounted(() => {
+    if (suportaNotificacao()) permitido.value = Notification.permission === 'granted'
+  })
+
   async function pedirPermissao (): Promise<boolean> {
     if (!suportaNotificacao()) return false
     const r = await Notification.requestPermission()
@@ -37,7 +43,9 @@ export function useAlertas () {
   function avisar (titulo: string, corpo: string) {
     tocarSom()
     vibrar()
-    if (permitido.value && suportaNotificacao()) {
+    // Checa a permissão real do navegador (não só o ref), cobrindo o caso de
+    // reload sem ter pedido permissão de novo nesta sessão.
+    if (suportaNotificacao() && Notification.permission === 'granted') {
       try { new Notification(titulo, { body: corpo, icon: '/icon.svg' }) } catch { /* noop */ }
     }
   }
