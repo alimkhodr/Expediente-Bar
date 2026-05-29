@@ -14,7 +14,7 @@ useSeoMeta({
 </script>
 <template>
   <div>
-    <ScreenCarousel />
+    <ScreenCarousel id="home" />
     <Container
       id="agenda"
       contrast
