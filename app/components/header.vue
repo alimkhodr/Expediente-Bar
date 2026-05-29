@@ -36,13 +36,7 @@ onMounted(() => {
     <div class="w-full px-6 py-4 bg-stone-100/85 dark:bg-stone-950/85 backdrop-blur-md flex flex-row justify-between">
       <div class="flex flex-row justify-between items-center w-full">
         <a href="#home">
-          <!-- <Logo class="h-8 md:h-10" /> -->
-          <NuxtImg
-            src="/images/logo-copa.png"
-            alt="Logo da Copa"
-            format="webp"
-            class="h-12 md:h-16"
-          />
+          <Logo class="h-8 md:h-10" />
         </a>
         <UDrawer direction="right">
           <UButton
