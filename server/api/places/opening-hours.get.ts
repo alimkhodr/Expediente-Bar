@@ -8,5 +8,5 @@ export default cachedEventHandler(async (event) => {
 }, {
   maxAge: 60 * 60,
   swr: true,
-  name: 'places-opening-hours',
+  name: 'places-opening-hours'
 })
