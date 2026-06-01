@@ -44,6 +44,7 @@ defineProps<{
       >
         <PainelSenhaDisplay
           :numero="atual.numero"
+          :nome="atual.nome"
           :trocou="trocou"
           class="w-full min-h-0 portrait:h-[clamp(8rem,30cqi,22rem)] landscape:flex-1"
         />

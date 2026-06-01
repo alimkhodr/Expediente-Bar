@@ -3,10 +3,12 @@ import { formatarSenha } from '~/utils/fila'
 
 const props = withDefaults(defineProps<{
   numero: number | null | undefined
+  nome?: string | null
   variante?: 'atual' | 'historico'
   glow?: boolean
   trocou?: number
 }>(), {
+  nome: null,
   variante: 'atual',
   glow: false,
   trocou: 0
@@ -19,25 +21,34 @@ const VIEW_H = 200
 </script>
 
 <template>
-  <svg
-    :viewBox="`0 0 ${VIEW_W} ${VIEW_H}`"
-    preserveAspectRatio="xMidYMid meet"
-    class="block max-w-full"
-    :class="glow ? 'senha-glow' : ''"
-  >
-    <text
-      :key="`${texto}-${trocou}`"
-      x="50%"
-      y="50%"
-      text-anchor="middle"
-      dominant-baseline="central"
-      class="font-bold senha-text"
-      :style="{
-        animation: trocou ? 'senhaFlip 0.55s cubic-bezier(0.22,1,0.36,1)' : 'none',
-        fill: variante === 'atual' ? 'var(--ui-primary)' : 'var(--ui-text-muted)'
-      }"
-    >{{ texto }}</text>
-  </svg>
+  <div class="flex flex-col items-center justify-center w-full min-h-0">
+    <svg
+      :viewBox="`0 0 ${VIEW_W} ${VIEW_H}`"
+      preserveAspectRatio="xMidYMid meet"
+      class="block max-w-full min-h-0"
+      :class="glow ? 'senha-glow' : ''"
+    >
+      <text
+        :key="`${texto}-${trocou}`"
+        x="50%"
+        y="50%"
+        text-anchor="middle"
+        dominant-baseline="central"
+        class="font-bold senha-text"
+        :style="{
+          animation: trocou ? 'senhaFlip 0.55s cubic-bezier(0.22,1,0.36,1)' : 'none',
+          fill: variante === 'atual' ? 'var(--ui-primary)' : 'var(--ui-text-muted)'
+        }"
+      >{{ texto }}</text>
+    </svg>
+    <span
+      v-if="nome"
+      class="font-medium leading-none -mt-[6%] truncate max-w-full px-2"
+      :class="variante === 'atual'
+        ? 'text-[clamp(1rem,5cqi,2.5rem)] text-primary'
+        : 'text-[clamp(0.75rem,3cqi,1.25rem)] text-muted'"
+    >{{ nome }}</span>
+  </div>
 </template>
 
 <style scoped>
