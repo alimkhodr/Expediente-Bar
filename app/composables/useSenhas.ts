@@ -1,6 +1,7 @@
 export interface Senha {
   id: number
   numero: number
+  nome: string | null
   criado_em: string
 }
 
