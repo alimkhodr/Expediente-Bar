@@ -7,7 +7,15 @@ describe('parseComanda', () => {
     expect(parseComanda(txt)).toEqual({ nome: 'Jihad', numero: 455 })
   })
 
-  it('aceita nome composto', () => {
+  it('aceita nome composto antes do numero', () => {
+    expect(parseComanda('Cliente: Jihad Khodr Ali 455')).toEqual({ nome: 'Jihad Khodr Ali', numero: 455 })
+  })
+
+  it('aceita numero antes do nome', () => {
+    expect(parseComanda('Cliente: 455 Jihad')).toEqual({ nome: 'Jihad', numero: 455 })
+  })
+
+  it('aceita nome composto (Ana Maria 12)', () => {
     expect(parseComanda('Cliente: Ana Maria 12')).toEqual({ nome: 'Ana Maria', numero: 12 })
   })
 
@@ -15,15 +23,21 @@ describe('parseComanda', () => {
     expect(parseComanda('Pedido: 773210\nCliente: Jihad')).toEqual({ nome: 'Jihad', numero: null })
   })
 
-  it('sem linha Cliente, usa numero isolado de ate 3 digitos', () => {
-    expect(parseComanda('Senha 87 chamada')).toEqual({ nome: null, numero: 87 })
+  it('corta o restante quando o OCR junta a linha seguinte', () => {
+    expect(parseComanda('Cliente: Jihad 455 Horario: 21:04 Atendente: Kelly')).toEqual({ nome: 'Jihad', numero: 455 })
   })
 
-  it('retorna nulos quando nao ha nada reconhecivel', () => {
-    expect(parseComanda('texto lixo sem dados')).toEqual({ nome: null, numero: null })
+  it('tolera erro de OCR na palavra Cliente', () => {
+    expect(parseComanda('Cl1ente Jihad 455')).toEqual({ nome: 'Jihad', numero: 455 })
   })
 
-  it('nao confunde Pedido de 6 digitos com a senha', () => {
+  it('separa numero colado no nome', () => {
+    expect(parseComanda('Cliente: Jihad455')).toEqual({ nome: 'Jihad', numero: 455 })
+  })
+
+  it('sem linha Cliente, NAO chuta numero (volta vazio)', () => {
+    expect(parseComanda('Senha 87 chamada')).toEqual({ nome: null, numero: null })
     expect(parseComanda('Pedido: 773210 Canal: Balcao')).toEqual({ nome: null, numero: null })
+    expect(parseComanda('texto lixo sem dados')).toEqual({ nome: null, numero: null })
   })
 })
