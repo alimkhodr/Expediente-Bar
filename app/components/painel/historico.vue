@@ -25,6 +25,7 @@ const itens = computed(() => props.limite > 0 ? props.senhas.slice(0, props.limi
       >
         <PainelSenhaDisplay
           :numero="s.numero"
+          :nome="s.nome"
           variante="historico"
           class="flex-1 w-full min-h-0"
         />

@@ -10,6 +10,8 @@ const toast = useToast()
 
 const loading = ref(false)
 const numero = ref('')
+const nome = ref('')
+const escanearAberto = ref(false)
 
 async function chamarSenha () {
   if (!numero.value) {
@@ -26,7 +28,7 @@ async function chamarSenha () {
   loading.value = true
   try {
     // @ts-expect-error - Supabase schema may not be defined
-    const { error } = await supabase.from('senhas').insert([{ numero: parseInt(numero.value, 10) }])
+    const { error } = await supabase.from('senhas').insert([{ numero: numeroInt, nome: nome.value.trim() || null }])
 
     if (error) {
       toast.add({
@@ -41,10 +43,17 @@ async function chamarSenha () {
         color: 'success'
       })
       numero.value = ''
+      nome.value = ''
     }
   } finally {
     loading.value = false
   }
+}
+
+async function lancarDoScan (payload: { nome: string | null, numero: number }) {
+  numero.value = String(payload.numero)
+  nome.value = payload.nome ?? ''
+  await chamarSenha()
 }
 
 async function logout () {
@@ -98,6 +107,19 @@ async function logout () {
           />
         </UFormField>
 
+        <UFormField
+          label="Nome (opcional)"
+          name="nome"
+        >
+          <UInput
+            v-model="nome"
+            placeholder="Jihad"
+            size="xl"
+            :disabled="loading"
+            class="w-full"
+          />
+        </UFormField>
+
         <UButton
           type="submit"
           block
@@ -107,7 +129,23 @@ async function logout () {
         >
           Chamar Senha
         </UButton>
+
+        <UButton
+          block
+          size="xl"
+          color="neutral"
+          variant="subtle"
+          icon="i-heroicons-qr-code"
+          label="Escanear comanda"
+          :disabled="loading"
+          @click="escanearAberto = true"
+        />
       </UForm>
     </UPageCard>
+
+    <PainelEscanearComanda
+      v-model:open="escanearAberto"
+      @confirm="lancarDoScan"
+    />
   </UContainer>
 </template>
