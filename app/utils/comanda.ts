@@ -10,7 +10,7 @@ const PROXIMOS_ROTULOS = /\b(hor[aá]rio|atendente|pedido|canal|itens|qtd|drinks
 export function parseComanda (texto: string): ComandaParseada {
   // Pega o que vem depois de "Cliente:" — tolerante a erros de OCR na palavra
   // (Cl1ente, Ciiente, Clente) e à pontuação (:, ., ausência).
-  const m = texto.match(/c[li1]{1,2}ente\s*[:;.\-]?\s*(.+)/i)
+  const m = texto.match(/c[li1]{1,2}ente\s*[:;.-]?\s*(.+)/i)
   if (!m) return { nome: null, numero: null }
 
   let segmento = m[1]

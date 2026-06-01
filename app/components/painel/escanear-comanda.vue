@@ -4,7 +4,7 @@ import { parseComanda } from '~/utils/comanda'
 const open = defineModel<boolean>('open', { default: false })
 const emit = defineEmits<{ confirm: [{ nome: string | null, numero: number }] }>()
 
-const { lendo, reconhecer } = useOcrComanda()
+const { lendo, reconhecer, terminar } = useOcrComanda()
 
 type Etapa = 'camera' | 'confirmar'
 const etapa = ref<Etapa>('camera')
@@ -33,13 +33,18 @@ function pararCamera () {
   stream = null
 }
 
+const MAX_LARGURA = 1600
+
 async function escanear () {
   const video = videoEl.value
   if (!video || !video.videoWidth) return
+  // Reduz a imagem para no máx MAX_LARGURA de largura: menos memória por leitura
+  // (evita o acúmulo que trava o worker) e melhor precisão do OCR.
+  const escala = Math.min(1, MAX_LARGURA / video.videoWidth)
   const canvas = document.createElement('canvas')
-  canvas.width = video.videoWidth
-  canvas.height = video.videoHeight
-  canvas.getContext('2d')?.drawImage(video, 0, 0)
+  canvas.width = Math.round(video.videoWidth * escala)
+  canvas.height = Math.round(video.videoHeight * escala)
+  canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height)
   const dataUrl = canvas.toDataURL('image/png')
 
   const texto = await reconhecer(dataUrl)
@@ -70,10 +75,16 @@ watch(open, (v) => {
     nextTick(iniciarCamera)
   } else {
     pararCamera()
+    // Libera o worker do Tesseract ao fechar: cada sessão começa limpa e a
+    // memória do WASM não acumula a ponto de travar o escaneamento.
+    terminar()
   }
 })
 
-onUnmounted(pararCamera)
+onUnmounted(() => {
+  pararCamera()
+  terminar()
+})
 </script>
 
 <template>

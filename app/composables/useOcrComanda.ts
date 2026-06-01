@@ -15,12 +15,18 @@ export function useOcrComanda () {
     }
   }
 
-  onUnmounted(async () => {
+  // Libera o worker do Tesseract. Chamado ao fechar o modal para que a memória
+  // do WASM não acumule entre sessões de escaneamento (o worker é recriado
+  // sob demanda na próxima leitura).
+  async function terminar () {
     if (worker) {
-      await worker.terminate()
+      const w = worker
       worker = null
+      await w.terminate()
     }
-  })
+  }
 
-  return { lendo, reconhecer }
+  onUnmounted(terminar)
+
+  return { lendo, reconhecer, terminar }
 }
