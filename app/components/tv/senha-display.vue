@@ -18,10 +18,12 @@ const texto = computed(() => formatarSenha(props.numero))
 const cor = computed(() => props.variante === 'atual' ? 'var(--ui-primary)' : 'var(--ui-text-muted)')
 
 const VIEW_W = 300
-// Com nome, o viewBox cresce para abrir espaço para o nome abaixo do número.
-// Sem nome, mantém 300x200 (layout idêntico ao original).
-const VIEW_H = computed(() => props.nome ? 248 : 200)
-const numeroY = computed(() => props.nome ? 96 : 100)
+// Geometria do SVG (margin/padding NÃO funcionam em <text>; tudo é y + viewBox).
+// Ajuste a distância número<->nome por aqui:
+//   numeroY = centro do número | nomeY = centro do nome | VIEW_H = altura total
+const VIEW_H = computed(() => props.nome ? 196 : 200)
+const numeroY = computed(() => props.nome ? 86 : 100)
+const nomeY = 176
 </script>
 
 <template>
@@ -46,7 +48,7 @@ const numeroY = computed(() => props.nome ? 96 : 100)
     <text
       v-if="nome"
       x="50%"
-      y="226"
+      :y="nomeY"
       text-anchor="middle"
       dominant-baseline="central"
       class="font-semibold senha-nome"

@@ -88,7 +88,7 @@ defineProps<{
 
 /* cartao base (substitui UCard) */
 .card {
-  background: #18181b;
+  background: #111111;
   border: 1px solid #27272a;
   border-radius: 1.4vmin;
 }
@@ -167,6 +167,13 @@ defineProps<{
 
 /* ---- modo retrato (preview no celular) ---- */
 @media (orientation: portrait) {
+  /* em portrait, vmin usa a largura (lado menor): logo/raios ficam pequenos -> aumenta */
+  .brand-logo {
+    height: clamp(2.75rem, 11vmin, 4rem);
+  }
+  .card {
+    border-radius: 3vmin;
+  }
   .brand-sep,
   .brand-title {
     display: none;

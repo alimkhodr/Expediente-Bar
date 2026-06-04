@@ -31,7 +31,7 @@ const url = computed(() => {
   max-width: 10ch;
   text-align: right;
   line-height: 1.15;
-  font-size: 1.6vmin;
+  font-size: 3vmin;
   color: #a1a1aa;
 }
 .qr-box {
@@ -40,5 +40,12 @@ const url = computed(() => {
   background: #fff;
   border: 1px solid #27272a;
   border-radius: 0.6vmin;
+}
+
+/* no mobile (portrait) o vmin encolhe -> raio maior pra acompanhar o tamanho */
+@media (orientation: portrait) {
+  .qr-box {
+    border-radius: 1.4vmin;
+  }
 }
 </style>

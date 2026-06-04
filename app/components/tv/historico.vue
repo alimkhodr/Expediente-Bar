@@ -42,14 +42,14 @@ const itens = computed(() => props.limite > 0 ? props.senhas.slice(0, props.limi
 }
 .hist-label {
   color: #a1a1aa;
-  font-size: 2vmin;
+  font-size: 5vmin;
 }
 /* flex-column com itens flex:1 = linhas de altura igual (substitui grid auto-rows-fr) */
 .hist-grid {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.2vmin;
+  gap: 2vmin;
   min-height: 0;
 }
 .hist-item {
@@ -60,10 +60,19 @@ const itens = computed(() => props.limite > 0 ? props.senhas.slice(0, props.limi
   align-items: center;
   justify-content: center;
   padding: 1.5vmin;
+  border: 1px solid #27272a;
+  border-radius: 1.4vmin;
 }
 .hist-senha {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
+}
+
+/* no mobile (portrait) o vmin encolhe -> raio maior pra acompanhar */
+@media (orientation: portrait) {
+  .hist-item {
+    border-radius: 3vmin;
+  }
 }
 </style>

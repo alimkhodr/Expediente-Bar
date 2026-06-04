@@ -37,7 +37,7 @@ const { hora, data } = useRelogio()
   justify-content: space-between;
   gap: 2vmin;
   color: #a1a1aa;
-  font-size: 1.8vmin;
+  font-size: 3vmin;
 }
 .rodape-left {
   display: flex;
@@ -67,11 +67,15 @@ const { hora, data } = useRelogio()
 .rodape-hora {
   color: #fafafa;
   font-weight: 700;
-  font-size: 2.6vmin;
+  font-size: 4vmin;
 }
 @media (orientation: portrait) {
   .rodape-data {
     display: none;
+  }
+  /* vmin encolhe no portrait -> raio maior */
+  .rodape-badge {
+    border-radius: 2vmin;
   }
 }
 </style>
