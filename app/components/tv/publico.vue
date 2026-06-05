@@ -77,7 +77,7 @@ defineProps<{
   display: flex;
   flex-direction: column;
   gap: 2vmin;
-  padding: 4.5vmin 5vmin;
+  padding: 6.5vmin 7vmin;
   background: #09090b;
   color: #fafafa;
   font-family: 'Poppins', sans-serif;
