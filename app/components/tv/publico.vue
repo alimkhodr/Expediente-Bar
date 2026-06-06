@@ -10,18 +10,6 @@ defineProps<{
 
 <template>
   <div class="painel">
-    <header class="painel-header">
-      <div class="brand">
-        <Logo
-          icon
-          class="brand-logo"
-        />
-        <span class="brand-sep" />
-        <h1 class="brand-title">Painel de senhas</h1>
-      </div>
-      <TvQrAcompanhe />
-    </header>
-
     <div
       v-if="!atual"
       class="painel-empty"
