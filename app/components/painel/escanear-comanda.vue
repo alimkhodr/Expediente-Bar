@@ -16,7 +16,7 @@ const nome = ref('')
 const numero = ref('')
 
 // Quantas leituras seguidas sem resultado limpo antes de cair na tela manual.
-const MAX_TENTATIVAS = 6
+const MAX_TENTATIVAS = 12
 let rodando = false // loop de auto-scan ativo
 
 async function iniciarCamera () {
@@ -95,7 +95,7 @@ async function autoEscanear () {
     }
 
     // Respiro entre leituras: dá tempo da câmera estabilizar e libera a UI.
-    await new Promise(res => setTimeout(res, 300))
+    await new Promise(res => setTimeout(res, 400))
   }
 }
 
