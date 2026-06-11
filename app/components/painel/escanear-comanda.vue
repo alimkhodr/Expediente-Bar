@@ -4,7 +4,7 @@ import { parseComanda } from '~/utils/comanda'
 const open = defineModel<boolean>('open', { default: false })
 const emit = defineEmits<{ confirm: [{ nome: string | null, numero: number }] }>()
 
-const { lendo, reconhecer, terminar } = useOcrComanda()
+const { reconhecer, terminar } = useOcrComanda()
 
 type Etapa = 'camera' | 'confirmar'
 const etapa = ref<Etapa>('camera')
@@ -160,7 +160,7 @@ onUnmounted(() => {
             name="i-heroicons-arrow-path"
             class="size-5 animate-spin"
           />
-          <span>{{ lendo ? 'Lendo comanda...' : 'Aponte para a comanda' }}</span>
+          <span>Lendo comanda...</span>
         </div>
       </div>
 
