@@ -91,6 +91,19 @@ async function logout () {
         @submit="chamarSenha"
       >
         <UFormField
+          label="Nome (opcional)"
+          name="nome"
+        >
+          <UInput
+            v-model="nome"
+            placeholder="Jihad"
+            size="xl"
+            :disabled="loading"
+            class="w-full"
+          />
+        </UFormField>
+
+        <UFormField
           label="Número da Senha"
           name="numero"
           required
@@ -104,19 +117,6 @@ async function logout () {
             size="xl"
             :disabled="loading"
             class="w-full font-bold"
-          />
-        </UFormField>
-
-        <UFormField
-          label="Nome (opcional)"
-          name="nome"
-        >
-          <UInput
-            v-model="nome"
-            placeholder="Jihad"
-            size="xl"
-            :disabled="loading"
-            class="w-full"
           />
         </UFormField>
 

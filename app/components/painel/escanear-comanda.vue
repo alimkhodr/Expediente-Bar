@@ -15,6 +15,10 @@ let stream: MediaStream | null = null
 const nome = ref('')
 const numero = ref('')
 
+// Quantas leituras seguidas sem resultado limpo antes de cair na tela manual.
+const MAX_TENTATIVAS = 6
+let rodando = false // loop de auto-scan ativo
+
 async function iniciarCamera () {
   erroCamera.value = ''
   try {
@@ -23,21 +27,25 @@ async function iniciarCamera () {
       videoEl.value.srcObject = stream
       await videoEl.value.play()
     }
+    autoEscanear()
   } catch {
     erroCamera.value = 'Não foi possível acessar a câmera. Verifique a permissão do navegador.'
   }
 }
 
 function pararCamera () {
+  rodando = false
   stream?.getTracks().forEach(t => t.stop())
   stream = null
 }
 
 const MAX_LARGURA = 1600
 
-async function escanear () {
+// Captura um frame e roda o OCR. Devolve null se a câmera ainda não está pronta
+// (não conta como tentativa); caso contrário, o que o parser conseguiu extrair.
+async function lerFrame () {
   const video = videoEl.value
-  if (!video || !video.videoWidth) return
+  if (!video || !video.videoWidth) return null
   // Reduz a imagem para no máx MAX_LARGURA de largura: menos memória por leitura
   // (evita o acúmulo que trava o worker) e melhor precisão do OCR.
   const escala = Math.min(1, MAX_LARGURA / video.videoWidth)
@@ -48,11 +56,47 @@ async function escanear () {
   const dataUrl = canvas.toDataURL('image/png')
 
   const texto = await reconhecer(dataUrl)
-  const r = parseComanda(texto)
-  nome.value = r.nome ?? ''
-  numero.value = r.numero != null ? String(r.numero) : ''
-  pararCamera()
-  etapa.value = 'confirmar'
+  return parseComanda(texto)
+}
+
+// Loop de leitura: tenta ler sozinho até vir uma comanda limpa (nome + número
+// válido) e aí lança direto — sem nenhum toque. Se não conseguir após
+// MAX_TENTATIVAS, cai na tela de confirmar com o melhor palpite pra ajuste manual.
+async function autoEscanear () {
+  if (rodando) return
+  rodando = true
+  let tentativas = 0
+
+  while (rodando && etapa.value === 'camera' && open.value) {
+    const r = await lerFrame()
+    if (!rodando) return
+
+    // Câmera ainda inicializando: espera sem gastar tentativa.
+    if (!r) {
+      await new Promise(res => setTimeout(res, 200))
+      continue
+    }
+
+    if (r.nome && r.numero != null && r.numero >= 1 && r.numero <= 999) {
+      nome.value = r.nome
+      numero.value = String(r.numero)
+      pararCamera()
+      lancar()
+      return
+    }
+
+    tentativas++
+    if (tentativas >= MAX_TENTATIVAS) {
+      nome.value = r.nome ?? ''
+      numero.value = r.numero != null ? String(r.numero) : ''
+      pararCamera()
+      etapa.value = 'confirmar'
+      return
+    }
+
+    // Respiro entre leituras: dá tempo da câmera estabilizar e libera a UI.
+    await new Promise(res => setTimeout(res, 300))
+  }
 }
 
 function voltar () {
@@ -111,13 +155,13 @@ onUnmounted(() => {
           muted
           class="max-h-[60vh] w-auto rounded-lg bg-black"
         />
-        <UButton
-          size="xl"
-          icon="i-heroicons-camera"
-          :loading="lendo"
-          :label="lendo ? 'Lendo...' : 'Escanear'"
-          @click="escanear"
-        />
+        <div class="flex items-center gap-2 text-muted">
+          <UIcon
+            name="i-heroicons-arrow-path"
+            class="size-5 animate-spin"
+          />
+          <span>{{ lendo ? 'Lendo comanda...' : 'Aponte para a comanda' }}</span>
+        </div>
       </div>
 
       <div
