@@ -3,18 +3,6 @@ const { trackEvent } = useAnalytics()
 
 const items = [
   {
-    image: '/images/copa-do-mundo.jpg',
-    imageMobile: '/images/copa-do-mundo-mobile.jpg',
-    title: 'Copa do Mundo',
-    color: 'success' as const,
-    text: 'Seremos o ponto de encontro de diferentes galera porém na mesma torcida, todos juntos pela nossa seleção',
-    button: {
-      label: 'Ver agenda',
-      icon: 'mdi:calendar',
-      to: 'https://www.canva.com/design/DAHJMeXi3DE/JtbzDwqxF-I_gmmJM23NBA/view'
-    }
-  },
-  {
     image: '/images/birthday.jpg',
     imageMobile: '/images/birthday.jpg',
     title: 'Comemore seu aniversário!',
@@ -75,7 +63,7 @@ const items = [
           <UText
             size="title"
             weight="bold"
-            :color="item.color || 'primary'"
+            color="primary"
             tag="h2"
           >
             {{ item.title }}
@@ -94,7 +82,7 @@ const items = [
             :label="item.button.label"
             :icon="item.button.icon"
             :to="item.button.to"
-            :color="item.color || 'primary'"
+            color="primary"
             target="_blank"
             @click="trackEvent('carousel_button_click', { slide_title: item.title, button_label: item.button.label })"
           />
