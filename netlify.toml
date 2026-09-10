@@ -1,18 +1,14 @@
 [build]
-  command = "corepack disable && npm run generate"
+  command = "(corepack disable || true) && npm run build"
   publish = "dist"
 
 [images]
   remote_images = [
     "https://lh3.googleusercontent.com/.*",
     "https://lh4.googleusercontent.com/.*",
-    "https://akrnjowlqqfiqvfgsojs.supabase.co/.*"
+    "https://akrnjowlqqfiqvfgsojs.supabase.co/.*",
+    "https://images.sympla.com.br/.*"
   ]
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
 
 [build.environment]
   NODE_VERSION = "22"
@@ -22,3 +18,35 @@
   COREPACK_ENABLE_STRICT = "0"
   COREPACK_ENABLE_AUTO_PIN = "false"
   COREPACK_ROOT = "/dev/null"
+
+# Cabeçalhos de segurança para todo o site.
+# (cache de /_nuxt/* e o redirect para a função SSR são gerados pelo Nuxt em dist/_headers e dist/_redirects)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(self), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    cache-control = "public, max-age=604800, stale-while-revalidate=86400"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/tv"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[dev]
+  command = "npm run dev"
+  targetPort = 3000
+  port = 8888
+  framework = "#custom"

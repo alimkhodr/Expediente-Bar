@@ -1,12 +1,15 @@
-const PLACE_ID = 'ChIJVx-dQk9LzJQR80Am0iwvW10'
+import type { ReviewsResponse } from '~/types/reviews'
 
-export default cachedEventHandler(async (event) => {
-  const config = useRuntimeConfig(event)
-  return $fetch(
-    `https://places.googleapis.com/v1/places/${PLACE_ID}?fields=reviews&languageCode=pt-BR&key=${config.apiKey}`
-  )
+export default cachedEventHandler(async (event): Promise<ReviewsResponse> => {
+  const dados = await buscarPlace<ReviewsResponse>(event, 'reviews,rating,userRatingCount')
+  return {
+    reviews: dados?.reviews ?? [],
+    rating: dados?.rating,
+    userRatingCount: dados?.userRatingCount
+  }
 }, {
-  maxAge: 60 * 60 * 24,
+  maxAge: import.meta.dev ? 1 : 60 * 60 * 24,
   swr: true,
-  name: 'places-reviews'
+  name: 'places-reviews',
+  getKey: () => 'v2'
 })

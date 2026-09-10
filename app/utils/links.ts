@@ -1,9 +1,17 @@
-const phoneNumber = '5512988865185'
-
 export const links = {
-  ifood: 'https://www.ifood.com.br/delivery/sao-jose-dos-campos-sp/expediente-bar-jardim-satelite/0780226c-3ae2-4204-b6f0-ed90ada79fc2',
-  whatsapp: (message: string = 'Olá!') => {return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`},
-  instagram: 'https://www.instagram.com/expedientebar_',
-  facebook: 'https://www.facebook.com/Expedientebarsjc',
-  review: 'https://search.google.com/local/writereview?placeid=ChIJVx-dQk9LzJQR80Am0iwvW10'
+  ifood: site.social.ifood,
+  instagram: site.social.instagram,
+  facebook: site.social.facebook,
+  googleMaps: site.social.googleMaps,
+  review: `https://search.google.com/local/writereview?placeid=${site.googlePlaceId}`,
+  whatsapp: (message: string = 'Olá!') =>
+    `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`
+}
+
+/** Mensagens prontas do WhatsApp usadas em vários CTAs. */
+export const whatsappMessages = {
+  reserva: 'Olá! Gostaria de fazer uma reserva.',
+  aniversario: 'Olá! Gostaria de reservar para comemorar meu aniversário!',
+  pagode: 'Olá! Gostaria de fazer uma reserva para curtir o pagode com vocês!',
+  contato: 'Olá!'
 }

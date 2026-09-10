@@ -1,57 +1,41 @@
 <script setup lang="ts">
-const title = 'Expediente Bar'
-const headDescription = 'O melhor expediente é aqui! Descubra nossos horários, localização, eventos e tire suas dúvidas sobre nosso bar.'
+const { links: linksHero, destaques, agenda, faq } = useConteudo()
 
-useSeoMeta({
-  title,
-  description: headDescription,
-  ogTitle: title,
-  ogDescription: headDescription,
-  twitterTitle: title,
-  twitterDescription: headDescription,
-  robots: 'index,follow'
+usePaginaSeo({
+  titulo: 'Expediente Bar · Pagode ao vivo, cerveja gelada e porções em São José dos Campos',
+  descricao: site.description,
+  caminho: '/',
+  tituloCompleto: true
 })
+
+useSchemaOrg([
+  schemaNegocio(),
+  schemaWebSite(),
+  schemaPagina('/', 'Expediente Bar', site.description),
+  schemaFaq(faq.value)
+])
 </script>
+
 <template>
   <div>
-    <ScreenCarousel id="home" />
-    <Container
-      id="agenda"
-      contrast
-    >
-      <Agenda />
-    </Container>
-    <BrandsCarousel />
-    <Container id="galeria">
-      <Gallery />
-    </Container>
-    <Container
-      id="mapa"
-      contrast
-    >
-      <Map />
-    </Container>
-    <Container id="avaliacoes">
-      <Reviews />
-    </Container>
-    <Container
-      id="faq"
-      contrast
-    >
-      <Faq />
-    </Container>
-    <Container>
-      <SocialMedia />
-    </Container>
-    <Container
-      id="local"
-      contrast
-    >
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <Address class="h-full" />
-        <OpeningHours />
-      </div>
-    </Container>
-    <Footer />
+    <HeroLinks :itens="linksHero" />
+    <LazyMarcas hydrate-on-visible />
+    <LazyDestaques
+      hydrate-on-visible
+      :destaques="destaques"
+    />
+    <LazyEventosPreview hydrate-on-visible />
+    <LazyAgendaSemanal
+      hydrate-on-visible
+      :agenda="agenda"
+    />
+    <LazyGaleria hydrate-on-visible />
+    <LazyReservas hydrate-on-visible />
+    <LazyAvaliacoes hydrate-on-visible />
+    <LazyPerguntasFrequentes
+      hydrate-on-visible
+      :perguntas="faq"
+    />
+    <LazyLocal hydrate-on-visible />
   </div>
 </template>

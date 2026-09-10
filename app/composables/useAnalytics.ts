@@ -1,10 +1,8 @@
 export function useAnalytics () {
-  const { $posthog } = useNuxtApp()
+  const { $analytics } = useNuxtApp()
 
   const trackEvent = (name: string, properties?: Record<string, unknown>) => {
-    if (import.meta.client && $posthog) {
-      $posthog.capture(name, properties)
-    }
+    if (import.meta.client) $analytics?.capturar(name, properties)
   }
 
   return { trackEvent }

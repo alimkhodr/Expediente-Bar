@@ -1,14 +1,10 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-html {
-  scroll-behavior: smooth;
-}
-
 @theme static {
-  --font-sans: 'Poppins', sans-serif;
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 
-  --color-yellow-50:  #fff8e6;
+  --color-yellow-50: #fff8e6;
   --color-yellow-100: #ffefcc;
   --color-yellow-200: #ffdf99;
   --color-yellow-300: #ffd166;
@@ -20,3 +16,89 @@ html {
   --color-yellow-900: #996403;
   --color-yellow-950: #664202;
 }
+
+:root {
+  --ui-radius: 0.875rem;
+  --altura-header: 4rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--altura-header);
+  background: #000;
+}
+
+body {
+  background: #000;
+  color: var(--ui-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Cada seção respeita o header fixo ao navegar por âncora */
+section[id] {
+  scroll-margin-top: var(--altura-header);
+}
+
+/* Foco visível e consistente (acessibilidade) */
+:focus-visible {
+  outline: 2px solid var(--ui-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Fundo do hero: gradientes da marca, sem imagem (LCP barato) */
+.fundo-hero {
+  background:
+    radial-gradient(60% 50% at 50% 0%, color-mix(in srgb, var(--ui-primary) 22%, transparent), transparent 70%),
+    radial-gradient(40% 35% at 85% 80%, color-mix(in srgb, var(--ui-primary) 10%, transparent), transparent 70%),
+    #000;
+}
+
+/* Textura sutil sem baixar asset */
+.textura::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: repeating-linear-gradient(0deg, transparent 0 2px, rgba(255, 255, 255, 0.35) 2px 3px);
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+/* Animações de entrada leves (respeitam prefers-reduced-motion) */
+@keyframes subir {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.entrar {
+  animation: subir 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.entrar-1 { animation-delay: 0.05s; }
+.entrar-2 { animation-delay: 0.15s; }
+.entrar-3 { animation-delay: 0.25s; }
+.entrar-4 { animation-delay: 0.35s; }
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.flutuar {
+  animation: flutuar 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .entrar, .flutuar { animation: none !important; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* PhotoSwipe (cardápio) */
+.pswp__bg { background: rgba(0, 0, 0, 0.94); }
