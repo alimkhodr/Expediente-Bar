@@ -157,7 +157,7 @@ onUnmounted(() => {
         />
         <div class="flex items-center gap-2 text-muted">
           <UIcon
-            name="i-heroicons-arrow-path"
+            name="i-lucide-refresh-cw"
             class="size-5 animate-spin"
           />
           <span>Lendo comanda...</span>

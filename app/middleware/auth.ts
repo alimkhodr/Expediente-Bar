@@ -1,8 +1,7 @@
-export default defineNuxtRouteMiddleware((to) => {
-  if (import.meta.server) {
-    return
-  }
+export default defineNuxtRouteMiddleware(async (to) => {
+  if (import.meta.server) return
 
+  await aguardarSessao()
   const user = useSupabaseUser()
 
   if (!user.value) {

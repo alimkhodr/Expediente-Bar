@@ -1,12 +1,17 @@
-const PLACE_ID = 'ChIJVx-dQk9LzJQR80Am0iwvW10'
+import type { HorarioResponse } from '~/types/horario'
 
-export default cachedEventHandler(async (event) => {
-  const config = useRuntimeConfig(event)
-  return $fetch(
-    `https://places.googleapis.com/v1/places/${PLACE_ID}?fields=currentOpeningHours&languageCode=pt-BR&key=${config.apiKey}`
-  )
+/**
+ * Horário regular do Google. O "aberto agora" é calculado no navegador
+ * a partir dos períodos, então este payload pode ficar em cache por 1 dia.
+ */
+export default cachedEventHandler(async (event): Promise<HorarioResponse> => {
+  const dados = await buscarPlace<{
+    regularOpeningHours?: HorarioResponse['regularOpeningHours']
+  }>(event, 'regularOpeningHours')
+  return { regularOpeningHours: dados?.regularOpeningHours ?? null, fonte: dados ? 'google' : 'fallback' }
 }, {
-  maxAge: 60 * 60,
+  maxAge: import.meta.dev ? 1 : 60 * 60 * 24,
   swr: true,
-  name: 'places-opening-hours'
+  name: 'places-opening-hours',
+  getKey: () => 'v2'
 })

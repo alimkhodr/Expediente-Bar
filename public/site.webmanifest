@@ -1,0 +1,14 @@
+{
+  "name": "Expediente Bar",
+  "short_name": "Expediente",
+  "description": "Bar em São José dos Campos: pagode ao vivo, cerveja gelada, porções e drinks.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

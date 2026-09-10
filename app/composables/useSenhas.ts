@@ -9,14 +9,12 @@ export function useSenhas (limite = 10) {
   const supabase = useSupabaseClient()
 
   const senhas = ref<Senha[]>([])
-  const carregando = ref(true)
   const trocou = ref(0) // incrementa quando a senha atual muda (gatilho de animação/alerta)
 
   const atual = computed<Senha | null>(() => senhas.value[0] ?? null)
   const historico = computed<Senha[]>(() => senhas.value.slice(1))
 
   async function carregar () {
-    // @ts-expect-error - Supabase schema may not be defined
     const { data } = await supabase
       .from('senhas')
       .select('*')
@@ -30,7 +28,6 @@ export function useSenhas (limite = 10) {
         trocou.value++
       }
     }
-    carregando.value = false
   }
 
   let channel: ReturnType<typeof supabase.channel> | null = null
@@ -47,5 +44,5 @@ export function useSenhas (limite = 10) {
     if (channel) supabase.removeChannel(channel)
   })
 
-  return { senhas, atual, historico, carregando, trocou, recarregar: carregar }
+  return { atual, historico, trocou }
 }

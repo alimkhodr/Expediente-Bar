@@ -1,0 +1,43 @@
+{
+  "version": "5",
+  "remote": {
+    "https://edge.netlify.com/": "fd941d61d88673d5f28aab283fb86fcc50f08a3bc80ee5470498fcfa88c65cfb",
+    "https://edge.netlify.com/bootstrap/config.ts": "6a2ce0e544e15e8f8883a5c18da5948e37fd0f2619f68cb31f3af53c51817025",
+    "https://edge.netlify.com/bootstrap/context.ts": "e97240232121e2f369f6546ce961490f34d961ea1ea54be3ff09633e3f08373f",
+    "https://edge.netlify.com/bootstrap/cookie.ts": "8b0baae708989ca183c6f3b4ab3d029e6abcbc2e43f93edeb0ff447b3bbc3a05",
+    "https://edge.netlify.com/bootstrap/edge_function.ts": "b8253e86aa83c67341f5cfedeba5049d77fbf84dcab7eceff7566b7728ae9b39",
+    "https://edge.netlify.com/bootstrap/globals/types.ts": "eaa6148ded3121d8dee62dd91c86e7fe76601df0f3ca8d7962243a30f4c8935f"
+  },
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@iconify-json/lucide@^1.2.130",
+        "npm:@iconify-json/simple-icons@^1.2.95",
+        "npm:@nuxt/eslint@^1.17.0",
+        "npm:@nuxt/fonts@0.14",
+        "npm:@nuxt/image@^1.11.0",
+        "npm:@nuxt/ui@^4.11.1",
+        "npm:@nuxtjs/robots@^6.2.0",
+        "npm:@nuxtjs/sitemap@^8.5.0",
+        "npm:@playwright/test@^1.63.0",
+        "npm:@supabase/supabase-js@^2.116.0",
+        "npm:@types/node@^24.3.1",
+        "npm:eslint-config-prettier@^10.1.8",
+        "npm:eslint-plugin-prettier@^5.5.4",
+        "npm:eslint@^9.39.5",
+        "npm:motion-v@^2.4.2",
+        "npm:nuxt@^4.5.2",
+        "npm:photoswipe@^5.4.4",
+        "npm:posthog-js@^1.428.7",
+        "npm:prettier@^3.6.2",
+        "npm:sharp@~0.34.3",
+        "npm:tailwindcss@^4.3.3",
+        "npm:tesseract.js@7",
+        "npm:typescript@^5.9.3",
+        "npm:vitest@2",
+        "npm:vue-router@^4.6.4",
+        "npm:vue@^3.5.42"
+      ]
+    }
+  }
+}

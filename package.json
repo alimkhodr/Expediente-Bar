@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "expediente-bar",
   "type": "module",
   "private": true,
   "engines": {
@@ -8,9 +8,9 @@
   },
   "packageManager": "pnpm@10.0.0",
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "dev:netlify": "netlify dev",
+    "build": "nuxt build",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
@@ -20,30 +20,55 @@
     "format:check": "prettier --check .",
     "preinstall": "npx only-allow pnpm",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "imagens:galeria": "node scripts/otimizar-imagens.mjs galeria",
+    "imagens:marcas": "node scripts/otimizar-imagens.mjs marcas",
+    "imagens:cardapio": "node scripts/otimizar-imagens.mjs cardapio",
+    "imagens:favicons": "node scripts/otimizar-imagens.mjs favicons",
+    "test:e2e:server": "NITRO_PRESET=node-server nuxt build && PORT=3100 node .output/server/index.mjs",
+    "build:local": "NITRO_PRESET=node-server nuxt build"
   },
   "dependencies": {
-    "@nuxt/eslint": "^1.9.0",
-    "@nuxt/fonts": "^0.11.4",
+    "@nuxt/fonts": "^0.14.0",
     "@nuxt/image": "^1.11.0",
-    "@nuxt/ui": "^4.0.0",
-    "@nuxtjs/supabase": "^2.0.4",
-    "eslint": "^9.33.0",
-    "nuxt": "^4.0.3",
-    "posthog-js": "^1.369.5",
-    "qrcode.vue": "^3.8.0",
+    "@nuxt/ui": "^4.11.1",
+    "@nuxtjs/robots": "^6.2.0",
+    "@nuxtjs/sitemap": "^8.5.0",
+    "@supabase/supabase-js": "^2.116.0",
+    "motion-v": "^2.4.2",
+    "nuxt": "^4.5.2",
+    "photoswipe": "^5.4.4",
+    "posthog-js": "^1.428.7",
     "sharp": "^0.34.3",
     "tesseract.js": "^7.0.0",
-    "typescript": "^5.9.2",
-    "vue": "^3.5.18",
-    "vue-router": "^4.5.1"
+    "vue": "^3.5.42",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "^1.2.130",
+    "@iconify-json/simple-icons": "^1.2.95",
+    "@nuxt/eslint": "^1.17.0",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^24.3.1",
+    "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "prettier": "^3.6.2",
-    "tailwindcss": "^4.2.2",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
     "vitest": "^2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "esbuild",
+      "tesseract.js"
+    ],
+    "overrides": {
+      "sharp": "^0.34.3"
+    }
   }
 }

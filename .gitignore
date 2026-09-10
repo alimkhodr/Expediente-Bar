@@ -25,3 +25,10 @@ logs
 
 .superpowers/
 .playwright-mcp/
+.lighthouse/
+playwright-report/
+test-results/
+capturas/
+
+# Netlify (build local)
+.netlify/

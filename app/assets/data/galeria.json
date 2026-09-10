@@ -1,0 +1,488 @@
+[
+  {
+    "src": "/images/galeria/foto-01.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "1.png"
+  },
+  {
+    "src": "/images/galeria/foto-02.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "2.png"
+  },
+  {
+    "src": "/images/galeria/foto-03.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "3.png"
+  },
+  {
+    "src": "/images/galeria/foto-04.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "4.png"
+  },
+  {
+    "src": "/images/galeria/foto-05.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "5.png"
+  },
+  {
+    "src": "/images/galeria/foto-06.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "6.png"
+  },
+  {
+    "src": "/images/galeria/foto-07.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "7.png"
+  },
+  {
+    "src": "/images/galeria/foto-08.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "8.png"
+  },
+  {
+    "src": "/images/galeria/detalhe-9.webp",
+    "width": 320,
+    "height": 200,
+    "origem": "9.png"
+  },
+  {
+    "src": "/images/galeria/foto-10.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "10.png"
+  },
+  {
+    "src": "/images/galeria/foto-11.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "11.png"
+  },
+  {
+    "src": "/images/galeria/foto-12.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "12.png"
+  },
+  {
+    "src": "/images/galeria/foto-13.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "13.png"
+  },
+  {
+    "src": "/images/galeria/foto-14.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "14.png"
+  },
+  {
+    "src": "/images/galeria/foto-15.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "15.png"
+  },
+  {
+    "src": "/images/galeria/foto-16.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "16.png"
+  },
+  {
+    "src": "/images/galeria/foto-17.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "17.png"
+  },
+  {
+    "src": "/images/galeria/foto-18.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "18.png"
+  },
+  {
+    "src": "/images/galeria/foto-19.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "19.png"
+  },
+  {
+    "src": "/images/galeria/foto-20.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "20.png"
+  },
+  {
+    "src": "/images/galeria/foto-21.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "21.png"
+  },
+  {
+    "src": "/images/galeria/detalhe-22.webp",
+    "width": 320,
+    "height": 200,
+    "origem": "22.png"
+  },
+  {
+    "src": "/images/galeria/foto-23.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "23.png"
+  },
+  {
+    "src": "/images/galeria/foto-24.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "24.png"
+  },
+  {
+    "src": "/images/galeria/foto-25.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "25.png"
+  },
+  {
+    "src": "/images/galeria/foto-26.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "26.png"
+  },
+  {
+    "src": "/images/galeria/foto-27.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "27.png"
+  },
+  {
+    "src": "/images/galeria/foto-28.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "28.png"
+  },
+  {
+    "src": "/images/galeria/foto-29.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "29.png"
+  },
+  {
+    "src": "/images/galeria/foto-30.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "30.png"
+  },
+  {
+    "src": "/images/galeria/foto-31.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "31.png"
+  },
+  {
+    "src": "/images/galeria/foto-32.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "32.png"
+  },
+  {
+    "src": "/images/galeria/foto-33.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "33.png"
+  },
+  {
+    "src": "/images/galeria/foto-34.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "34.png"
+  },
+  {
+    "src": "/images/galeria/foto-35.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "35.png"
+  },
+  {
+    "src": "/images/galeria/foto-36.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "36.png"
+  },
+  {
+    "src": "/images/galeria/foto-37.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "37.png"
+  },
+  {
+    "src": "/images/galeria/foto-38.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "38.png"
+  },
+  {
+    "src": "/images/galeria/foto-39.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "39.png"
+  },
+  {
+    "src": "/images/galeria/foto-40.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "40.png"
+  },
+  {
+    "src": "/images/galeria/foto-41.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "41.png"
+  },
+  {
+    "src": "/images/galeria/foto-42.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "42.png"
+  },
+  {
+    "src": "/images/galeria/foto-43.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "43.png"
+  },
+  {
+    "src": "/images/galeria/foto-44.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "44.png"
+  },
+  {
+    "src": "/images/galeria/foto-45.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "45.png"
+  },
+  {
+    "src": "/images/galeria/foto-46.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "46.png"
+  },
+  {
+    "src": "/images/galeria/foto-47.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "47.png"
+  },
+  {
+    "src": "/images/galeria/foto-48.webp",
+    "width": 1080,
+    "height": 1350,
+    "origem": "48.png"
+  },
+  {
+    "src": "/images/galeria/foto-49.webp",
+    "width": 675,
+    "height": 740,
+    "origem": "gin-tonic-675x740-1.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-50.webp",
+    "width": 675,
+    "height": 740,
+    "origem": "gin-tonica-com-morango-675x740-1.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-51.webp",
+    "width": 675,
+    "height": 740,
+    "origem": "gt-SJP-0226-675x740-1.jpg"
+  },
+  {
+    "src": "/images/galeria/detalhe-52.webp",
+    "width": 357,
+    "height": 477,
+    "origem": "Image.webp"
+  },
+  {
+    "src": "/images/galeria/foto-53.webp",
+    "width": 1080,
+    "height": 926,
+    "origem": "vesper-martini.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-54.webp",
+    "width": 960,
+    "height": 1440,
+    "origem": "WhatsApp Image 2026-09-04 at 17.23.49 (1).jpeg"
+  },
+  {
+    "src": "/images/galeria/foto-55.webp",
+    "width": 901,
+    "height": 1352,
+    "origem": "WhatsApp Image 2026-09-04 at 17.23.49.jpeg"
+  },
+  {
+    "src": "/images/galeria/foto-56.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC04230.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-57.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC04498.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-58.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC04637.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-59.webp",
+    "width": 1350,
+    "height": 900,
+    "origem": "DSC04742.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-60.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC04748.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-61.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC04840.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-62.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05065.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-63.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05096.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-64.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05257.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-65.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05295.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-66.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05474.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-67.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05482.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-68.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05505.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-69.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05635.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-70.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05667.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-71.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05747.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-72.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05752.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-73.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05789.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-74.webp",
+    "width": 1350,
+    "height": 900,
+    "origem": "DSC05909.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-75.webp",
+    "width": 1350,
+    "height": 900,
+    "origem": "DSC05977.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-76.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC05984.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-77.webp",
+    "width": 1350,
+    "height": 884,
+    "origem": "DSC05990.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-78.webp",
+    "width": 1350,
+    "height": 900,
+    "origem": "DSC05995.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-79.webp",
+    "width": 1350,
+    "height": 900,
+    "origem": "DSC06001.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-80.webp",
+    "width": 1350,
+    "height": 900,
+    "origem": "DSC06009.jpg"
+  },
+  {
+    "src": "/images/galeria/foto-81.webp",
+    "width": 900,
+    "height": 1350,
+    "origem": "DSC06130.jpg"
+  }
+]

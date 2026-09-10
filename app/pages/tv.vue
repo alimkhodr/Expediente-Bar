@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'blank' })
 
+useSeoMeta({ robots: 'noindex, nofollow' })
+
 const { atual, historico, trocou } = useSenhas()
 
 const emFullscreen = ref(false)
@@ -49,7 +51,7 @@ onBeforeUnmount(() => {
       {{ emFullscreen ? '✕' : '⛶' }}
     </button>
 
-    <TvPublico
+    <PainelPublico
       :atual="atual"
       :historico="historico"
       :trocou="trocou"

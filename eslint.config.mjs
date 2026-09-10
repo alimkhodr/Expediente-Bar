@@ -9,6 +9,9 @@ export default withNuxt(
       '.output/**',
       'dist/**',
       'coverage/**',
+      '.lighthouse/**',
+      'playwright-report/**',
+      'test-results/**',
       '*.min.js'
     ]
   },
@@ -34,7 +37,6 @@ export default withNuxt(
       }],
       'vue/attribute-hyphenation': ['error', 'always'],
       'vue/v-on-event-hyphenation': ['error', 'always'],
-      // Regras específicas para indentação em Vue
       'vue/html-indent': ['error', 2, {
         attribute: 1,
         baseIndent: 1,
@@ -59,7 +61,6 @@ export default withNuxt(
         singleline: 'never',
         multiline: 'always'
       }],
-      // Regras gerais
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       'prefer-const': 'error',
@@ -69,7 +70,7 @@ export default withNuxt(
       'arrow-spacing': 'error',
       'comma-dangle': ['error', 'never'],
       'semi': ['error', 'never'],
-      'quotes': ['error', 'single'],
+      'quotes': ['error', 'single', { avoidEscape: true }],
       'indent': ['error', 2, { SwitchCase: 1 }],
       'no-trailing-spaces': 'error',
       'eol-last': 'error',
@@ -80,6 +81,14 @@ export default withNuxt(
       'keyword-spacing': 'error',
       'space-infix-ops': 'error',
       'spaced-comment': ['error', 'always']
+    }
+  },
+  {
+    // Componentes vendorizados do Vue Bits: mantidos próximos do upstream
+    files: ['app/components/vue-bits/**/*.vue'],
+    rules: {
+      'vue/require-default-prop': 'off',
+      'vue/no-template-shadow': 'off'
     }
   }
 )

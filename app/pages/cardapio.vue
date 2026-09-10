@@ -1,33 +1,56 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: 'cardapio'
+const paginas = [
+  { src: '/images/cardapio/1.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – porções e petiscos' },
+  { src: '/images/cardapio/2.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – lanches e pratos' },
+  { src: '/images/cardapio/3.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – cervejas e bebidas' },
+  { src: '/images/cardapio/4.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – drinks e doses' }
+]
+
+const descricao = 'Cardápio completo do Expediente Bar em São José dos Campos: porções, petiscos, lanches, cervejas, drinks e doses. Veja com zoom direto no celular.'
+
+usePaginaSeo({
+  titulo: 'Cardápio',
+  descricao,
+  caminho: '/cardapio'
 })
 
-const loaded = ref(false)
-const iframeRef = ref<HTMLIFrameElement | null>(null)
+useSchemaOrg([
+  schemaPagina('/cardapio', 'Cardápio · Expediente Bar', descricao),
+  schemaBreadcrumb([{ nome: 'Início', caminho: '/' }, { nome: 'Cardápio', caminho: '/cardapio' }]),
+  {
+    '@type': 'Menu',
+    '@id': `${useRuntimeConfig().public.siteUrl}/cardapio#menu`,
+    name: 'Cardápio do Expediente Bar',
+    description: descricao,
+    inLanguage: 'pt-BR',
+    image: paginas.map(p => `${useRuntimeConfig().public.siteUrl}${p.src}`),
+    hasMenuSection: paginas.map(p => ({ '@type': 'MenuSection', name: p.titulo.replace('Cardápio – ', '') }))
+  }
+])
+
+const breadcrumb = [
+  { label: 'Início', to: '/', icon: 'i-lucide-house' },
+  { label: 'Cardápio', to: '/cardapio' }
+]
 </script>
 
 <template>
-  <div
-    class="w-full bg-stone-900 flex justify-center relative"
-    style="height: 100svh; padding: 3rem 1rem 1rem;"
-  >
-    <USkeleton
-      v-if="!loaded"
-      class="absolute w-full max-w-3xl rounded-lg"
-      style="top: 3rem; bottom: 1rem; left: 50%; transform: translateX(-50%);"
-    />
+  <div class="pt-16">
+    <Secao
+      id="cardapio"
+      nivel="h1"
+      destaque="Cardápio"
+      descricao="Porções, lanches, cervejas e drinks. Toque em uma página para ampliar e dar zoom."
+    >
+      <template #topo>
+        <UBreadcrumb :items="breadcrumb" />
+      </template>
 
-    <iframe
-      ref="iframeRef"
-      loading="lazy"
-      class="w-full max-w-3xl rounded-lg transition-opacity duration-300"
-      :class="loaded ? 'opacity-100' : 'opacity-0'"
-      style="height: 100%; border: none; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);"
-      src="https://www.canva.com/design/DAGyopGCjLc/yBInJ25nigDwMw0uWRBlQg/view?embed"
-      allowfullscreen
-      allow="fullscreen"
-      @load="loaded = true"
-    />
+      <CardapioViewer :paginas="paginas" />
+
+      <p class="mt-10 text-center text-xs text-muted">
+        Preços e itens podem mudar sem aviso. Aceitamos cartões, Pix e vales-refeição (VR, Pluxee, Alelo, Ticket).
+      </p>
+    </Secao>
   </div>
 </template>

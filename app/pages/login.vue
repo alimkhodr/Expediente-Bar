@@ -1,14 +1,15 @@
 <script setup lang="ts">
-
 definePageMeta({
   layout: 'blank'
 })
+
+useSeoMeta({ robots: 'noindex, nofollow' })
 
 const supabase = useSupabaseClient()
 const toast = useToast()
 const user = useSupabaseUser()
 
-const redirect = useRoute().query.redirect as string || '/painel/admin'
+const redirect = useRoute().query.redirect as string || '/admin'
 
 const loading = ref(false)
 
@@ -69,28 +70,11 @@ async function login (event: FormSubmitEvent) {
     loading.value = false
   }
 }
-
-async function logout () {
-  await supabase.auth.signOut()
-  toast.add({
-    title: 'Logout realizado',
-    color: 'info'
-  })
-}
 </script>
 
 <template>
-  <UContainer class="relative py-8 h-screen">
-    <UButton
-      icon="i-heroicons-arrow-right-on-rectangle"
-      color="neutral"
-      variant="link"
-      label="Sair"
-      class="absolute top-1 right-1"
-      @click="logout"
-    />
+  <UContainer class="py-8 h-screen">
     <div class="flex flex-col items-center justify-center h-full">
-
       <UPageCard
         class="w-full max-w-md"
       >
