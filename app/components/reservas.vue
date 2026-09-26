@@ -51,14 +51,7 @@ const acoes = [
       </template>
 
       <figure class="lg:col-span-3">
-        <img
-          src="/images/mapa.svg"
-          alt="Mapa da casa do Expediente Bar com a disposição das mesas, palco e bar"
-          width="1200"
-          height="800"
-          loading="lazy"
-          decoding="async"
-        />
+        <HouseMap class="rounded-xl bg-stone-950 p-3 ring-1 ring-white/10 sm:p-5" />
         <figcaption class="mt-2 text-center text-xs text-muted">
           Mapa ilustrativo da casa
         </figcaption>

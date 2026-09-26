@@ -1,4 +1,5 @@
 import type { Evento } from '~/types/eventos'
+import galleryManifest from '~/assets/data/galeria.json'
 
 type Nodo = Record<string, unknown>
 
@@ -31,7 +32,7 @@ export function schemaNegocio (): Nodo {
     url: siteUrl,
     telephone: site.telephone,
     priceRange: site.priceRange,
-    image: [`${siteUrl}${site.images.og}`],
+    image: [`${siteUrl}${site.images.og}`, ...imagensNegocio.map(src => `${siteUrl}${src}`)],
     logo: `${siteUrl}${site.images.logo}`,
     address: {
       '@type': 'PostalAddress',
@@ -153,6 +154,33 @@ export function schemaEvento (evento: Evento): Nodo {
       priceCurrency: 'BRL',
       validFrom: new Date().toISOString().slice(0, 10)
     }
+  }
+}
+
+/** Fotos do negócio no JSON-LD (a mesma lista da galeria, limitada). */
+const imagensNegocio = galleryManifest.filter(f => f.src.includes('/foto-')).slice(0, 8).map(f => f.src)
+
+/** Galeria de fotos como ImageGallery/ImageObject: ajuda o Google Imagens a associar as fotos ao bar. */
+export function schemaGaleria (): Nodo {
+  const { siteUrl } = base()
+  return {
+    '@type': 'ImageGallery',
+    '@id': `${siteUrl}/#galeria`,
+    name: 'Galeria de fotos do Expediente Bar',
+    url: `${siteUrl}/#galeria`,
+    about: { '@id': `${siteUrl}/#negocio` },
+    associatedMedia: galleryManifest.filter(f => f.src.includes('/foto-')).map(f => ({
+      '@type': 'ImageObject',
+      contentUrl: `${siteUrl}${f.src}`,
+      url: `${siteUrl}${f.src}`,
+      name: f.alt,
+      caption: f.alt,
+      width: f.width,
+      height: f.height,
+      representativeOfPage: false,
+      creditText: site.name,
+      copyrightNotice: site.name
+    }))
   }
 }
 
