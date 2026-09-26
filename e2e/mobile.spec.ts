@@ -26,7 +26,7 @@ test.describe('Mobile', () => {
 
   test('links do hero têm área de toque confortável', async ({ page }) => {
     await page.goto('/')
-    const links = page.getByRole('navigation', { name: 'Links principais' }).getByRole('link')
+    const links = page.locator('section#inicio').getByRole('link')
     const total = await links.count()
     expect(total).toBeGreaterThanOrEqual(5)
     for (let i = 0; i < total; i++) {

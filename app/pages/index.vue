@@ -12,7 +12,8 @@ useSchemaOrg([
   schemaNegocio(),
   schemaWebSite(),
   schemaPagina('/', 'Expediente Bar', site.description),
-  schemaFaq(faq.value)
+  schemaFaq(faq.value),
+  schemaGaleria()
 ])
 </script>
 
@@ -29,7 +30,7 @@ useSchemaOrg([
       hydrate-on-visible
       :agenda="agenda"
     />
-    <LazyGaleria hydrate-on-visible />
+    <LazyPhotoWall hydrate-on-visible />
     <LazyReservas hydrate-on-visible />
     <LazyAvaliacoes hydrate-on-visible />
     <LazyPerguntasFrequentes

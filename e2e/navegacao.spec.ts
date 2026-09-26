@@ -6,10 +6,11 @@ test.describe('Navegação', () => {
     await expect(page).toHaveTitle(/Expediente Bar/)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
-    const nav = page.getByRole('navigation', { name: 'Links principais' })
-    await expect(nav).toBeVisible()
+    // Hero: botões (reservar, cardápio) + grid de atalhos (nav "Atalhos") vindos do CMS
+    const hero = page.locator('section#inicio')
+    await expect(hero.getByRole('navigation', { name: 'Atalhos' })).toBeVisible()
     for (const nome of ['Reservar', 'Cardápio', 'Eventos', 'Agenda', 'Instagram', 'iFood', 'Como chegar']) {
-      await expect(nav.getByRole('link', { name: new RegExp(nome, 'i') }).first()).toBeVisible()
+      await expect(hero.getByRole('link', { name: new RegExp(nome, 'i') }).first()).toBeVisible()
     }
 
     // eventos e avaliações só aparecem quando há dados (Sympla / Google)

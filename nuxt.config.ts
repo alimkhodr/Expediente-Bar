@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import galleryManifest from './app/assets/data/galeria.json'
 const siteUrl = process.env.NUXT_PUBLIC_SITE_URL || 'https://expedientebar.com.br'
 
 /** Rotas internas (painel de senhas, TV, admin): sem SSR, sem indexação, fora do sitemap. */
@@ -31,10 +32,25 @@ export default defineNuxtConfig({
   sitemap: {
     exclude: [...rotasInternas],
     defaults: { changefreq: 'weekly', priority: 0.7 },
+    // Sitemap de imagens: fotos da galeria e do hero na home, páginas do cardápio em /cardapio
+    // (https://nuxtseo.com/docs/sitemap/guides/images)
     urls: [
-      { loc: '/', priority: 1, changefreq: 'daily' },
+      {
+        loc: '/',
+        priority: 1,
+        changefreq: 'daily',
+        images: [
+          { loc: '/images/hero/fachada.webp', title: 'Fachada do Expediente Bar ao entardecer' },
+          ...galleryManifest.filter(f => f.src.includes('/foto-')).map(f => ({ loc: f.src, title: f.alt }))
+        ]
+      },
       { loc: '/eventos', priority: 0.9, changefreq: 'daily' },
-      { loc: '/cardapio', priority: 0.8, changefreq: 'weekly' }
+      {
+        loc: '/cardapio',
+        priority: 0.8,
+        changefreq: 'weekly',
+        images: [1, 2, 3, 4].map(n => ({ loc: `/images/cardapio/${n}.webp`, title: `Cardápio do Expediente Bar – página ${n}` }))
+      }
     ]
   },
 
