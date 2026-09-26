@@ -14,7 +14,7 @@ test.describe('Navegação', () => {
     for (const nome of ['Reservar', 'Cardápio', 'Eventos', 'Agenda', 'Instagram', 'iFood', 'Como chegar']) {
       const link = hero.getByRole('link', { name: new RegExp(nome, 'i') }).first()
       await expect(link).toBeAttached()
-      await expect(link.locator('xpath=ancestor-or-self::*[self::li or self::a][1]')).toBeVisible()
+      await expect(link.locator('xpath=ancestor::li[1]').or(link).first()).toBeVisible()
     }
 
     // eventos e avaliações só aparecem quando há dados (Sympla / Google)
