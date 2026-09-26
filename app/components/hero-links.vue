@@ -147,17 +147,23 @@ function clicar (id: string, titulo: string) {
         >
           <UPageCard
             v-if="proximoEvento"
-            :to="proximoEvento.url"
-            target="_blank"
             :ui="{
               root: 'group relative h-[13.5rem] sm:h-[15rem] overflow-hidden rounded-xl ring-white/15 bg-stone-900 text-left transition hover:ring-primary/70',
               container: 'h-full p-0 sm:p-0',
               wrapper: 'relative h-full justify-end items-stretch p-5 sm:p-6',
               body: 'flex-none w-full'
             }"
-            @click="clicar('evento', proximoEvento.nome)"
           >
             <template #header>
+              <!-- Link de cobertura: o card inteiro leva ao Sympla sem aninhar <a> dentro de <a> -->
+              <a
+                :href="proximoEvento.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="absolute inset-0 z-10 rounded-xl focus-visible:outline-2 focus-visible:outline-primary"
+                :aria-label="`Comprar ingresso: ${proximoEvento.nome}`"
+                @click="clicar('evento', proximoEvento.nome)"
+              />
               <NuxtImg
                 v-if="proximoEvento.imagem"
                 :src="proximoEvento.imagem"
@@ -195,7 +201,7 @@ function clicar (id: string, titulo: string) {
               </span>
             </template>
             <template #body>
-              <div class="relative flex flex-col gap-1">
+              <div class="pointer-events-none relative flex flex-col gap-1">
                 <time
                   :datetime="comOffsetSaoPaulo(proximoEvento.inicio)"
                   class="text-xs font-medium text-white/80 sm:text-sm"
@@ -207,8 +213,8 @@ function clicar (id: string, titulo: string) {
                 </p>
                 <NuxtLink
                   to="/eventos"
-                  class="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
-                  @click.stop="clicar('eventos', 'Eventos e ingressos')"
+                  class="pointer-events-auto relative z-20 mt-1 inline-flex items-center gap-1 self-start text-sm font-semibold text-primary hover:underline"
+                  @click="clicar('eventos', 'Eventos e ingressos')"
                 >
                   Eventos e ingressos
                   <UIcon

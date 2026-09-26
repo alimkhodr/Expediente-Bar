@@ -30,7 +30,9 @@ test.describe('Mobile', () => {
     const total = await links.count()
     expect(total).toBeGreaterThanOrEqual(5)
     for (let i = 0; i < total; i++) {
-      const caixa = await links.nth(i).boundingBox()
+      // Links de card (overlay sem tamanho) são medidos pelo card que os contém
+      let caixa = await links.nth(i).boundingBox()
+      if (!caixa || caixa.height < 2) caixa = await links.nth(i).locator('xpath=ancestor::li[1]').boundingBox()
       expect(caixa?.height ?? 0).toBeGreaterThanOrEqual(44)
     }
   })

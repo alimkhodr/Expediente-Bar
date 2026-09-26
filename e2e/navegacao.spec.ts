@@ -9,8 +9,12 @@ test.describe('Navegação', () => {
     // Hero: botões (reservar, cardápio) + grid de atalhos (nav "Atalhos") vindos do CMS
     const hero = page.locator('section#inicio')
     await expect(hero.getByRole('navigation', { name: 'Atalhos' })).toBeVisible()
+    // Nos cards do Nuxt UI (UPageCard `to`) o <a> é um overlay sem tamanho próprio:
+    // conferimos que o link existe e que o card que o contém está visível.
     for (const nome of ['Reservar', 'Cardápio', 'Eventos', 'Agenda', 'Instagram', 'iFood', 'Como chegar']) {
-      await expect(hero.getByRole('link', { name: new RegExp(nome, 'i') }).first()).toBeVisible()
+      const link = hero.getByRole('link', { name: new RegExp(nome, 'i') }).first()
+      await expect(link).toBeAttached()
+      await expect(link.locator('xpath=ancestor-or-self::*[self::li or self::a][1]')).toBeVisible()
     }
 
     // eventos e avaliações só aparecem quando há dados (Sympla / Google)
