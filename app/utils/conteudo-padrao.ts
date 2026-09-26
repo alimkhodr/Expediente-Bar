@@ -29,7 +29,7 @@ export const conteudoPadrao: Conteudo = {
       id: 'pagode',
       titulo: 'O melhor do pagode',
       texto: 'A energia do pagode que você ama é aqui. Confira a agenda e venha curtir com a gente.',
-      imagem: '/images/galeria/foto-14.webp',
+      imagem: '/images/galeria/foto-83.webp',
       botao: 'Ver agenda',
       url: '#agenda',
       icone: 'i-lucide-music',
