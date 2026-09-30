@@ -23,7 +23,6 @@ const itens = computed(() => props.perguntas.map(p => ({
     destaque="Perguntas"
     titulo="frequentes"
     descricao="Ficou alguma dúvida? Chama a gente no WhatsApp."
-    contraste
   >
     <template #acoes>
       <UButton

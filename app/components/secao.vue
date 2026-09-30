@@ -45,7 +45,7 @@ onMounted(() => {
   <section
     :id="id"
     :aria-labelledby="temCabecalho ? `${id}-titulo` : undefined"
-    class="relative"
+    class="home-section relative"
     :class="[contraste ? 'bg-elevated/40' : '', largo ? 'pb-16 sm:pb-20' : '']"
   >
     <!-- Páginas internas: cabeçalho com h1 -->

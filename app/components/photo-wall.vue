@@ -12,7 +12,6 @@ import galleryManifest from '~/assets/data/galeria.json'
 interface Photo { src: string, width: number, height: number, alt: string }
 
 const ROWS = 4
-const TILE_ASPECT = 5 / 4
 const DRIFT_PX_PER_SECOND = 22
 const FRICTION = 0.94
 const DRAG_THRESHOLD_PX = 6
@@ -40,17 +39,12 @@ const wallRef = ref<HTMLElement | null>(null)
 const copyRef = ref<HTMLElement | null>(null)
 
 let x = 0
-let y = 0
 let velocityX = 0
-let velocityY = 0
 let copyWidth = 0
-let wallHeight = 0
-let sectionHeight = 0
 let dragging = false
 let dragged = false
-let touchDrag = false
 let lastPointerX = 0
-let lastPointerY = 0
+let pointerStartY = 0
 let lastMoveAt = 0
 let frame = 0
 let lastFrameAt = 0
@@ -61,19 +55,7 @@ let lightbox: import('photoswipe/lightbox').default | null = null
 
 function measure () {
   copyWidth = copyRef.value?.getBoundingClientRect().width ?? 0
-  wallHeight = wallRef.value?.getBoundingClientRect().height ?? 0
-  sectionHeight = sectionRef.value?.getBoundingClientRect().height ?? 0
-  clampY()
   applyTransform()
-}
-
-function clampY () {
-  if (wallHeight <= sectionHeight) {
-    y = (sectionHeight - wallHeight) / 2
-    return
-  }
-  const min = sectionHeight - wallHeight
-  y = Math.min(0, Math.max(min, y))
 }
 
 function wrapX () {
@@ -84,7 +66,7 @@ function wrapX () {
 }
 
 function applyTransform () {
-  if (wallRef.value) wallRef.value.style.transform = `translate3d(${x}px, ${y}px, 0)`
+  if (wallRef.value) wallRef.value.style.transform = `translate3d(${x}px, 0, 0)`
 }
 
 function tick (now: number) {
@@ -92,18 +74,14 @@ function tick (now: number) {
   lastFrameAt = now
 
   if (!dragging) {
-    if (Math.abs(velocityX) > 5 || Math.abs(velocityY) > 5) {
+    if (Math.abs(velocityX) > 5) {
       x += velocityX * dt
-      y += velocityY * dt
       velocityX *= FRICTION
-      velocityY *= FRICTION
     } else {
       velocityX = 0
-      velocityY = 0
       if (!reducedMotion) x -= DRIFT_PX_PER_SECOND * dt
     }
     wrapX()
-    clampY()
     applyTransform()
   }
 
@@ -122,11 +100,9 @@ function onPointerDown (e: PointerEvent) {
   dragging = true
   dragged = false
   pressedTile = (e.target as HTMLElement).closest<HTMLElement>('button[data-index]')
-  touchDrag = e.pointerType === 'touch'
   velocityX = 0
-  velocityY = 0
   lastPointerX = e.clientX
-  lastPointerY = e.clientY
+  pointerStartY = e.clientY
   lastMoveAt = e.timeStamp
   sectionRef.value?.setPointerCapture(e.pointerId)
 }
@@ -134,20 +110,15 @@ function onPointerDown (e: PointerEvent) {
 function onPointerMove (e: PointerEvent) {
   if (!dragging) return
   const dx = e.clientX - lastPointerX
-  // No toque o eixo vertical fica com a rolagem da página (touch-action: pan-y)
-  const dy = touchDrag ? 0 : e.clientY - lastPointerY
-  if (!dragged && Math.hypot(e.clientX - lastPointerX, e.clientY - lastPointerY) < DRAG_THRESHOLD_PX) return
+  // Só o eixo horizontal move o mural; o vertical continua rolando a página
+  if (!dragged && Math.hypot(e.clientX - lastPointerX, e.clientY - pointerStartY) < DRAG_THRESHOLD_PX) return
   dragged = true
   const dt = Math.max(1, e.timeStamp - lastMoveAt)
   velocityX = (dx / dt) * 1000
-  velocityY = (dy / dt) * 1000
   x += dx
-  y += dy
   lastPointerX = e.clientX
-  lastPointerY = e.clientY
   lastMoveAt = e.timeStamp
   wrapX()
-  clampY()
   applyTransform()
 }
 
@@ -157,10 +128,8 @@ function onPointerUp (e: PointerEvent) {
   // Se parou o dedo antes de soltar, não há inércia
   if (e.timeStamp - lastMoveAt > 80) {
     velocityX = 0
-    velocityY = 0
   }
   velocityX = Math.max(-2500, Math.min(2500, velocityX))
-  velocityY = Math.max(-2500, Math.min(2500, velocityY))
   if (dragged) {
     trackEvent('galeria_arrastar')
   } else {
@@ -315,8 +284,10 @@ onMounted(() => {
 <style scoped>
 .photo-wall {
   --gap: 10px;
-  --tile-w: 168px;
-  --tile-h: calc(var(--tile-w) * v-bind(TILE_ASPECT));
+  /* 4 linhas com colunas alternadas deslocadas meia foto para cima:
+     3,5 fotos + 3 vãos precisam cobrir a altura da seção (sem sobras no topo ou embaixo) */
+  --tile-h: calc((100svh - 3 * var(--gap)) / 3.4);
+  --tile-w: calc(var(--tile-h) * 4 / 5);
   /* O toque vertical continua rolando a página; o horizontal arrasta o mural */
   touch-action: pan-y pinch-zoom;
   contain: layout paint;
@@ -324,7 +295,6 @@ onMounted(() => {
 
 @media (min-width: 640px) {
   .photo-wall {
-    --tile-w: 208px;
     --gap: 12px;
   }
 }
@@ -333,6 +303,5 @@ onMounted(() => {
   grid-auto-flow: column;
   grid-auto-columns: var(--tile-w);
   gap: var(--gap);
-  padding-top: calc(var(--tile-h) / 2);
 }
 </style>

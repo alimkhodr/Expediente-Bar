@@ -17,7 +17,6 @@ const carregando = computed(() => status.value === 'pending' || status.value ===
     destaque="Próximos"
     titulo="eventos"
     descricao="Festas com ingresso: garanta o seu antes de esgotar."
-    contraste
   >
     <template #acoes>
       <UButton

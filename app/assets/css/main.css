@@ -102,3 +102,26 @@ section[id] {
 
 /* PhotoSwipe (cardápio) */
 .pswp__bg { background: rgba(0, 0, 0, 0.94); }
+
+/* ---------------------------------------------------------------------------
+   Home: seções alternam cinza/preto. A galeria (preta) fica entre dois grupos:
+   - antes dela, conta de trás para frente: a seção colada na galeria é cinza;
+   - depois dela, conta do início: a seção colada na galeria é cinza.
+   Seções ocultas (eventos/avaliações sem dados) não entram na contagem.
+   --------------------------------------------------------------------------- */
+.section-group--before-gallery > .home-section:nth-last-child(odd),
+.section-group--after-gallery > .home-section:nth-child(odd) {
+  background-color: color-mix(in oklab, var(--ui-bg-elevated) 40%, transparent);
+}
+
+/* Em seção cinza, cards "subtle" (cinza) viram pretos para não sumirem no fundo */
+.section-group--before-gallery > .home-section:nth-last-child(odd) [data-slot="root"][class*="bg-elevated"],
+.section-group--after-gallery > .home-section:nth-child(odd) [data-slot="root"][class*="bg-elevated"] {
+  /* preto puro: no tema escuro --ui-bg é stone-900, que ainda é cinza */
+  background-color: #000;
+}
+
+/* Rodapé é o oposto da última seção da home, para nunca repetir cor */
+body:has(.section-group--after-gallery > .home-section:last-child:nth-child(even)) footer {
+  background-color: color-mix(in oklab, var(--ui-bg-elevated) 40%, transparent);
+}

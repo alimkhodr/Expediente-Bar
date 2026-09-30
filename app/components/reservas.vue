@@ -30,7 +30,7 @@ const acoes = [
   <section
     id="reservas"
     aria-labelledby="reservas-titulo"
-    class="bg-elevated/40"
+    class="home-section"
   >
     <UPageSection
       as="div"
