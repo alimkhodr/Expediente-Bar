@@ -49,7 +49,7 @@ export default defineNuxtConfig({
         loc: '/cardapio',
         priority: 0.8,
         changefreq: 'weekly',
-        images: [1, 2, 3, 4].map(n => ({ loc: `/images/cardapio/${n}.webp`, title: `Cardápio do Expediente Bar – página ${n}` }))
+        images: [1, 2, 3, 4].map(n => ({ loc: `/images/cardapio/pagina-${n}.webp`, title: `Cardápio do Expediente Bar – página ${n}` }))
       }
     ]
   },

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const paginas = [
-  { src: '/images/cardapio/1.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – porções e petiscos' },
-  { src: '/images/cardapio/2.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – lanches e pratos' },
-  { src: '/images/cardapio/3.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – cervejas e bebidas' },
-  { src: '/images/cardapio/4.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – drinks e doses' }
+  { src: '/images/cardapio/pagina-1.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – batatas, porções e bolinhos' },
+  { src: '/images/cardapio/pagina-2.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – lanches, sobremesas, sucos e bebidas' },
+  { src: '/images/cardapio/pagina-3.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – cervejas, long necks e gin' },
+  { src: '/images/cardapio/pagina-4.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – caipirinhas, drinks, doses e combos' }
 ]
 
 const descricao = 'Cardápio completo do Expediente Bar em São José dos Campos: porções, petiscos, lanches, cervejas, drinks e doses. Veja com zoom direto no celular.'
