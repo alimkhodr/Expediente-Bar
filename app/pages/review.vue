@@ -57,21 +57,26 @@ async function goToReview (skipNames = false) {
       class="h-12 w-auto"
     />
 
-    <div class="mt-10 flex items-center gap-1 text-primary">
-      <UIcon
+    <!-- SVG próprio: ícones lucide são máscara e não aceitam preenchimento -->
+    <div
+      class="mt-10 flex items-center gap-1 text-primary"
+      aria-hidden="true"
+    >
+      <svg
         v-for="n in 5"
         :key="n"
-        name="i-lucide-star"
+        viewBox="0 0 24 24"
         class="size-7 fill-current"
-        aria-hidden="true"
-      />
+      >
+        <path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.55L12 17.52l-5.88 3.09 1.12-6.55L2.48 9.42l6.58-.96z" />
+      </svg>
     </div>
 
     <h1 class="mt-5 text-3xl font-bold text-white">
       Gostou do Expediente?
     </h1>
     <p class="mt-2 max-w-sm text-white/70">
-      Sua avaliação no Google ajuda muito a gente. Antes, conta quem é você e quem te atendeu hoje.
+      Sua avaliação no Google ajuda muito a gente. Antes, conta quem é você e quem te atendeu.
     </p>
 
     <form
@@ -80,9 +85,9 @@ async function goToReview (skipNames = false) {
     >
       <UFormField
         label="Seu nome"
-        hint="como aparece no Google"
+        help="Igual ao da sua conta Google, para acharmos sua avaliação."
         required
-        :ui="{ label: 'text-white', hint: 'text-white/50' }"
+        :ui="{ label: 'text-white', help: 'text-white/60' }"
       >
         <UInput
           v-model="customerName"
@@ -92,6 +97,7 @@ async function goToReview (skipNames = false) {
           required
           autocomplete="name"
           autocapitalize="words"
+          enterkeyhint="next"
           class="w-full"
         />
       </UFormField>
@@ -106,6 +112,7 @@ async function goToReview (skipNames = false) {
           :maxlength="WAITER_NAME_MAX"
           autocomplete="off"
           autocapitalize="words"
+          enterkeyhint="go"
           class="w-full"
         />
       </UFormField>
@@ -123,12 +130,12 @@ async function goToReview (skipNames = false) {
         variant="link"
         color="neutral"
         :disabled="sending"
-        class="self-center text-white/60"
+        class="self-center text-white/70"
         @click="goToReview(true)"
       >
-        Prefiro não informar
+        Avaliar sem informar nome
       </UButton>
-      <p class="text-center text-xs text-white/40">
+      <p class="text-center text-xs text-white/60">
         Usamos seu nome só para encontrar sua avaliação e reconhecer quem te atendeu.
       </p>
     </form>

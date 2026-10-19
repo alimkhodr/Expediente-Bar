@@ -2,7 +2,7 @@
 import type { Conteudo, ChaveConteudo, LinkHero, Destaque, ItemAgenda, PerguntaFaq } from '~/types/conteudo'
 import { conteudoPadrao } from '~/utils/conteudo-padrao'
 
-definePageMeta({ layout: 'blank', middleware: ['auth'] })
+definePageMeta({ layout: 'admin', middleware: ['auth'] })
 useSeoMeta({ title: 'Conteúdo do site', robots: 'noindex, nofollow' })
 
 const supabase = useSupabaseClient()
@@ -86,257 +86,270 @@ const abaAtual = computed(() => CHAVES.find(c => c.chave === aba.value)!)
 </script>
 
 <template>
-  <UContainer class="py-8 max-w-4xl">
-    <UPageCard>
-      <PainelAdminHeader
-        titulo="Conteúdo do site"
-        descricao="Tudo que não vem de uma API (links, destaques, agenda e FAQ). Eventos, horários e avaliações são automáticos."
-        :links="[{ label: 'Senhas', to: '/admin', icon: 'i-lucide-hash' }, { label: 'Avaliações', to: '/admin/reviews', icon: 'i-lucide-star' }]"
-      >
-        <UButton
-          color="neutral"
-          variant="outline"
-          icon="i-lucide-external-link"
-          :loading="publicando"
-          @click="verNoSite"
-        >
-          Ver site
-        </UButton>
-      </PainelAdminHeader>
+  <UDashboardPanel id="cms">
+    <template #header>
+      <UDashboardNavbar title="Conteúdo do site">
+        <template #right>
+          <UButton
+            color="neutral"
+            variant="outline"
+            icon="i-lucide-external-link"
+            :loading="publicando"
+            @click="verNoSite"
+          >
+            Ver site
+          </UButton>
+        </template>
+      </UDashboardNavbar>
 
-      <UTabs
-        v-model="aba"
-        :items="abas"
-        class="mt-6"
-        :ui="{ trigger: 'flex-1' }"
-      />
-
-      <div
-        v-if="carregando"
-        class="mt-6 flex flex-col gap-3"
-        aria-busy="true"
-      >
-        <USkeleton
-          v-for="n in 3"
-          :key="n"
-          class="h-24"
+      <UDashboardToolbar class="overflow-x-auto">
+        <UTabs
+          v-model="aba"
+          :items="abas"
+          :content="false"
+          size="sm"
+          variant="link"
+          class="min-w-max"
         />
-      </div>
+      </UDashboardToolbar>
+    </template>
 
-      <div
-        v-else
-        class="mt-6 flex flex-col gap-6"
-      >
-        <UAlert
-          :description="abaAtual.ajuda"
-          color="neutral"
-          variant="subtle"
-          icon="i-lucide-info"
-        />
+    <template #body>
+      <div class="mx-auto w-full max-w-4xl">
+        <p class="mb-6 text-sm text-muted">
+          Tudo que não vem de uma API. Eventos, horários e avaliações do Google são automáticos.
+        </p>
 
-        <!-- LINKS -->
-        <AdminListaOrdenavel
-          v-if="aba === 'links'"
-          v-model="conteudo.links"
-          :novo="novoLink"
-          rotulo-adicionar="Adicionar link"
-          :titulo="(item) => item.titulo"
-        >
-          <template #default="{ item }">
-            <div class="grid gap-3 sm:grid-cols-2">
-              <UFormField label="Título">
-                <UInput
-                  v-model="item.titulo"
-                  class="w-full"
-                />
-              </UFormField>
-              <UFormField label="Descrição curta">
-                <UInput
-                  v-model="item.descricao"
-                  class="w-full"
-                />
-              </UFormField>
-              <UFormField
-                label="URL"
-                help="#agenda, /cardapio ou https://…"
-              >
-                <UInput
-                  v-model="item.url"
-                  class="w-full"
-                />
-              </UFormField>
-              <UFormField label="Ícone">
-                <AdminCampoIcone v-model="item.icone" />
-              </UFormField>
-              <UFormField label="Visível no site">
-                <USwitch v-model="item.ativo" />
-              </UFormField>
-            </div>
-          </template>
-        </AdminListaOrdenavel>
-
-        <!-- DESTAQUES -->
-        <AdminListaOrdenavel
-          v-if="aba === 'destaques'"
-          v-model="conteudo.destaques"
-          :novo="novoDestaque"
-          rotulo-adicionar="Adicionar destaque"
-          :titulo="(item) => item.titulo"
-        >
-          <template #default="{ item }">
-            <div class="grid gap-3 sm:grid-cols-2">
-              <UFormField label="Título">
-                <UInput
-                  v-model="item.titulo"
-                  class="w-full"
-                />
-              </UFormField>
-              <UFormField label="Texto do botão">
-                <UInput
-                  v-model="item.botao"
-                  class="w-full"
-                />
-              </UFormField>
-              <UFormField
-                label="Texto"
-                class="sm:col-span-2"
-              >
-                <UTextarea
-                  v-model="item.texto"
-                  :rows="2"
-                  class="w-full"
-                />
-              </UFormField>
-              <UFormField label="URL do botão">
-                <UInput
-                  v-model="item.url"
-                  class="w-full"
-                />
-              </UFormField>
-              <UFormField label="Ícone">
-                <AdminCampoIcone v-model="item.icone!" />
-              </UFormField>
-              <UFormField
-                label="Imagem"
-                help="Caminho em /images/…"
-              >
-                <UInput
-                  v-model="item.imagem"
-                  class="w-full"
-                />
-              </UFormField>
-              <UFormField label="Visível no site">
-                <USwitch v-model="item.ativo" />
-              </UFormField>
-            </div>
-          </template>
-        </AdminListaOrdenavel>
-
-        <!-- AGENDA -->
         <div
-          v-if="aba === 'agenda'"
+          v-if="carregando"
+          class="flex flex-col gap-3"
+          aria-busy="true"
+        >
+          <USkeleton
+            v-for="n in 3"
+            :key="n"
+            class="h-24"
+          />
+        </div>
+
+        <div
+          v-else
           class="flex flex-col gap-6"
         >
-          <div class="grid gap-3 sm:grid-cols-2">
-            <UFormField
-              label="Embed do Canva"
-              help="Link de compartilhamento do Canva terminado em ?embed"
-            >
-              <UInput
-                v-model="conteudo.agenda.canvaEmbed"
-                class="w-full"
-              />
-            </UFormField>
-            <UFormField
-              label="Link público da agenda"
-              help="Instagram ou Canva"
-            >
-              <UInput
-                v-model="conteudo.agenda.linkPublico"
-                class="w-full"
-              />
-            </UFormField>
-          </div>
+          <UAlert
+            :description="abaAtual.ajuda"
+            color="neutral"
+            variant="subtle"
+            icon="i-lucide-info"
+          />
+
+          <!-- LINKS -->
           <AdminListaOrdenavel
-            v-model="conteudo.agenda.itens"
-            :novo="novoItemAgenda"
-            rotulo-adicionar="Adicionar dia"
-            :titulo="(item) => item.dia"
+            v-if="aba === 'links'"
+            v-model="conteudo.links"
+            :novo="novoLink"
+            rotulo-adicionar="Adicionar link"
+            :titulo="(item) => item.titulo"
           >
             <template #default="{ item }">
-              <div class="grid gap-3 sm:grid-cols-3">
-                <UFormField label="Dia">
+              <div class="grid gap-3 sm:grid-cols-2">
+                <UFormField label="Título">
                   <UInput
-                    v-model="item.dia"
+                    v-model="item.titulo"
                     class="w-full"
                   />
                 </UFormField>
-                <UFormField label="Descrição">
+                <UFormField label="Descrição curta">
                   <UInput
                     v-model="item.descricao"
+                    class="w-full"
+                  />
+                </UFormField>
+                <UFormField
+                  label="URL"
+                  help="#agenda, /cardapio ou https://…"
+                >
+                  <UInput
+                    v-model="item.url"
                     class="w-full"
                   />
                 </UFormField>
                 <UFormField label="Ícone">
                   <AdminCampoIcone v-model="item.icone" />
                 </UFormField>
+                <UFormField label="Visível no site">
+                  <USwitch v-model="item.ativo" />
+                </UFormField>
               </div>
             </template>
           </AdminListaOrdenavel>
-        </div>
 
-        <!-- FAQ -->
-        <AdminListaOrdenavel
-          v-if="aba === 'faq'"
-          v-model="conteudo.faq"
-          :novo="novaPergunta"
-          rotulo-adicionar="Adicionar pergunta"
-          :titulo="(item) => item.question"
-        >
-          <template #default="{ item }">
-            <div class="flex flex-col gap-3">
-              <UFormField label="Pergunta">
+          <!-- DESTAQUES -->
+          <AdminListaOrdenavel
+            v-if="aba === 'destaques'"
+            v-model="conteudo.destaques"
+            :novo="novoDestaque"
+            rotulo-adicionar="Adicionar destaque"
+            :titulo="(item) => item.titulo"
+          >
+            <template #default="{ item }">
+              <div class="grid gap-3 sm:grid-cols-2">
+                <UFormField label="Título">
+                  <UInput
+                    v-model="item.titulo"
+                    class="w-full"
+                  />
+                </UFormField>
+                <UFormField label="Texto do botão">
+                  <UInput
+                    v-model="item.botao"
+                    class="w-full"
+                  />
+                </UFormField>
+                <UFormField
+                  label="Texto"
+                  class="sm:col-span-2"
+                >
+                  <UTextarea
+                    v-model="item.texto"
+                    :rows="2"
+                    class="w-full"
+                  />
+                </UFormField>
+                <UFormField label="URL do botão">
+                  <UInput
+                    v-model="item.url"
+                    class="w-full"
+                  />
+                </UFormField>
+                <UFormField label="Ícone">
+                  <AdminCampoIcone v-model="item.icone!" />
+                </UFormField>
+                <UFormField
+                  label="Imagem"
+                  help="Caminho em /images/…"
+                >
+                  <UInput
+                    v-model="item.imagem"
+                    class="w-full"
+                  />
+                </UFormField>
+                <UFormField label="Visível no site">
+                  <USwitch v-model="item.ativo" />
+                </UFormField>
+              </div>
+            </template>
+          </AdminListaOrdenavel>
+
+          <!-- AGENDA -->
+          <div
+            v-if="aba === 'agenda'"
+            class="flex flex-col gap-6"
+          >
+            <div class="grid gap-3 sm:grid-cols-2">
+              <UFormField
+                label="Embed do Canva"
+                help="Link de compartilhamento do Canva terminado em ?embed"
+              >
                 <UInput
-                  v-model="item.question"
+                  v-model="conteudo.agenda.canvaEmbed"
                   class="w-full"
                 />
               </UFormField>
-              <UFormField label="Resposta">
-                <UTextarea
-                  v-model="item.answer"
-                  :rows="3"
+              <UFormField
+                label="Link público da agenda"
+                help="Instagram ou Canva"
+              >
+                <UInput
+                  v-model="conteudo.agenda.linkPublico"
                   class="w-full"
                 />
               </UFormField>
             </div>
-          </template>
-        </AdminListaOrdenavel>
-
-        <div class="flex flex-wrap items-center justify-between gap-3 border-t border-default pt-5">
-          <p class="text-xs text-muted">
-            {{ origem[aba] === 'cms' ? 'Este bloco usa o conteúdo salvo aqui.' : 'Este bloco ainda usa o padrão do site.' }}
-          </p>
-          <div class="flex gap-2">
-            <UButton
-              color="neutral"
-              variant="ghost"
-              icon="i-lucide-rotate-ccw"
-              :disabled="origem[aba] !== 'cms'"
-              @click="restaurarPadrao(aba)"
+            <AdminListaOrdenavel
+              v-model="conteudo.agenda.itens"
+              :novo="novoItemAgenda"
+              rotulo-adicionar="Adicionar dia"
+              :titulo="(item) => item.dia"
             >
-              Restaurar padrão
-            </UButton>
-            <UButton
-              color="primary"
-              icon="i-lucide-save"
-              :loading="salvando === aba"
-              @click="salvar(aba)"
-            >
-              Salvar {{ abaAtual.label.toLowerCase() }}
-            </UButton>
+              <template #default="{ item }">
+                <div class="grid gap-3 sm:grid-cols-3">
+                  <UFormField label="Dia">
+                    <UInput
+                      v-model="item.dia"
+                      class="w-full"
+                    />
+                  </UFormField>
+                  <UFormField label="Descrição">
+                    <UInput
+                      v-model="item.descricao"
+                      class="w-full"
+                    />
+                  </UFormField>
+                  <UFormField label="Ícone">
+                    <AdminCampoIcone v-model="item.icone" />
+                  </UFormField>
+                </div>
+              </template>
+            </AdminListaOrdenavel>
           </div>
+
+          <!-- FAQ -->
+          <AdminListaOrdenavel
+            v-if="aba === 'faq'"
+            v-model="conteudo.faq"
+            :novo="novaPergunta"
+            rotulo-adicionar="Adicionar pergunta"
+            :titulo="(item) => item.question"
+          >
+            <template #default="{ item }">
+              <div class="flex flex-col gap-3">
+                <UFormField label="Pergunta">
+                  <UInput
+                    v-model="item.question"
+                    class="w-full"
+                  />
+                </UFormField>
+                <UFormField label="Resposta">
+                  <UTextarea
+                    v-model="item.answer"
+                    :rows="3"
+                    class="w-full"
+                  />
+                </UFormField>
+              </div>
+            </template>
+          </AdminListaOrdenavel>
+
         </div>
       </div>
-    </UPageCard>
-  </UContainer>
+    </template>
+
+    <template #footer>
+      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-default px-4 py-3 sm:px-6">
+        <p class="text-xs text-muted">
+          {{ origem[aba] === 'cms' ? 'Este bloco usa o conteúdo salvo aqui.' : 'Este bloco ainda usa o padrão do site.' }}
+        </p>
+        <div class="flex gap-2">
+          <UButton
+            color="neutral"
+            variant="ghost"
+            icon="i-lucide-rotate-ccw"
+            :disabled="origem[aba] !== 'cms'"
+            @click="restaurarPadrao(aba)"
+          >
+            Restaurar padrão
+          </UButton>
+          <UButton
+            color="primary"
+            icon="i-lucide-save"
+            :loading="salvando === aba"
+            @click="salvar(aba)"
+          >
+            Salvar {{ abaAtual.label.toLowerCase() }}
+          </UButton>
+        </div>
+      </div>
+    </template>
+  </UDashboardPanel>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
 
-definePageMeta({ layout: 'blank', middleware: ['auth'] })
+definePageMeta({ layout: 'admin', middleware: ['auth'] })
 useSeoMeta({ title: 'Placa de avaliação', robots: 'noindex, nofollow' })
 
 const supabase = useSupabaseClient()
@@ -23,6 +23,7 @@ const periods = [
 const period = ref<Period>('today')
 const rows = ref<ReviewRequest[]>([])
 const loading = ref(true)
+const loadError = ref<{ missingTable: boolean, message: string } | null>(null)
 
 /** Meia-noite de hoje em São Paulo (sem horário de verão desde 2019: UTC-3). */
 function startOf (value: Period): string | null {
@@ -45,10 +46,12 @@ async function load () {
   if (start) query = query.gte('created_at', start)
   const { data, error } = await query
   loading.value = false
+  // Erro fica fixo na tela (o refresh automático empilharia um toast por minuto)
   if (error) {
-    toast.add({ title: 'Não foi possível carregar os envios', description: error.message, color: 'error' })
+    loadError.value = { missingTable: error.code === 'PGRST205', message: error.message }
     return
   }
+  loadError.value = null
   rows.value = (data ?? []) as ReviewRequest[]
 }
 
@@ -88,6 +91,14 @@ const totals = computed(() => ({
   nfc: rows.value.filter(r => r.source === 'nfc').length,
   qr: rows.value.filter(r => r.source === 'qr').length
 }))
+
+const kpis = computed(() => [
+  { label: 'Envios', value: totals.value.all, icon: 'i-lucide-send' },
+  { label: 'Confirmadas', value: totals.value.confirmed, icon: 'i-lucide-badge-check' },
+  { label: 'Garçons', value: totals.value.waiters, icon: 'i-lucide-users' },
+  { label: 'Por NFC', value: totals.value.nfc, icon: 'i-lucide-nfc' },
+  { label: 'Por QR', value: totals.value.qr, icon: 'i-lucide-qr-code' }
+])
 
 const formatTime = (iso: string) => new Intl.DateTimeFormat('pt-BR', {
   timeZone: TIME_ZONE, day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -133,137 +144,265 @@ const medal = (i: number) => ['🥇', '🥈', '🥉'][i] ?? `${i + 1}º`
 </script>
 
 <template>
-  <UContainer class="max-w-5xl py-8">
-    <UPageCard>
-      <PainelAdminHeader
-        titulo="Placa de avaliação"
-        descricao="Confira o nome do cliente nas avaliações do Google e marque as encontradas. Atualiza a cada minuto."
-        :links="[
-          { label: 'Senhas', to: '/admin', icon: 'i-lucide-hash' },
-          { label: 'Conteúdo do site', to: '/admin/cms', icon: 'i-lucide-layout-template' }
-        ]"
-      />
-
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <UTabs
-          v-model="period"
-          :items="periods"
-          :content="false"
-        />
-        <div class="flex flex-wrap gap-2">
+  <UDashboardPanel id="reviews">
+    <template #header>
+      <UDashboardNavbar title="Placa de avaliação">
+        <template #right>
           <UButton
             :to="links.googleMaps"
             target="_blank"
             icon="i-simple-icons-googlemaps"
             color="neutral"
             variant="outline"
+            class="hidden sm:inline-flex"
           >
             Avaliações no Google
           </UButton>
-          <UButton
-            icon="i-lucide-refresh-cw"
-            color="neutral"
-            variant="outline"
-            :loading="loading"
-            @click="load"
+          <UTooltip text="Avaliações no Google">
+            <UButton
+              :to="links.googleMaps"
+              target="_blank"
+              icon="i-simple-icons-googlemaps"
+              color="neutral"
+              variant="outline"
+              aria-label="Avaliações no Google"
+              class="sm:hidden"
+            />
+          </UTooltip>
+          <UTooltip text="Baixar CSV">
+            <UButton
+              icon="i-lucide-download"
+              color="neutral"
+              variant="outline"
+              aria-label="Baixar CSV"
+              :disabled="!rows.length"
+              @click="exportCsv"
+            />
+          </UTooltip>
+          <UTooltip text="Atualizar">
+            <UButton
+              icon="i-lucide-refresh-cw"
+              color="neutral"
+              variant="outline"
+              aria-label="Atualizar"
+              :loading="loading"
+              @click="load"
+            />
+          </UTooltip>
+        </template>
+      </UDashboardNavbar>
+
+      <UDashboardToolbar>
+        <UTabs
+          v-model="period"
+          :items="periods"
+          :content="false"
+          size="sm"
+          class="w-full sm:w-auto"
+        />
+      </UDashboardToolbar>
+    </template>
+
+    <template #body>
+      <div class="mx-auto flex w-full max-w-5xl flex-col gap-8">
+        <p class="text-sm text-muted">
+          O cliente digita o nome dele na placa antes de ir para o Google. Procure o nome nas avaliações do Google e marque como <strong class="text-default">encontrada</strong>: o ranking conta primeiro as confirmadas. Atualiza a cada minuto.
+        </p>
+
+        <UAlert
+          v-if="loadError"
+          color="warning"
+          variant="subtle"
+          icon="i-lucide-circle-alert"
+          :title="loadError.missingTable ? 'Tabela ainda não criada no Supabase' : 'Não foi possível carregar os envios'"
+          :description="loadError.missingTable
+            ? 'Rode supabase/migrations/20261019000000_review_requests.sql no SQL Editor do Supabase. Até lá a placa leva o cliente ao Google, mas não salva os nomes.'
+            : loadError.message"
+        />
+
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <div
+            v-for="kpi in kpis"
+            :key="kpi.label"
+            class="rounded-lg border border-default bg-elevated/40 p-4 last:col-span-2 sm:last:col-span-1"
           >
-            Atualizar
-          </UButton>
-          <UButton
-            icon="i-lucide-download"
-            color="neutral"
-            variant="outline"
-            :disabled="!rows.length"
-            @click="exportCsv"
-          >
-            CSV
-          </UButton>
+            <div class="flex items-center justify-between gap-2 text-muted">
+              <span class="text-xs font-medium">{{ kpi.label }}</span>
+              <UIcon
+                :name="kpi.icon"
+                class="size-4 shrink-0"
+              />
+            </div>
+            <p class="mt-2 text-2xl font-bold tabular-nums text-highlighted">
+              {{ kpi.value }}
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
-        <UCard
-          v-for="kpi in [
-            { label: 'Envios', value: totals.all },
-            { label: 'Confirmadas', value: totals.confirmed },
-            { label: 'Garçons', value: totals.waiters },
-            { label: 'Por NFC', value: totals.nfc },
-            { label: 'Por QR', value: totals.qr }
-          ]"
-          :key="kpi.label"
-          :ui="{ body: 'p-4 sm:p-4' }"
-        >
-          <p class="text-xs text-muted">
-            {{ kpi.label }}
-          </p>
-          <p class="text-2xl font-bold">
-            {{ kpi.value }}
-          </p>
-        </UCard>
-      </div>
+        <!-- Ranking -->
+        <section>
+          <h2 class="mb-3 text-base font-semibold text-highlighted">
+            Ranking dos garçons
+          </h2>
 
-      <h2 class="mt-8 mb-3 text-lg font-semibold">
-        Ranking
-      </h2>
-      <UTable
-        :data="ranking"
-        :columns="rankingColumns"
-        :loading="loading"
-        empty="Nenhum envio no período"
-      >
-        <template #position-cell="{ row }">
-          {{ medal(row.index) }}
-        </template>
-        <template #confirmed-cell="{ row }">
-          <span class="font-semibold text-primary">{{ row.original.confirmed }}</span>
-        </template>
-        <template #lastAt-cell="{ row }">
-          {{ formatTime(row.original.lastAt) }}
-        </template>
-      </UTable>
+          <!-- Celular: lista -->
+          <ul class="divide-y divide-default rounded-lg border border-default sm:hidden">
+            <li
+              v-for="(waiter, index) in ranking"
+              :key="waiter.key"
+              class="flex items-center gap-3 px-4 py-3"
+            >
+              <span class="w-7 shrink-0 text-center text-lg">{{ medal(index) }}</span>
+              <div class="min-w-0 flex-1">
+                <p class="truncate font-medium text-highlighted">
+                  {{ waiter.name }}
+                </p>
+                <p class="text-xs text-muted">
+                  {{ waiter.total }} envios · {{ waiter.nfc }} NFC · {{ waiter.qr }} QR
+                </p>
+              </div>
+              <div class="text-right">
+                <p class="text-lg font-bold tabular-nums text-primary">
+                  {{ waiter.confirmed }}
+                </p>
+                <p class="text-xs text-muted">
+                  confirmadas
+                </p>
+              </div>
+            </li>
+            <li
+              v-if="!ranking.length"
+              class="px-4 py-6 text-center text-sm text-muted"
+            >
+              {{ loading ? 'Carregando…' : 'Nenhum envio no período' }}
+            </li>
+          </ul>
 
-      <h2 class="mt-8 mb-3 text-lg font-semibold">
-        Histórico
-      </h2>
-      <UTable
-        :data="rows"
-        :columns="historyColumns"
-        :loading="loading"
-        empty="Nenhum envio no período"
-        class="max-h-[28rem]"
-        sticky
-      >
-        <template #created_at-cell="{ row }">
-          {{ formatTime(row.original.created_at) }}
-        </template>
-        <template #customer_name-cell="{ row }">
-          <span :class="row.original.customer_name ? 'font-medium' : 'text-muted'">{{ row.original.customer_name || 'Não informado' }}</span>
-        </template>
-        <template #waiter_name-cell="{ row }">
-          <span :class="row.original.waiter_name ? '' : 'text-muted'">{{ row.original.waiter_name || 'Sem nome' }}</span>
-        </template>
-        <template #source-cell="{ row }">
-          <UBadge
-            :color="row.original.source === 'nfc' ? 'primary' : 'neutral'"
-            variant="subtle"
+          <!-- Desktop: tabela -->
+          <UTable
+            :data="ranking"
+            :columns="rankingColumns"
+            :loading="loading"
+            empty="Nenhum envio no período"
+            class="hidden rounded-lg border border-default sm:block"
           >
-            {{ sourceLabel[row.original.source] }}
-          </UBadge>
-        </template>
-        <template #confirmed_at-cell="{ row }">
-          <UButton
-            size="xs"
-            :color="row.original.confirmed_at ? 'success' : 'neutral'"
-            :variant="row.original.confirmed_at ? 'subtle' : 'outline'"
-            :icon="row.original.confirmed_at ? 'i-lucide-check' : 'i-lucide-search'"
-            :loading="savingIds.has(row.original.id)"
-            :aria-label="row.original.confirmed_at ? 'Desmarcar avaliação encontrada' : 'Marcar avaliação como encontrada no Google'"
-            @click="toggleConfirmed(row.original.id)"
+            <template #position-cell="{ row }">
+              {{ medal(row.index) }}
+            </template>
+            <template #name-cell="{ row }">
+              <span class="font-medium text-highlighted">{{ row.original.name }}</span>
+            </template>
+            <template #confirmed-cell="{ row }">
+              <span class="font-semibold text-primary">{{ row.original.confirmed }}</span>
+            </template>
+            <template #lastAt-cell="{ row }">
+              {{ formatTime(row.original.lastAt) }}
+            </template>
+          </UTable>
+        </section>
+
+        <!-- Histórico -->
+        <section>
+          <h2 class="mb-3 text-base font-semibold text-highlighted">
+            Envios
+          </h2>
+
+          <!-- Celular: cards -->
+          <ul class="flex flex-col gap-2 sm:hidden">
+            <li
+              v-for="row in rows"
+              :key="row.id"
+              class="rounded-lg border border-default p-3"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <p
+                    class="truncate font-medium"
+                    :class="row.customer_name ? 'text-highlighted' : 'text-muted'"
+                  >
+                    {{ row.customer_name || 'Cliente não informado' }}
+                  </p>
+                  <p class="truncate text-xs text-muted">
+                    Atendido por {{ row.waiter_name || '—' }} · {{ formatTime(row.created_at) }}
+                  </p>
+                </div>
+                <UBadge
+                  :color="row.source === 'nfc' ? 'primary' : 'neutral'"
+                  variant="subtle"
+                  class="shrink-0"
+                >
+                  {{ sourceLabel[row.source] }}
+                </UBadge>
+              </div>
+              <UButton
+                v-if="row.customer_name"
+                block
+                size="sm"
+                class="mt-3"
+                :color="row.confirmed_at ? 'success' : 'neutral'"
+                :variant="row.confirmed_at ? 'subtle' : 'outline'"
+                :icon="row.confirmed_at ? 'i-lucide-check' : 'i-lucide-search'"
+                :loading="savingIds.has(row.id)"
+                @click="toggleConfirmed(row.id)"
+              >
+                {{ row.confirmed_at ? 'Encontrada no Google' : 'Marcar como encontrada' }}
+              </UButton>
+            </li>
+            <li
+              v-if="!rows.length"
+              class="rounded-lg border border-default px-4 py-6 text-center text-sm text-muted"
+            >
+              {{ loading ? 'Carregando…' : 'Nenhum envio no período' }}
+            </li>
+          </ul>
+
+          <!-- Desktop: tabela -->
+          <UTable
+            :data="rows"
+            :columns="historyColumns"
+            :loading="loading"
+            empty="Nenhum envio no período"
+            class="hidden max-h-[32rem] rounded-lg border border-default sm:block"
+            sticky
           >
-            {{ row.original.confirmed_at ? 'Encontrada' : 'Conferir' }}
-          </UButton>
-        </template>
-      </UTable>
-    </UPageCard>
-  </UContainer>
+            <template #created_at-cell="{ row }">
+              <span class="tabular-nums">{{ formatTime(row.original.created_at) }}</span>
+            </template>
+            <template #customer_name-cell="{ row }">
+              <span :class="row.original.customer_name ? 'font-medium text-highlighted' : 'text-muted'">{{ row.original.customer_name || 'Não informado' }}</span>
+            </template>
+            <template #waiter_name-cell="{ row }">
+              <span :class="row.original.waiter_name ? '' : 'text-muted'">{{ row.original.waiter_name || '—' }}</span>
+            </template>
+            <template #source-cell="{ row }">
+              <UBadge
+                :color="row.original.source === 'nfc' ? 'primary' : 'neutral'"
+                variant="subtle"
+              >
+                {{ sourceLabel[row.original.source] }}
+              </UBadge>
+            </template>
+            <template #confirmed_at-cell="{ row }">
+              <UButton
+                v-if="row.original.customer_name"
+                size="xs"
+                :color="row.original.confirmed_at ? 'success' : 'neutral'"
+                :variant="row.original.confirmed_at ? 'subtle' : 'outline'"
+                :icon="row.original.confirmed_at ? 'i-lucide-check' : 'i-lucide-search'"
+                :loading="savingIds.has(row.original.id)"
+                :aria-label="row.original.confirmed_at ? 'Desmarcar avaliação encontrada' : 'Marcar avaliação como encontrada no Google'"
+                @click="toggleConfirmed(row.original.id)"
+              >
+                {{ row.original.confirmed_at ? 'Encontrada' : 'Conferir' }}
+              </UButton>
+              <span
+                v-else
+                class="text-xs text-dimmed"
+              >sem nome</span>
+            </template>
+          </UTable>
+        </section>
+      </div>
+    </template>
+  </UDashboardPanel>
 </template>
