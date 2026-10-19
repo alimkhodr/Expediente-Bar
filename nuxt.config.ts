@@ -3,7 +3,7 @@ import galleryManifest from './app/assets/data/galeria.json'
 const siteUrl = process.env.NUXT_PUBLIC_SITE_URL || 'https://expedientebar.com.br'
 
 /** Rotas internas (painel de senhas, TV, admin): sem SSR, sem indexação, fora do sitemap. */
-const rotasInternas = ['/admin', '/admin/**', '/tv', '/login']
+const rotasInternas = ['/admin', '/admin/**', '/tv', '/login', '/avaliar', '/review']
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -133,6 +133,9 @@ export default defineNuxtConfig({
     '/admin/**': { ssr: false, headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
     '/tv': { ssr: false, headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
     '/login': { ssr: false, headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+    // Placa de avaliação (NFC/QR): página estática, fora do Google
+    '/avaliar': { prerender: true, headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+    '/review': { redirect: { to: '/avaliar', statusCode: 301 } },
     // URLs antigas
     '/painel': { redirect: { to: '/tv', statusCode: 301 } },
     '/painel/admin': { redirect: { to: '/admin', statusCode: 301 } },
@@ -147,7 +150,7 @@ export default defineNuxtConfig({
     compressPublicAssets: { brotli: true, gzip: true },
     prerender: {
       crawlLinks: false,
-      routes: ['/cardapio'],
+      routes: ['/cardapio', '/avaliar'],
       ignore: ['/.netlify']
     }
   },

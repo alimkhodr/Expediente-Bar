@@ -91,7 +91,7 @@ const abaAtual = computed(() => CHAVES.find(c => c.chave === aba.value)!)
       <PainelAdminHeader
         titulo="Conteúdo do site"
         descricao="Tudo que não vem de uma API (links, destaques, agenda e FAQ). Eventos, horários e avaliações são automáticos."
-        :links="[{ label: 'Senhas', to: '/admin', icon: 'i-lucide-hash' }]"
+        :links="[{ label: 'Senhas', to: '/admin', icon: 'i-lucide-hash' }, { label: 'Avaliações', to: '/admin/reviews', icon: 'i-lucide-star' }]"
       >
         <UButton
           color="neutral"

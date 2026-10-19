@@ -65,6 +65,10 @@ async function lancarDoScan (payload: { nome: string | null, numero: number }) {
       <PainelAdminHeader
         titulo="Chamar Senha"
         descricao="Digite o número da senha"
+        :links="[
+          { label: 'Avaliações', to: '/admin/reviews', icon: 'i-lucide-star' },
+          { label: 'Conteúdo do site', to: '/admin/cms', icon: 'i-lucide-layout-template' }
+        ]"
       />
 
       <UForm
