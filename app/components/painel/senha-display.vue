@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatarSenha } from '~/utils/fila'
+import { estimateTextWidth, formatarSenha, nameForScreen } from '~/utils/fila'
 
 const props = withDefaults(defineProps<{
   numero: number | null | undefined
@@ -16,17 +16,27 @@ const props = withDefaults(defineProps<{
 
 const texto = computed(() => formatarSenha(props.numero))
 // var(--ui-*): no /tv o PainelPublico redefine essas variaveis em hex dentro
-// de .painel (Chrome antigo); no /acompanhar (Nuxt UI) vem do tema.
+// de .painel (Chrome antigo); no admin vem do tema.
 const cor = computed(() => props.variante === 'atual' ? 'var(--ui-primary)' : 'var(--ui-text-muted)')
+const corNumeroComNome = computed(() => props.variante === 'atual' ? 'var(--ui-text-highlighted)' : 'var(--ui-text-muted)')
 
-const VIEW_W = 300
+const BASE_W = 300
+const NAME_SIZE = 100
+const NAME_MARGIN = 24
+
+// Feedback do balcão: as pessoas procuram o NOME, então com nome ele vira o destaque
+// e o número fica menor embaixo. Nomes longos encurtam (nameForScreen) e o viewBox
+// alarga para caber o nome: com preserveAspectRatio="meet" tudo encolhe junto,
+// então o nome nunca sai do card e continua sempre maior que o número.
 // Geometria do SVG (margin/padding NÃO funcionam em <text>; tudo é y + viewBox).
-// Com nome, o viewBox cresce para abrir espaço para o nome abaixo do número.
-// Sem nome, mantém 300x200 (layout idêntico ao original).
-//   numeroY = centro do número | nomeY = centro do nome | VIEW_H = altura total
-const VIEW_H = computed(() => props.nome ? 248 : 200)
-const numeroY = computed(() => props.nome ? 96 : 100)
-const nomeY = 226
+// Sem nome mantém 300x200 com o número grande (layout original).
+const nomeTela = computed(() => nameForScreen(props.nome))
+const VIEW_W = computed(() => nomeTela.value
+  ? Math.max(BASE_W, estimateTextWidth(nomeTela.value, NAME_SIZE) + NAME_MARGIN)
+  : BASE_W)
+const VIEW_H = computed(() => nomeTela.value ? 230 : 200)
+const nomeY = 78
+const numeroY = computed(() => nomeTela.value ? 182 : 100)
 </script>
 
 <template>
@@ -35,7 +45,22 @@ const nomeY = 226
     preserveAspectRatio="xMidYMid meet"
     class="senha-svg"
     :class="{ 'senha-glow': glow }"
+    role="img"
+    :aria-label="nomeTela ? `${nomeTela}, senha ${texto}` : `Senha ${texto}`"
   >
+    <text
+      v-if="nomeTela"
+      :key="`nome-${nomeTela}-${trocou}`"
+      x="50%"
+      :y="nomeY"
+      text-anchor="middle"
+      dominant-baseline="central"
+      class="senha-nome"
+      :style="{
+        animation: trocou ? 'senhaFlip 0.55s cubic-bezier(0.22,1,0.36,1)' : 'none',
+        fill: cor
+      }"
+    >{{ nomeTela }}</text>
     <text
       :key="`${texto}-${trocou}`"
       x="50%"
@@ -43,20 +68,12 @@ const nomeY = 226
       text-anchor="middle"
       dominant-baseline="central"
       class="senha-text"
+      :class="{ 'senha-text--com-nome': nomeTela }"
       :style="{
-        animation: trocou ? 'senhaFlip 0.55s cubic-bezier(0.22,1,0.36,1)' : 'none',
-        fill: cor
+        animation: trocou && !nomeTela ? 'senhaFlip 0.55s cubic-bezier(0.22,1,0.36,1)' : 'none',
+        fill: nomeTela ? corNumeroComNome : cor
       }"
     >{{ texto }}</text>
-    <text
-      v-if="nome"
-      x="50%"
-      :y="nomeY"
-      text-anchor="middle"
-      dominant-baseline="central"
-      class="senha-nome"
-      :style="{ fill: cor }"
-    >{{ nome }}</text>
   </svg>
 </template>
 
@@ -77,11 +94,17 @@ const nomeY = 226
   transform-box: fill-box;
   transform-origin: center;
 }
+.senha-text--com-nome {
+  font-size: 72px;
+  letter-spacing: -3px;
+}
 .senha-nome {
   font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 40px;
+  font-weight: 700;
+  font-size: 100px;
   letter-spacing: -1px;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 .senha-glow {
   /* rgba estatico no lugar de color-mix() (Chrome <111 nao suporta) */

@@ -5,8 +5,9 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const user = useSupabaseUser()
 const { sair } = useSessaoAdmin()
 const open = ref(false)
+const waiter = computed(() => isWaiter(user.value))
 
-const ferramentas = computed<NavigationMenuItem[]>(() => adminTools.map(tool => ({
+const ferramentas = computed<NavigationMenuItem[]>(() => adminTools.filter(tool => canAccess(tool.to, waiter.value)).map(tool => ({
   label: tool.label,
   icon: tool.icon,
   to: tool.to,
@@ -14,7 +15,8 @@ const ferramentas = computed<NavigationMenuItem[]>(() => adminTools.map(tool => 
   onSelect: () => { open.value = false }
 })))
 
-const telasPublicas = computed<NavigationMenuItem[]>(() => publicScreens.map(screen => ({
+// Garçom vê só a TV (para conferir a chamada)
+const telasPublicas = computed<NavigationMenuItem[]>(() => publicScreens.filter(screen => !waiter.value || screen.to === '/tv').map(screen => ({
   label: screen.label,
   icon: screen.icon,
   to: screen.to,
@@ -33,7 +35,7 @@ const telasPublicas = computed<NavigationMenuItem[]>(() => publicScreens.map(scr
     >
       <template #header="{ collapsed }">
         <NuxtLink
-          to="/admin"
+          :to="waiter ? WAITER_HOME : '/admin'"
           class="flex items-center gap-2"
           aria-label="Início do admin"
         >
