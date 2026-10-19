@@ -3,7 +3,7 @@ definePageMeta({
   layout: 'blank'
 })
 
-useSeoMeta({ robots: 'noindex, nofollow' })
+useSeoMeta({ title: 'Entrar', robots: 'noindex, nofollow' })
 
 const supabase = useSupabaseClient()
 const toast = useToast()
@@ -73,21 +73,24 @@ async function login (event: FormSubmitEvent) {
 </script>
 
 <template>
-  <UContainer class="py-8 h-screen">
-    <div class="flex flex-col items-center justify-center h-full">
-      <UPageCard
-        class="w-full max-w-md"
-      >
-        <UAuthForm
-          :fields="loginFields"
-          title="Login"
-          description="Faça login para continuar"
-          submit-label="Entrar"
-          :loading="loading"
-          class="max-w-md w-full"
-          @submit="login"
-        />
-      </UPageCard>
-    </div>
-  </UContainer>
+  <main class="flex min-h-svh flex-col items-center justify-center gap-8 bg-default px-4 py-10">
+    <img
+      src="/logo.svg"
+      alt="Expediente Bar"
+      width="476"
+      height="151"
+      class="h-10 w-auto"
+    />
+    <UPageCard class="w-full max-w-sm">
+      <UAuthForm
+        :fields="loginFields"
+        title="Área da equipe"
+        description="Entre com o e-mail cadastrado no Supabase."
+        icon="i-lucide-lock"
+        :submit="{ label: 'Entrar' }"
+        :loading="loading"
+        @submit="login"
+      />
+    </UPageCard>
+  </main>
 </template>
