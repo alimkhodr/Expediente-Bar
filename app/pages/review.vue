@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
- * Placa de avaliação (NFC/QR): o cliente digita quem atendeu, salvamos o envio
- * e abrimos a tela de avaliação do Google. Link da placa: /avaliar?utm_source=placa&utm_medium=nfc|qr
+ * Placa de avaliação (NFC/QR): o cliente digita o nome dele (para a equipe achar a
+ * avaliação no Google) e quem atendeu, salvamos o envio e abrimos a tela de avaliação do Google. Link da placa: /avaliar?utm_source=placa&utm_medium=nfc|qr
  */
 definePageMeta({
   layout: 'blank',
@@ -19,13 +19,14 @@ const { trackEvent } = useAnalytics()
 
 const SAVE_TIMEOUT_MS = 2500
 
+const customerName = ref('')
 const waiterName = ref('')
 const sending = ref(false)
 const source = sourceFromMedium(route.query.utm_medium)
 
 /** Salva o envio sem nunca travar o cliente: se o banco demorar ou falhar, segue para o Google. */
-async function saveRequest (name: string | null) {
-  const insert = supabase.from('review_requests').insert({ waiter_name: name, source } as never)
+async function saveRequest (customer: string | null, waiter: string | null) {
+  const insert = supabase.from('review_requests').insert({ customer_name: customer, waiter_name: waiter, source } as never)
   const timeout = new Promise(resolve => setTimeout(resolve, SAVE_TIMEOUT_MS))
   try {
     await Promise.race([insert, timeout])
@@ -34,12 +35,14 @@ async function saveRequest (name: string | null) {
   }
 }
 
-async function goToReview (skipName = false) {
+async function goToReview (skipNames = false) {
   if (sending.value) return
   sending.value = true
-  const name = skipName ? null : cleanWaiterName(waiterName.value)
-  trackEvent('review_plaque_submit', { waiter_name: name, source })
-  await saveRequest(name)
+  const customer = skipNames ? null : cleanName(customerName.value, CUSTOMER_NAME_MAX)
+  const waiter = skipNames ? null : cleanName(waiterName.value, WAITER_NAME_MAX)
+  // Nome do cliente fica só no Supabase (LGPD); no PostHog vai apenas se foi preenchido
+  trackEvent('review_plaque_submit', { waiter_name: waiter, has_customer_name: !!customer, source })
+  await saveRequest(customer, waiter)
   window.location.assign(links.review)
 }
 </script>
@@ -68,22 +71,39 @@ async function goToReview (skipName = false) {
       Gostou do Expediente?
     </h1>
     <p class="mt-2 max-w-sm text-white/70">
-      Sua avaliação no Google ajuda muito a gente. Antes, conta quem te atendeu hoje.
+      Sua avaliação no Google ajuda muito a gente. Antes, conta quem é você e quem te atendeu hoje.
     </p>
 
     <form
-      class="mt-8 flex w-full max-w-sm flex-col gap-3"
+      class="mt-8 flex w-full max-w-sm flex-col gap-4 text-left"
       @submit.prevent="goToReview()"
     >
       <UFormField
+        label="Seu nome"
+        hint="como aparece no Google"
+        required
+        :ui="{ label: 'text-white', hint: 'text-white/50' }"
+      >
+        <UInput
+          v-model="customerName"
+          placeholder="Ex.: Ana Souza"
+          size="xl"
+          :maxlength="CUSTOMER_NAME_MAX"
+          required
+          autocomplete="name"
+          autocapitalize="words"
+          class="w-full"
+        />
+      </UFormField>
+      <UFormField
         label="Quem te atendeu?"
-        :ui="{ label: 'text-white text-left w-full' }"
+        :ui="{ label: 'text-white' }"
       >
         <UInput
           v-model="waiterName"
           placeholder="Nome do garçom"
           size="xl"
-          maxlength="60"
+          :maxlength="WAITER_NAME_MAX"
           autocomplete="off"
           autocapitalize="words"
           class="w-full"
@@ -106,8 +126,11 @@ async function goToReview (skipName = false) {
         class="self-center text-white/60"
         @click="goToReview(true)"
       >
-        Não lembro, pular
+        Prefiro não informar
       </UButton>
+      <p class="text-center text-xs text-white/40">
+        Usamos seu nome só para encontrar sua avaliação e reconhecer quem te atendeu.
+      </p>
     </form>
   </main>
 </template>

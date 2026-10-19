@@ -38,7 +38,7 @@ async function load () {
   loading.value = true
   let query = supabase
     .from('review_requests')
-    .select('id, waiter_name, source, created_at')
+    .select('id, customer_name, waiter_name, source, confirmed_at, created_at')
     .order('created_at', { ascending: false })
     .limit(MAX_ROWS)
   const start = startOf(period.value)
@@ -61,13 +61,32 @@ onMounted(() => {
 })
 onUnmounted(() => clearInterval(timer))
 
+const savingIds = ref(new Set<number>())
+
+/** Marca/desmarca que a avaliação foi encontrada no Google com o nome do cliente. */
+async function toggleConfirmed (id: number) {
+  // Altera o item reativo da lista (o row.original da tabela pode não ser reativo)
+  const row = rows.value.find(r => r.id === id)
+  if (!row) return
+  const previous = row.confirmed_at
+  const next = previous ? null : new Date().toISOString()
+  row.confirmed_at = next
+  savingIds.value.add(row.id)
+  const { error } = await supabase.from('review_requests').update({ confirmed_at: next } as never).eq('id', row.id)
+  savingIds.value.delete(row.id)
+  if (error) {
+    row.confirmed_at = previous
+    toast.add({ title: 'Não foi possível salvar a conferência', description: error.message, color: 'error' })
+  }
+}
+
 const ranking = computed(() => rankWaiters(rows.value))
 const totals = computed(() => ({
   all: rows.value.length,
+  confirmed: rows.value.filter(r => r.confirmed_at).length,
   waiters: ranking.value.length,
   nfc: rows.value.filter(r => r.source === 'nfc').length,
-  qr: rows.value.filter(r => r.source === 'qr').length,
-  unnamed: rows.value.filter(r => !waiterKey(r.waiter_name)).length
+  qr: rows.value.filter(r => r.source === 'qr').length
 }))
 
 const formatTime = (iso: string) => new Intl.DateTimeFormat('pt-BR', {
@@ -79,6 +98,7 @@ const sourceLabel: Record<ReviewSource, string> = { nfc: 'NFC', qr: 'QR code', s
 const rankingColumns: TableColumn<WaiterRanking>[] = [
   { id: 'position', header: '#' },
   { accessorKey: 'name', header: 'Garçom' },
+  { accessorKey: 'confirmed', header: 'Confirmadas' },
   { accessorKey: 'total', header: 'Envios' },
   { accessorKey: 'nfc', header: 'NFC' },
   { accessorKey: 'qr', header: 'QR' },
@@ -87,14 +107,20 @@ const rankingColumns: TableColumn<WaiterRanking>[] = [
 
 const historyColumns: TableColumn<ReviewRequest>[] = [
   { accessorKey: 'created_at', header: 'Horário' },
+  { accessorKey: 'customer_name', header: 'Cliente' },
   { accessorKey: 'waiter_name', header: 'Garçom' },
-  { accessorKey: 'source', header: 'Origem' }
+  { accessorKey: 'source', header: 'Origem' },
+  { accessorKey: 'confirmed_at', header: 'No Google?' }
 ]
 
-/** CSV para conferir com os horários das avaliações no painel do Google. */
+const csvCell = (value: string | null) => (value ?? '').replace(/[;\n]/g, ',')
+
+/** CSV para conferir com as avaliações no painel do Google. */
 function exportCsv () {
-  const lines = [['horario', 'garcom', 'origem'].join(';')]
-  for (const r of rows.value) lines.push([formatTime(r.created_at), (r.waiter_name ?? '').replace(/;/g, ','), r.source].join(';'))
+  const lines = [['horario', 'cliente', 'garcom', 'origem', 'confirmada'].join(';')]
+  for (const r of rows.value) {
+    lines.push([formatTime(r.created_at), csvCell(r.customer_name), csvCell(r.waiter_name), r.source, r.confirmed_at ? 'sim' : 'nao'].join(';'))
+  }
   const blob = new Blob([String.fromCharCode(0xFEFF) + lines.join('\n')], { type: 'text/csv;charset=utf-8' })
   const link = document.createElement('a')
   link.href = URL.createObjectURL(blob)
@@ -111,7 +137,7 @@ const medal = (i: number) => ['🥇', '🥈', '🥉'][i] ?? `${i + 1}º`
     <UPageCard>
       <PainelAdminHeader
         titulo="Placa de avaliação"
-        descricao="Quem os clientes indicaram antes de ir para o Google. Atualiza a cada minuto."
+        descricao="Confira o nome do cliente nas avaliações do Google e marque as encontradas. Atualiza a cada minuto."
         :links="[
           { label: 'Senhas', to: '/admin', icon: 'i-lucide-hash' },
           { label: 'Conteúdo do site', to: '/admin/cms', icon: 'i-lucide-layout-template' }
@@ -124,7 +150,16 @@ const medal = (i: number) => ['🥇', '🥈', '🥉'][i] ?? `${i + 1}º`
           :items="periods"
           :content="false"
         />
-        <div class="flex gap-2">
+        <div class="flex flex-wrap gap-2">
+          <UButton
+            :to="links.googleMaps"
+            target="_blank"
+            icon="i-simple-icons-googlemaps"
+            color="neutral"
+            variant="outline"
+          >
+            Avaliações no Google
+          </UButton>
           <UButton
             icon="i-lucide-refresh-cw"
             color="neutral"
@@ -150,10 +185,10 @@ const medal = (i: number) => ['🥇', '🥈', '🥉'][i] ?? `${i + 1}º`
         <UCard
           v-for="kpi in [
             { label: 'Envios', value: totals.all },
+            { label: 'Confirmadas', value: totals.confirmed },
             { label: 'Garçons', value: totals.waiters },
             { label: 'Por NFC', value: totals.nfc },
-            { label: 'Por QR', value: totals.qr },
-            { label: 'Sem nome', value: totals.unnamed }
+            { label: 'Por QR', value: totals.qr }
           ]"
           :key="kpi.label"
           :ui="{ body: 'p-4 sm:p-4' }"
@@ -179,8 +214,8 @@ const medal = (i: number) => ['🥇', '🥈', '🥉'][i] ?? `${i + 1}º`
         <template #position-cell="{ row }">
           {{ medal(row.index) }}
         </template>
-        <template #total-cell="{ row }">
-          <span class="font-semibold text-primary">{{ row.original.total }}</span>
+        <template #confirmed-cell="{ row }">
+          <span class="font-semibold text-primary">{{ row.original.confirmed }}</span>
         </template>
         <template #lastAt-cell="{ row }">
           {{ formatTime(row.original.lastAt) }}
@@ -201,6 +236,9 @@ const medal = (i: number) => ['🥇', '🥈', '🥉'][i] ?? `${i + 1}º`
         <template #created_at-cell="{ row }">
           {{ formatTime(row.original.created_at) }}
         </template>
+        <template #customer_name-cell="{ row }">
+          <span :class="row.original.customer_name ? 'font-medium' : 'text-muted'">{{ row.original.customer_name || 'Não informado' }}</span>
+        </template>
         <template #waiter_name-cell="{ row }">
           <span :class="row.original.waiter_name ? '' : 'text-muted'">{{ row.original.waiter_name || 'Sem nome' }}</span>
         </template>
@@ -211,6 +249,19 @@ const medal = (i: number) => ['🥇', '🥈', '🥉'][i] ?? `${i + 1}º`
           >
             {{ sourceLabel[row.original.source] }}
           </UBadge>
+        </template>
+        <template #confirmed_at-cell="{ row }">
+          <UButton
+            size="xs"
+            :color="row.original.confirmed_at ? 'success' : 'neutral'"
+            :variant="row.original.confirmed_at ? 'subtle' : 'outline'"
+            :icon="row.original.confirmed_at ? 'i-lucide-check' : 'i-lucide-search'"
+            :loading="savingIds.has(row.original.id)"
+            :aria-label="row.original.confirmed_at ? 'Desmarcar avaliação encontrada' : 'Marcar avaliação como encontrada no Google'"
+            @click="toggleConfirmed(row.original.id)"
+          >
+            {{ row.original.confirmed_at ? 'Encontrada' : 'Conferir' }}
+          </UButton>
         </template>
       </UTable>
     </UPageCard>
