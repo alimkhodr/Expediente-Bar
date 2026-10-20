@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { cleanName, rankWaiters, sourceFromMedium, waiterKey, type ReviewRequest } from './review-requests'
+import { cleanName, filterSuggestions, mergeSuggestions, similarityScore, rankWaiters, sourceFromMedium, waiterKey, type ReviewRequest } from './review-requests'
 
 describe('sourceFromMedium', () => {
   it('aceita nfc e qr e cai em site no resto', () => {
@@ -43,5 +43,61 @@ describe('rankWaiters', () => {
       row(3, 'Maria', 'qr', '2026-10-18T22:20:00Z', true)
     ])
     expect(ranking.map(r => [r.name, r.confirmed, r.total])).toEqual([['Maria', 1, 1], ['João', 0, 2]])
+  })
+})
+
+describe('mergeSuggestions', () => {
+  it('junta grafias do mesmo garçom e usa a mais citada', () => {
+    const merged = mergeSuggestions([
+      { name: 'gabriel paulista', uses: 2 },
+      { name: 'Gabriel Paulista', uses: 5 },
+      { name: 'João', uses: 3 },
+      { name: 'joao', uses: 2 }
+    ])
+    expect(merged).toEqual([
+      { name: 'Gabriel Paulista', uses: 7 },
+      { name: 'João', uses: 5 }
+    ])
+  })
+})
+
+describe('similarityScore', () => {
+  it('pontua começo do nome, começo de palavra, trecho e erro de digitação', () => {
+    expect(similarityScore('Gabriel Paulista', 'gab')).toBe(4)
+    expect(similarityScore('Gabriel Paulista', 'paul')).toBe(3)
+    expect(similarityScore('Gabriel Paulista', 'ulis')).toBe(2)
+    expect(similarityScore('Gabriel Paulista', 'gabirel')).toBe(1)
+    expect(similarityScore('Gabriel Paulista', 'xyz')).toBe(0)
+    expect(similarityScore('Jo', 'ja')).toBe(0)
+  })
+})
+
+describe('filterSuggestions', () => {
+  const list = [
+    { name: 'Gabriel Paulista', uses: 7 },
+    { name: 'João', uses: 5 },
+    { name: 'Paulo', uses: 3 },
+    { name: 'Giovana', uses: 2 },
+    { name: 'Matheus', uses: 2 },
+    { name: 'Bruno', uses: 1 }
+  ]
+
+  it('sem texto mostra só os 4 mais citados', () => {
+    expect(filterSuggestions(list, '').map(s => s.name)).toEqual(['Gabriel Paulista', 'João', 'Paulo', 'Giovana'])
+  })
+
+  it('ordena pelo mais parecido e desempata pelos mais citados', () => {
+    // "Paulo" começa com "pau" (4) e passa na frente de "Gabriel Paulista" (palavra, 3) mesmo citado menos
+    expect(filterSuggestions(list, 'pau').map(s => s.name)).toEqual(['Paulo', 'Gabriel Paulista'])
+    expect(filterSuggestions(list, 'joa').map(s => s.name)).toEqual(['João'])
+  })
+
+  it('acha mesmo com erro de digitação', () => {
+    expect(filterSuggestions(list, 'gabirel').map(s => s.name)).toEqual(['Gabriel Paulista'])
+    expect(filterSuggestions(list, 'mateus').map(s => s.name)).toEqual(['Matheus'])
+  })
+
+  it('some quando o nome já foi digitado inteiro', () => {
+    expect(filterSuggestions(list, 'joão')).toEqual([])
   })
 })
