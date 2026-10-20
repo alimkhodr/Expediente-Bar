@@ -75,3 +75,44 @@ export function rankWaiters (rows: ReviewRequest[]): WaiterRanking[] {
     }))
     .sort((a, b) => b.confirmed - a.confirmed || b.total - a.total || a.name.localeCompare(b.name, 'pt-BR'))
 }
+
+export interface WaiterSuggestion {
+  name: string
+  uses: number
+}
+
+export const SUGGESTIONS_SHOWN = 6
+
+/** Junta grafias do mesmo garçom vindas do banco ("João" e "joao") e ordena pelos mais citados. */
+export function mergeSuggestions (rows: WaiterSuggestion[]): WaiterSuggestion[] {
+  const groups = new Map<string, { name: string, best: number, uses: number }>()
+  for (const row of rows) {
+    const key = waiterKey(row.name)
+    if (!key) continue
+    const group = groups.get(key) ?? { name: titleCase(row.name.trim()), best: 0, uses: 0 }
+    if (row.uses > group.best) {
+      group.name = titleCase(row.name.trim())
+      group.best = row.uses
+    }
+    group.uses += row.uses
+    groups.set(key, group)
+  }
+  return [...groups.values()]
+    .map(({ name, uses }) => ({ name, uses }))
+    .sort((a, b) => b.uses - a.uses || a.name.localeCompare(b.name, 'pt-BR'))
+}
+
+/**
+ * Sugestões para o que o cliente digitou: sem texto, os mais citados; com texto, os que têm
+ * alguma palavra começando pelo que foi digitado (sem acento/maiúscula). Some quando já bate exato.
+ */
+export function filterSuggestions (list: WaiterSuggestion[], typed: string, limit = SUGGESTIONS_SHOWN): WaiterSuggestion[] {
+  const query = waiterKey(typed)
+  if (!query) return list.slice(0, limit)
+  return list
+    .filter((item) => {
+      const key = waiterKey(item.name)
+      return key !== query && (key.startsWith(query) || key.split(' ').some(word => word.startsWith(query)))
+    })
+    .slice(0, limit)
+}

@@ -24,6 +24,21 @@ const waiterName = ref('')
 const sending = ref(false)
 const source = sourceFromMedium(route.query.utm_medium)
 
+// Garçons mais citados por outros clientes viram botões (função do banco devolve só nomes de garçom)
+const suggestions = ref<WaiterSuggestion[]>([])
+const pickedSuggestion = ref(false)
+const visibleSuggestions = computed(() => filterSuggestions(suggestions.value, waiterName.value))
+
+onMounted(async () => {
+  const { data } = await supabase.rpc('waiter_suggestions')
+  suggestions.value = mergeSuggestions((data ?? []) as WaiterSuggestion[])
+})
+
+function pickWaiter (name: string) {
+  waiterName.value = name
+  pickedSuggestion.value = true
+}
+
 /** Salva o envio sem nunca travar o cliente: se o banco demorar ou falhar, segue para o Google. */
 async function saveRequest (customer: string | null, waiter: string | null) {
   const insert = supabase.from('review_requests').insert({ customer_name: customer, waiter_name: waiter, source } as never)
@@ -41,7 +56,12 @@ async function goToReview (skipNames = false) {
   const customer = skipNames ? null : cleanName(customerName.value, CUSTOMER_NAME_MAX)
   const waiter = skipNames ? null : cleanName(waiterName.value, WAITER_NAME_MAX)
   // Nome do cliente fica só no Supabase (LGPD); no PostHog vai apenas se foi preenchido
-  trackEvent('review_plaque_submit', { waiter_name: waiter, has_customer_name: !!customer, source })
+  trackEvent('review_plaque_submit', {
+    waiter_name: waiter,
+    has_customer_name: !!customer,
+    waiter_from_suggestion: !!waiter && pickedSuggestion.value,
+    source
+  })
   await saveRequest(customer, waiter)
   window.location.assign(links.review)
 }
@@ -114,7 +134,25 @@ async function goToReview (skipNames = false) {
           autocapitalize="words"
           enterkeyhint="go"
           class="w-full"
+          @update:model-value="pickedSuggestion = false"
         />
+        <div
+          v-if="visibleSuggestions.length"
+          role="group"
+          aria-label="Garçons mais citados"
+          class="mt-2 flex flex-wrap gap-2"
+        >
+          <UButton
+            v-for="suggestion in visibleSuggestions"
+            :key="suggestion.name"
+            :label="suggestion.name"
+            size="md"
+            color="neutral"
+            variant="subtle"
+            class="rounded-full"
+            @click="pickWaiter(suggestion.name)"
+          />
+        </div>
       </UFormField>
       <UButton
         type="submit"

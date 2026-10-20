@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { cleanName, rankWaiters, sourceFromMedium, waiterKey, type ReviewRequest } from './review-requests'
+import { cleanName, filterSuggestions, mergeSuggestions, rankWaiters, sourceFromMedium, waiterKey, type ReviewRequest } from './review-requests'
 
 describe('sourceFromMedium', () => {
   it('aceita nfc e qr e cai em site no resto', () => {
@@ -43,5 +43,42 @@ describe('rankWaiters', () => {
       row(3, 'Maria', 'qr', '2026-10-18T22:20:00Z', true)
     ])
     expect(ranking.map(r => [r.name, r.confirmed, r.total])).toEqual([['Maria', 1, 1], ['João', 0, 2]])
+  })
+})
+
+describe('mergeSuggestions', () => {
+  it('junta grafias do mesmo garçom e usa a mais citada', () => {
+    const merged = mergeSuggestions([
+      { name: 'gabriel paulista', uses: 2 },
+      { name: 'Gabriel Paulista', uses: 5 },
+      { name: 'João', uses: 3 },
+      { name: 'joao', uses: 2 }
+    ])
+    expect(merged).toEqual([
+      { name: 'Gabriel Paulista', uses: 7 },
+      { name: 'João', uses: 5 }
+    ])
+  })
+})
+
+describe('filterSuggestions', () => {
+  const list = [
+    { name: 'Gabriel Paulista', uses: 7 },
+    { name: 'João', uses: 5 },
+    { name: 'Paulo', uses: 3 }
+  ]
+
+  it('sem texto mostra os mais citados', () => {
+    expect(filterSuggestions(list, '').map(s => s.name)).toEqual(['Gabriel Paulista', 'João', 'Paulo'])
+    expect(filterSuggestions(list, '', 2)).toHaveLength(2)
+  })
+
+  it('filtra pelo começo de qualquer palavra, sem acento', () => {
+    expect(filterSuggestions(list, 'pau').map(s => s.name)).toEqual(['Gabriel Paulista', 'Paulo'])
+    expect(filterSuggestions(list, 'joa').map(s => s.name)).toEqual(['João'])
+  })
+
+  it('some quando o nome já foi digitado inteiro', () => {
+    expect(filterSuggestions(list, 'joão')).toEqual([])
   })
 })
