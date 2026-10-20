@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { cleanName, filterSuggestions, mergeSuggestions, rankWaiters, sourceFromMedium, waiterKey, type ReviewRequest } from './review-requests'
+import { cleanName, filterSuggestions, mergeSuggestions, similarityScore, rankWaiters, sourceFromMedium, waiterKey, type ReviewRequest } from './review-requests'
 
 describe('sourceFromMedium', () => {
   it('aceita nfc e qr e cai em site no resto', () => {
@@ -61,21 +61,40 @@ describe('mergeSuggestions', () => {
   })
 })
 
+describe('similarityScore', () => {
+  it('pontua começo do nome, começo de palavra, trecho e erro de digitação', () => {
+    expect(similarityScore('Gabriel Paulista', 'gab')).toBe(4)
+    expect(similarityScore('Gabriel Paulista', 'paul')).toBe(3)
+    expect(similarityScore('Gabriel Paulista', 'ulis')).toBe(2)
+    expect(similarityScore('Gabriel Paulista', 'gabirel')).toBe(1)
+    expect(similarityScore('Gabriel Paulista', 'xyz')).toBe(0)
+    expect(similarityScore('Jo', 'ja')).toBe(0)
+  })
+})
+
 describe('filterSuggestions', () => {
   const list = [
     { name: 'Gabriel Paulista', uses: 7 },
     { name: 'João', uses: 5 },
-    { name: 'Paulo', uses: 3 }
+    { name: 'Paulo', uses: 3 },
+    { name: 'Giovana', uses: 2 },
+    { name: 'Matheus', uses: 2 },
+    { name: 'Bruno', uses: 1 }
   ]
 
-  it('sem texto mostra os mais citados', () => {
-    expect(filterSuggestions(list, '').map(s => s.name)).toEqual(['Gabriel Paulista', 'João', 'Paulo'])
-    expect(filterSuggestions(list, '', 2)).toHaveLength(2)
+  it('sem texto mostra só os 4 mais citados', () => {
+    expect(filterSuggestions(list, '').map(s => s.name)).toEqual(['Gabriel Paulista', 'João', 'Paulo', 'Giovana'])
   })
 
-  it('filtra pelo começo de qualquer palavra, sem acento', () => {
-    expect(filterSuggestions(list, 'pau').map(s => s.name)).toEqual(['Gabriel Paulista', 'Paulo'])
+  it('ordena pelo mais parecido e desempata pelos mais citados', () => {
+    // "Paulo" começa com "pau" (4) e passa na frente de "Gabriel Paulista" (palavra, 3) mesmo citado menos
+    expect(filterSuggestions(list, 'pau').map(s => s.name)).toEqual(['Paulo', 'Gabriel Paulista'])
     expect(filterSuggestions(list, 'joa').map(s => s.name)).toEqual(['João'])
+  })
+
+  it('acha mesmo com erro de digitação', () => {
+    expect(filterSuggestions(list, 'gabirel').map(s => s.name)).toEqual(['Gabriel Paulista'])
+    expect(filterSuggestions(list, 'mateus').map(s => s.name)).toEqual(['Matheus'])
   })
 
   it('some quando o nome já foi digitado inteiro', () => {

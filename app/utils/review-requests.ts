@@ -81,7 +81,8 @@ export interface WaiterSuggestion {
   uses: number
 }
 
-export const SUGGESTIONS_SHOWN = 6
+/** Poucos botões para não empurrar o "Avaliar no Google" para baixo da tela. */
+export const SUGGESTIONS_SHOWN = 4
 
 /** Junta grafias do mesmo garçom vindas do banco ("João" e "joao") e ordena pelos mais citados. */
 export function mergeSuggestions (rows: WaiterSuggestion[]): WaiterSuggestion[] {
@@ -102,17 +103,55 @@ export function mergeSuggestions (rows: WaiterSuggestion[]): WaiterSuggestion[] 
     .sort((a, b) => b.uses - a.uses || a.name.localeCompare(b.name, 'pt-BR'))
 }
 
+/** Distância de edição com troca de letras vizinhas contando 1 (Damerau, "gabirel" → "gabriel"). */
+function editDistance (a: string, b: string): number {
+  const d: number[][] = Array.from({ length: a.length + 1 }, (_, i) =>
+    Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)))
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1
+      d[i]![j] = Math.min(d[i - 1]![j]! + 1, d[i]![j - 1]! + 1, d[i - 1]![j - 1]! + cost)
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+        d[i]![j] = Math.min(d[i]![j]!, d[i - 2]![j - 2]! + 1)
+      }
+    }
+  }
+  return d[a.length]![b.length]!
+}
+
 /**
- * Sugestões para o que o cliente digitou: sem texto, os mais citados; com texto, os que têm
- * alguma palavra começando pelo que foi digitado (sem acento/maiúscula). Some quando já bate exato.
+ * Quanto o nome se parece com o que foi digitado (0 = não mostra):
+ * 4 começa igual · 3 alguma palavra começa igual · 2 contém · 1 parecido (erro de digitação).
+ */
+export function similarityScore (name: string, typed: string): number {
+  const key = waiterKey(name)
+  const query = waiterKey(typed)
+  if (!key || !query) return 0
+  if (key.startsWith(query)) return 4
+  const words = key.split(' ')
+  if (words.some(word => word.startsWith(query))) return 3
+  if (key.includes(query)) return 2
+  // Erro de digitação: compara com o começo de cada palavra (e do nome todo), com um caractere
+  // a mais ou a menos para cobrir letra esquecida ou sobrando ("mateus" → "matheus")
+  const tolerance = query.length >= 8 ? 2 : query.length >= 3 ? 1 : 0
+  if (!tolerance) return 0
+  const lengths = [query.length - 1, query.length, query.length + 1]
+  const near = [key, ...words].some(text => lengths.some(size => editDistance(text.slice(0, size), query) <= tolerance))
+  return near ? 1 : 0
+}
+
+/**
+ * Sugestões para o que o cliente digitou: sem texto, os mais citados; com texto, os mais
+ * parecidos primeiro (empate: mais citados). Some quando o nome já foi digitado inteiro.
  */
 export function filterSuggestions (list: WaiterSuggestion[], typed: string, limit = SUGGESTIONS_SHOWN): WaiterSuggestion[] {
   const query = waiterKey(typed)
   if (!query) return list.slice(0, limit)
+  if (list.some(item => waiterKey(item.name) === query)) return []
   return list
-    .filter((item) => {
-      const key = waiterKey(item.name)
-      return key !== query && (key.startsWith(query) || key.split(' ').some(word => word.startsWith(query)))
-    })
+    .map(item => ({ item, score: similarityScore(item.name, typed) }))
+    .filter(entry => entry.score > 0)
+    .sort((a, b) => b.score - a.score || b.item.uses - a.item.uses)
     .slice(0, limit)
+    .map(entry => entry.item)
 }
