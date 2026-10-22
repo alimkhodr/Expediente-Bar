@@ -152,7 +152,7 @@ const abaAtual = computed(() => CHAVES.find(c => c.chave === aba.value)!)
             :titulo="(item) => item.titulo"
           >
             <template #default="{ item }">
-              <div class="grid gap-3 sm:grid-cols-2">
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <UFormField label="Título">
                   <UInput
                     v-model="item.titulo"
@@ -193,7 +193,7 @@ const abaAtual = computed(() => CHAVES.find(c => c.chave === aba.value)!)
             :titulo="(item) => item.titulo"
           >
             <template #default="{ item }">
-              <div class="grid gap-3 sm:grid-cols-2">
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <UFormField label="Título">
                   <UInput
                     v-model="item.titulo"
@@ -246,7 +246,7 @@ const abaAtual = computed(() => CHAVES.find(c => c.chave === aba.value)!)
             v-if="aba === 'agenda'"
             class="flex flex-col gap-6"
           >
-            <div class="grid gap-3 sm:grid-cols-2">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <UFormField
                 label="Embed do Canva"
                 help="Link de compartilhamento do Canva terminado em ?embed"
@@ -273,7 +273,7 @@ const abaAtual = computed(() => CHAVES.find(c => c.chave === aba.value)!)
               :titulo="(item) => item.dia"
             >
               <template #default="{ item }">
-                <div class="grid gap-3 sm:grid-cols-3">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <UFormField label="Dia">
                     <UInput
                       v-model="item.dia"

@@ -76,7 +76,7 @@ async function lancarDoScan (payload: { nome: string | null, numero: number }) {
     </template>
 
     <template #body>
-      <div class="mx-auto grid w-full max-w-4xl gap-6 lg:grid-cols-[1fr_18rem]">
+      <div class="mx-auto grid w-full max-w-4xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <UPageCard
           title="Nova chamada"
           description="A senha aparece na TV do balcão na hora."
@@ -119,7 +119,7 @@ async function lancarDoScan (payload: { nome: string | null, numero: number }) {
               />
             </UFormField>
 
-            <div class="grid gap-3 sm:grid-cols-2">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <UButton
                 type="submit"
                 block

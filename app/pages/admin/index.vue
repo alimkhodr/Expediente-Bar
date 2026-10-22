@@ -156,7 +156,7 @@ async function copiar (url: string) {
           </UPageGrid>
         </section>
 
-        <div class="grid gap-8 lg:grid-cols-2">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <!-- Placas -->
           <section>
             <h2 class="mb-3 text-sm font-semibold text-muted">
