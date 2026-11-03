@@ -97,7 +97,7 @@ function ampliarAtual () {
           :data-pswp-srcset="`${img(pagina.src, { width: 800 })} 800w, ${img(pagina.src, { width: 1414 })} 1414w`"
           target="_blank"
           rel="noreferrer"
-          class="group relative block overflow-hidden rounded-2xl ring-1 ring-white/10 transition-shadow hover:ring-primary/60 focus-visible:ring-primary"
+          class="group relative block overflow-hidden rounded-sm ring-1 ring-white/10 transition-shadow hover:ring-primary/60 focus-visible:ring-primary"
           :aria-label="`${pagina.titulo} – toque para ampliar`"
           @click="abrir(i)"
         >
