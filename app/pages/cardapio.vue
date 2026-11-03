@@ -1,9 +1,11 @@
 <script setup lang="ts">
+// Cardápio de novembro/2026: cada página do PDF (A4 paisagem) cortada ao meio.
+// Pasta com data para o navegador não mostrar a versão antiga do cache (/images fica 7 dias em cache).
 const paginas = [
-  { src: '/images/cardapio/pagina-1.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – batatas, porções e bolinhos' },
-  { src: '/images/cardapio/pagina-2.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – lanches, sobremesas, sucos e bebidas' },
-  { src: '/images/cardapio/pagina-3.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – cervejas, long necks e gin' },
-  { src: '/images/cardapio/pagina-4.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – caipirinhas, drinks, doses e combos' }
+  { src: '/images/cardapio/2026-11/pagina-1.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – porções e lanches' },
+  { src: '/images/cardapio/2026-11/pagina-2.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – bolinhos, sobremesas, sucos e bebidas' },
+  { src: '/images/cardapio/2026-11/pagina-3.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – caipirinhas, doses e gin' },
+  { src: '/images/cardapio/2026-11/pagina-4.webp', largura: 1414, altura: 2000, titulo: 'Cardápio – cervejas, long drinks, drinks e combos' }
 ]
 
 const descricao = 'Cardápio completo do Expediente Bar em São José dos Campos: porções, petiscos, lanches, cervejas, drinks e doses. Veja com zoom direto no celular.'
