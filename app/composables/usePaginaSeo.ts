@@ -4,6 +4,8 @@ interface OpcoesSeo {
   /** Caminho canônico, ex.: '/cardapio' */
   caminho: string
   imagem?: string
+  /** Texto alternativo da imagem de compartilhamento (padrão: logo do bar) */
+  imagemAlt?: string
   /** Quando true, não aplica o sufixo "· Expediente Bar" (usado na home). */
   tituloCompleto?: boolean
   tipo?: 'website' | 'article'
@@ -32,7 +34,7 @@ export function usePaginaSeo (opcoes: OpcoesSeo) {
     ogImage: imagem,
     ogImageWidth: 1200,
     ogImageHeight: 630,
-    ogImageAlt: `Logo do ${site.name}`,
+    ogImageAlt: opcoes.imagemAlt ?? `Logo do ${site.name}`,
     twitterCard: 'summary_large_image',
     twitterTitle: opcoes.titulo,
     twitterDescription: opcoes.descricao,
