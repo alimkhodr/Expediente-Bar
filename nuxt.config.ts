@@ -151,6 +151,9 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: false,
       routes: ['/cardapio', '/avaliar'],
+      // Gera /cardapio.html em vez de /cardapio/index.html: a Netlify serve /cardapio direto (200),
+      // sem o 301 para /cardapio/ que contradizia o canonical e o sitemap
+      autoSubfolderIndex: false,
       ignore: ['/.netlify']
     }
   },

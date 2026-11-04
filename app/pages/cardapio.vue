@@ -13,7 +13,9 @@ const descricao = 'Cardápio completo do Expediente Bar em São José dos Campos
 usePaginaSeo({
   titulo: 'Cardápio',
   descricao,
-  caminho: '/cardapio'
+  caminho: '/cardapio',
+  imagem: '/images/cardapio/2026-11/og.jpg',
+  imagemAlt: 'Cardápio do Expediente Bar com porções, bolinhos, sobremesas e bebidas'
 })
 
 useSchemaOrg([
@@ -26,7 +28,8 @@ useSchemaOrg([
     description: descricao,
     inLanguage: 'pt-BR',
     image: paginas.map(p => `${useRuntimeConfig().public.siteUrl}${p.src}`),
-    hasMenuSection: paginas.map(p => ({ '@type': 'MenuSection', name: p.titulo.replace('Cardápio – ', '') }))
+    // Itens e preços em texto: as imagens do cardápio não são lidas como texto pelo Google
+    hasMenuSection: menuSchemaSections()
   }
 ])
 
@@ -49,6 +52,53 @@ const breadcrumb = [
       </template>
 
       <CardapioViewer :paginas="paginas" />
+
+      <!-- Versão em texto (fica no HTML mesmo fechada, para busca e leitores de tela) -->
+      <details class="group mx-auto mt-10 max-w-3xl rounded-sm border border-default">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 font-semibold [&::-webkit-details-marker]:hidden">
+          Ver cardápio em texto
+          <UIcon
+            name="i-lucide-chevron-down"
+            class="size-5 shrink-0 transition-transform group-open:rotate-180"
+            aria-hidden="true"
+          />
+        </summary>
+        <div class="grid grid-cols-1 gap-8 border-t border-default px-5 py-6 sm:grid-cols-2">
+          <section
+            v-for="section in menuSections"
+            :key="section.name"
+            class="min-w-0"
+          >
+            <h2 class="text-lg font-semibold text-highlighted">
+              {{ section.name }}
+            </h2>
+            <p
+              v-if="section.description"
+              class="text-sm text-muted"
+            >
+              {{ section.description }}
+            </p>
+            <ul class="mt-2 divide-y divide-default">
+              <li
+                v-for="item in section.items"
+                :key="item.name"
+                class="py-2"
+              >
+                <div class="flex items-baseline justify-between gap-3">
+                  <span>{{ item.name }}</span>
+                  <span class="shrink-0 font-semibold tabular-nums text-primary">{{ formatMenuPrice(item.price) }}</span>
+                </div>
+                <p
+                  v-if="item.description"
+                  class="text-sm text-muted"
+                >
+                  {{ item.description }}
+                </p>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </details>
 
       <p class="mt-10 text-center text-xs text-muted">
         Preços e itens podem mudar sem aviso. Aceitamos cartões, Pix e vales-refeição (VR, Pluxee, Alelo, Ticket).
